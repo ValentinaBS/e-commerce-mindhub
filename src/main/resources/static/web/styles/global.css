@@ -1,0 +1,18 @@
+:root {
+    --background: #DAB49C;
+    --secondary: #DB9A95;
+    --primary: #A38F85;
+    --shadows: #CDC6C3;
+    --black: #4D423A;
+    --title: 'Playfair Display', serif;
+    --body: 'Montserrat', sans-serif;
+}
+
+body {
+    color: var(--black);
+    font-family: var(--body);
+}
+
+h1, h2, h3 {
+    font-family: var(--title);
+}
