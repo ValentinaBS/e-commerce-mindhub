@@ -16,3 +16,45 @@ body {
 h1, h2, h3 {
     font-family: var(--title);
 }
+
+.small-header {
+    background-color: var(--background);
+    font-size: 0.8rem;
+}
+
+.nav-logo {
+    width: 200px;
+}
+
+.nav-logo-small {
+    width: 150px;
+}
+
+.nav-icons {
+    color: var(--black);
+}
+
+.nav-icons:hover {
+    color: var(--secondary);
+}
+
+.primary-btn {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    background-color: var(--secondary);
+    color: var(--black);
+}
+
+.secondary-btn {
+    border: 2px solid var(--secondary);
+}
+
+.secondary-btn:hover {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+}
