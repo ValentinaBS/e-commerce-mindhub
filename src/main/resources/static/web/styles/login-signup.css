@@ -10,9 +10,11 @@
     width: 100%;
     background-color: #A38F85;
     border: #A38F85;
+    font-weight: 600;
 }
 .buttonsignlog:hover{
     background-color: #A38F85;
+    
 }
 .underline-text {
     text-decoration: underline;
