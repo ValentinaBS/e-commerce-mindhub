@@ -23,3 +23,8 @@
 .inputs{
     border: 0.5px solid #4D423A;
 }
+@media screen and (max-width: 500px){
+    .formcontact{
+        width: 15rem;
+    }
+}
