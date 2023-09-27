@@ -1,0 +1,91 @@
+.home-banner {
+    background-color: var(--background);
+}
+
+.home-banner-img {
+    width: 200px;
+}
+
+.header-img {
+    width: 320px;
+    --s: 10px; /* control the size */
+    padding: var(--s);
+    border: calc(2*var(--s)) solid #0000;
+    outline: 1px solid #000;
+    outline-offset: calc(-1*var(--s));
+    background: conic-gradient(from 90deg at 1px 1px,#0000 25%,#000 0);
+}
+
+.home-categories {
+    background-color: var(--background);
+    max-width: 90%;
+    margin: 8rem auto;
+}
+
+.home-category-lips, 
+.home-category-skincare, 
+.home-category-brushes,
+.home-category-eyes {
+    background:
+    linear-gradient(
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.4)
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1.5rem 2rem 8rem;
+}
+
+.home-category-lips {
+    background:
+    linear-gradient(
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.4)
+    ),
+    url('../assets/home/home-category-lips.png');
+}
+
+.home-category-skincare {
+    background:
+    linear-gradient(
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.4)
+    ),
+    url('../assets/home/home-category-skincare.png');
+    background-position: top;
+}
+
+.home-category-brushes {
+    background:
+    linear-gradient(
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.4)
+    ),
+    url('../assets/home/home-category-brushes.png');
+}
+
+.home-category-eyes {
+    background:
+    linear-gradient(
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.4)
+    ),
+    url('../assets/home/home-category-eyes.png');
+    background-position: top;
+}
+
+@media screen and (min-width: 768px) {
+    .header-img {
+        width: 550px;
+    }
+
+    .home-categories {
+        max-width: 700px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .home-categories {
+        max-width: 1000px;
+    }
+}
