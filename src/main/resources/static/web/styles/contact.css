@@ -1,0 +1,30 @@
+
+.underline-text {
+    text-decoration: underline;
+    padding-bottom: 5px;
+}
+
+.formcontact{
+    width: 20rem;
+}
+
+.buttonSend{
+    width: 100%;
+    background-color: #A38F85;
+    border: #A38F85;
+}
+.buttonSend:hover{
+    background-color: #A38F85;
+}
+.textArea{
+    resize: none;
+    border: 0.5px solid #4D423A;
+}
+.inputs{
+    border: 0.5px solid #4D423A;
+}
+@media screen and (max-width: 500px){
+    .formcontact{
+        width: 15rem;
+    }
+}
