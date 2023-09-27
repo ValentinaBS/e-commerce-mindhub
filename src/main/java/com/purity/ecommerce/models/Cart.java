@@ -15,4 +15,28 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", fetch= FetchType.EAGER)
     private Set<CartItem> items = new HashSet<>();
+
+    public Cart(){
+
+    }
+    public Cart(long id, Set<CartItem> items) {
+        this.id = id;
+        this.items = items;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<CartItem> items) {
+        this.items = items;
+    }
 }
