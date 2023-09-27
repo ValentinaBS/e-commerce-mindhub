@@ -1,11 +1,7 @@
 package com.purity.ecommerce.models;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Customer {
@@ -17,6 +13,10 @@ public class Customer {
     private String email;
     private String password;
     private String address;
+  
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     public Customer() {
     }

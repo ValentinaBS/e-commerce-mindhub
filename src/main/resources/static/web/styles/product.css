@@ -1,0 +1,94 @@
+.card {
+    width: 80rem;
+    border: 0;
+    border: 2px solid red;
+}
+.price{
+    font-weight: 600;
+    color: #4D423A;
+}
+.textProduct{
+    color: #4D423A;
+}
+
+.description-p{
+    font-size: 0.8rem;
+    color: #4D423A;
+}
+.custom-button {
+    border-radius: 3rem;
+    background-color: #CDC6C3;
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border: none;
+    cursor: pointer;
+}
+
+
+.custom-button:hover {
+    background-color: #CDC6C3;
+}
+
+.input-group-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    border-radius: 3rem; 
+    background-color: #CDC6C3;
+    padding: 0.5rem; 
+    height: 3rem;
+}
+
+.input-group-custom button {
+    border: none;
+    background-color: transparent; 
+    cursor: pointer; 
+}
+
+.input-group-custom input {
+    border: none; 
+    background-color: transparent;
+    text-align: center;
+    width: 40px;
+}
+
+.input-group-custom button:hover {
+    background-color: #CDC6C3;
+}
+
+
+.buttonBag{
+    background-color: #A38F85;
+    width: 22rem;
+    height: 3rem;
+    padding: 0.8rem;
+    border:#A38F85 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+.buttonBag:hover{
+    background-color: #A38F85;
+    
+}
+.buttonBag2{
+    background-color: #A38F85;
+    width: 100%;
+    height: 3rem;
+    padding: 0.8rem;
+    border:#A38F85 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+.h5article{
+    font-size: 1rem;
+}
+.cardBodyArticle{
+    width: 100%;
+}

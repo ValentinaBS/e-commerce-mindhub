@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Product {
-
+  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -19,7 +19,6 @@ public class Product {
     private double price;
     private String category;
     private String brand;
-
     private int stock;
     private String imageUrl;
 
