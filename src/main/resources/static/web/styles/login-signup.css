@@ -1,0 +1,37 @@
+
+.formLogin-Signup{
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+.buttonsignlog{
+    width: 100%;
+    background-color: #A38F85;
+    border: #A38F85;
+    font-weight: 600;
+}
+.buttonsignlog:hover{
+    background-color: #A38F85;
+    
+}
+.underline-text {
+    text-decoration: underline;
+    padding-bottom: 5px;
+}
+.inputs{
+    border: 0.5px solid #4D423A;
+    width: 25rem;
+}
+.buttonFinal{
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    color: #4D423A;
+}
+@media screen and (max-width: 500px){
+    .formLogin-Signup{
+        width: 15rem;
+    }
+}
