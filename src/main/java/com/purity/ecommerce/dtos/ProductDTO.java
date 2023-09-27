@@ -1,46 +1,40 @@
-package com.purity.ecommerce.models;
-import org.hibernate.annotations.GenericGenerator;
+package com.purity.ecommerce.dtos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
-public class Product {
-  
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private long id;
+import com.purity.ecommerce.models.Product;
+
+public class ProductDTO {
+    private Long id;
     private String name;
     private String descriptLong;
     private String descriptShort;
     private double price;
+
     private String category;
     private String brand;
     private int stock;
     private String imageUrl;
 
-    public Product() {
+    public ProductDTO(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.descriptLong = product.getDescriptLong();
+        this.descriptShort = product.getDescriptShort();
+        this.price = product.getPrice();
+        this.category = product.getCategory();
+        this.brand = product.getBrand();
+        this.stock = product.getStock();
+        this.imageUrl = product.getImageUrl();
     }
 
-    public Product(String name, String descriptLong, String descriptShort, double price, String category, String brand, int stock, String imageUrl) {
-        this.name = name;
-        this.descriptLong = descriptLong;
-        this.descriptShort = descriptShort;
-        this.price = price;
-        this.category = category;
-        this.brand = brand;
-        this.stock = stock;
-        this.imageUrl = imageUrl;
+    public ProductDTO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,14 +44,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String getDescriptLong() {
@@ -74,6 +60,14 @@ public class Product {
 
     public void setDescriptShort(String descriptShort) {
         this.descriptShort = descriptShort;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getCategory() {
