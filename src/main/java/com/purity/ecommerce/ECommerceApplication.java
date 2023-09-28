@@ -17,7 +17,11 @@ public class ECommerceApplication {
 	@Bean
 	public CommandLineRunner initData(ProductRepository productRepository){
 		return (args) -> {
-			Product product1 = new Product("TRICLONE SKIN TECH HYDRATING", 10.99, "description1", "Makeup", "HausLabs", "C:/Users/Guest/Documents/MindHubJava/images/fadzhkjsilo_11LIGHTNEUTRAL_720x.webp");
+			Product product1 = new Product("TRICLONE SKIN TECH HYDRATING",
+					"DESCRPTION", "description1",
+					10.6, "Makeup",
+					"HausLabs", 4,
+					"https://raw.githubusercontent.com/nataliafuentesg/project-images/main/603aba80-4d6e-460d-900e-10b7eef48ece-fadzhkjsilo_11LIGHTNEUTRAL_720x.webp");
 			productRepository.save(product1);
 		};
 	}
