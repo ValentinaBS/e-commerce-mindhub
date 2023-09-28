@@ -1,0 +1,267 @@
+.card {
+    width:100%;
+    border: 0;
+    padding: 1rem;
+}
+.anchorRoute{
+    text-decoration: none;
+    color: #4D423A;
+}
+.breadcrumb-item{
+    color: #4D423A;
+}
+.card-body{
+    width: 100%;
+    min-height: 100%;
+}
+
+.card2{
+    width: 20rem;
+}
+.price{
+    font-weight: 600;
+    color: #4D423A;
+}
+.h3Product{
+    color: #4D423A;
+    font-weight: 600;
+}
+.textProduct{
+    color: #4D423A;
+}
+.h4Product{
+    text-decoration: underline;
+    font-weight: 600;
+}
+.description-p{
+    font-size: 0.8rem;
+    color: #4D423A;
+}
+.priceProduct{
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+.custom-button {
+    border-radius: 3rem;
+    background-color: #CDC6C3;
+    color: white; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border: none;
+    cursor: pointer;
+}
+
+
+.custom-button:hover {
+    background-color: #CDC6C3;
+}
+
+.input-group-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    border-radius: 0.5rem; 
+    background-color: #CDC6C3;
+    padding: 0.5rem; 
+    height: 3rem;
+}
+
+.input-group-custom button {
+    border: none;
+    background-color: transparent; 
+    cursor: pointer; 
+}
+
+.input-group-custom input {
+    border: none; 
+    background-color: transparent;
+    text-align: center;
+    width: 40px;
+}
+
+.input-group-custom button:hover {
+    background-color: #CDC6C3;
+}
+
+
+.buttonBag{
+    background-color: #A38F85;
+    width: 100%;
+    height: 3rem;
+    padding: 0.8rem;
+    border:#A38F85 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+}
+.buttonBag:hover{
+    background-color: #A38F85;
+    
+}
+.buttonBag2{
+    background-color: #A38F85;
+    width: 100%;
+    height: 3rem;
+    padding: 0.8rem;
+    border:#A38F85 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    border-radius: 0.5rem; 
+}
+.h5article{
+    font-size: 1rem;
+}
+.cardBodyArticle{
+    width: 100%;
+}
+@media screen and (min-width: 1200px) and (max-width: 1320px) {
+    .card{
+        width: 70rem;
+    }
+    .card-body{
+        width: 100%;
+    }
+    .card2{
+        width: 12rem!important ;
+    }
+    .priceProduct{
+        font-size: 1.5rem!important;
+    }
+}
+@media screen and (min-width: 1320px) and (max-width: 1440px) {
+    .card{
+        width: 75rem;
+    }
+    .card-body{
+        width: 100%;
+    }
+    .card2{
+        width: 12rem!important ;
+    }
+    .priceProduct{
+        font-size: 1.5rem!important;
+    }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+    .card{
+        width: 60rem;
+        
+    }
+    .card2{
+        width: 12rem!important ;
+    }
+    .priceProduct{
+        font-size: 1.2rem!important;
+    }
+    .card-body{
+        width: 100%;
+        margin-left: 0.5rem;
+        
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .card{
+        width: 40rem;
+    }
+    .card2{
+        width: 25rem!important ;
+    }
+    .divProducts{
+        display: flex; 
+        flex-direction: column;
+        
+    }
+    .row{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .card{
+        width: 30rem;
+    }
+    .card2{
+        width: 25rem!important ;
+    }
+    .divProducts{
+        display: flex; 
+        flex-direction: column;
+        
+    }
+    .row{
+        display: flex;
+        justify-content: center;
+    }
+}
+@media screen and (min-width: 515px) and (max-width: 575px) {
+    .card{
+        width: 30rem;
+    }
+    .card2{
+        width: 20rem!important ;
+    }
+    .divProducts{
+        display: flex; 
+        flex-direction: column;
+        
+    }
+    .row{
+        display: flex;
+        justify-content: center;
+    }
+    .priceProduct{
+        font-size: 1.1rem!important;
+    }
+    
+}
+@media screen and (min-width: 300px) and (max-width: 400px) {
+    .card{
+        width: 18rem;
+    }
+    .card2{
+        width: 15rem!important ;
+    }
+    .divProducts{
+        display: flex; 
+        flex-direction: column;
+        
+    }
+    .row{
+        display: flex;
+        justify-content: center;
+    }
+    .priceProduct{
+        font-size: 1.1rem!important;
+    }
+}
+@media screen and (min-width: 400px) and (max-width: 514px) {
+    .card{
+        width: 24rem;
+    }
+    .card2{
+        width: 20rem!important ;
+    }
+    .divProducts{
+        display: flex; 
+        flex-direction: column;
+        
+    }
+    .row{
+        display: flex;
+        justify-content: center;
+    }
+    .priceProduct{
+        font-size: 1.1rem!important;
+    }
+    .buttonBag{
+        font-size: 0.7rem;
+    }
+    
+}

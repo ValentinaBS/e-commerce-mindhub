@@ -1,14 +1,13 @@
 package com.purity.ecommerce.models;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Product {
-
+  
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -19,9 +18,11 @@ public class Product {
     private double price;
     private String category;
     private String brand;
-
     private int stock;
     private String imageUrl;
+
+    @OneToMany(mappedBy = "product", fetch= FetchType.EAGER)
+    private Set<CartItem> cartItems = new HashSet<>();
 
     public Product() {
     }
