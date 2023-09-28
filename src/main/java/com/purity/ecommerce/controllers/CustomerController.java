@@ -39,7 +39,6 @@ public class CustomerController {
 
         }
 
-
         Customer newCustomer = new Customer(
                 customer.getName(),
                 customer.getEmail(),
