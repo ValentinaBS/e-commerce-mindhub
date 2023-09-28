@@ -13,12 +13,16 @@ public class Cart {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
+    private String sesionToken;
+
     @OneToMany(mappedBy = "cart", fetch= FetchType.EAGER)
     private Set<CartItem> items = new HashSet<>();
+  
+    @OneToOne(mappedBy = "customer", fetch= FetchType.EAGER)
+    private Customer customer;
 
-    public Cart(){
-
-    }
+    public Cart(){}
+  
     public Cart(long id, Set<CartItem> items) {
         this.id = id;
         this.items = items;
@@ -38,5 +42,21 @@ public class Cart {
 
     public void setItems(Set<CartItem> items) {
         this.items = items;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getSesionToken() {
+        return sesionToken;
+    }
+
+    public void setSesionToken(String sesionToken) {
+        this.sesionToken = sesionToken;
     }
 }

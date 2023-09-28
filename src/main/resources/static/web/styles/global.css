@@ -21,6 +21,13 @@ h1, h2, h3 {
     display: none !important;
 }
 
+.underline-text {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    text-decoration-color: rgba(77, 66, 58, 0.5);
+}
+
 .small-header {
     background-color: var(--background);
     font-size: 0.8rem;
