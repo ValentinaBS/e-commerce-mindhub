@@ -65,6 +65,23 @@ select:focus {
     color: white;
 }
 
+.cart-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.input-group-custom input {
+    border: none; 
+    background-color: transparent;
+    text-align: center;
+    width: 70px;
+}
+
+.small-text {
+    font-size: 14px;
+}
+
 .primary-btn {
     background-color: var(--primary);
     color: white;
