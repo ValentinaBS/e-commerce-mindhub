@@ -1,0 +1,35 @@
+.product-card {
+    width: 90%;
+}
+
+.filter-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--primary);
+    cursor: pointer;
+}
+
+.btn-check:checked+.btn, .btn.active {
+    color: white;
+    background-color: var(--secondary);
+}
+
+.btn:hover {
+    --bs-btn-bg: var(--secondary);
+}
+
+@media screen and (min-width: 768px) {
+    .products-filters {
+        width: 80%;
+        height: fit-content;
+    }
+    .product-card {
+        width: 320px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .products-filters {
+        width: 340px;
+    }
+}

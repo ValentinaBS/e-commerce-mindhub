@@ -17,12 +17,15 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", fetch= FetchType.EAGER)
     private Set<CartItem> items = new HashSet<>();
-
+  
     @OneToOne(mappedBy = "customer", fetch= FetchType.EAGER)
     private Customer customer;
 
-    public Cart() {
-
+    public Cart(){}
+  
+    public Cart(long id, Set<CartItem> items) {
+        this.id = id;
+        this.items = items;
     }
 
     public long getId() {
