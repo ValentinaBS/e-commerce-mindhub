@@ -5,6 +5,7 @@ import com.purity.ecommerce.models.Cart;
 import com.purity.ecommerce.models.CartItem;
 import com.purity.ecommerce.models.Customer;
 import com.purity.ecommerce.models.Product;
+import com.purity.ecommerce.repositories.CartItemRepository;
 import com.purity.ecommerce.repositories.CartRepository;
 import com.purity.ecommerce.repositories.CustomerRepository;
 import com.purity.ecommerce.repositories.ProductRepository;
@@ -32,8 +33,10 @@ public class CartController {
     private ProductRepository productRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
-    @PostMapping("/cart/add")
+    @PostMapping("/cart")
     @Transactional
     public ResponseEntity<String> addToCart(
         @PathVariable long productID,
@@ -89,5 +92,48 @@ public class CartController {
         cartRepository.save(cart);
 
         return new ResponseEntity<>("Product add successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/cart/update")
+    @Transactional
+    public ResponseEntity<String> updateCartItem(
+        @RequestParam long cartItemID,
+        @RequestParam int count
+    ) {
+        CartItem currentItem = cartItemRepository.findById(cartItemID);
+
+        if (currentItem == null) {
+            return new ResponseEntity<>("Cart item not found in cart", HttpStatus.NOT_FOUND);
+        }
+
+        Product product = currentItem.getProduct();
+        if (product == null) {
+            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        }
+        if (product.getStock() < count) {
+            return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
+        }
+
+        currentItem.setCount(count);
+
+        cartItemRepository.saveAndFlush(currentItem);
+
+        return new ResponseEntity<>("Cart Item update successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("cart/remove")
+    @Transactional
+    public ResponseEntity<String> removeCartItem(
+            @RequestParam long cartItemID
+    ) {
+        CartItem currentItem = cartItemRepository.findById(cartItemID);
+
+        if (currentItem == null) {
+            return new ResponseEntity<>("Cart item not found in cart", HttpStatus.NOT_FOUND);
+        }
+
+        cartItemRepository.delete(currentItem);
+
+        return new ResponseEntity<>("Cart item removed successfully", HttpStatus.OK);
     }
 }

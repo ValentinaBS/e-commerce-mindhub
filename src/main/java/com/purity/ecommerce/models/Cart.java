@@ -18,7 +18,7 @@ public class Cart {
     @OneToMany(mappedBy = "cart", fetch= FetchType.EAGER)
     private Set<CartItem> items = new HashSet<>();
   
-    @OneToOne(mappedBy = "customer", fetch= FetchType.EAGER)
+    @OneToOne(mappedBy = "cart", fetch= FetchType.EAGER)
     private Customer customer;
 
     public Cart(){}
