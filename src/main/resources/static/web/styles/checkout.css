@@ -19,12 +19,6 @@
 .h2Delivery{
     text-decoration: underline;
 }
-.divShippingMethod{
-    border-radius: 0.5rem;
-    border: 1px solid black;
-    width: 20rem;
-    height: 9rem;
-}
 .div1{
     width: 100%;
     min-height: 27rem;
@@ -71,79 +65,88 @@
     padding: 2rem;
     border: 1px solid var(--black);
 }
-.card{
-    border: 0;
+
+.cart-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+.small-text{
+    font-size: 14px;
+}
+ul{
+    border: 1px solid black;
+    border-radius: 1.5rem!important;
+}
+.buttonShippingMethod{
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    border: 1px solid black;
+    width: 20rem;
     height: 9rem;
-    border: 1px solid red;
-    width: 100%;
+    text-align: start;
 }
-.card-body{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+h3{
+    color: var( --black);
 }
-.priceProduct{
-    font-weight: 600;
-    font-size: 1.7rem;
+.price{
+    color: var( --black);
 }
-.card-title{
-    font-family: var(--title);
-    color: var(--black);
-}
-.divMini{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: 1rem;
-}
-@media screen and (min-width: 700px) and (max-width: 1000px) {
+
+@media (min-width: 768px) and (max-width: 890px) {
     .formDelivery{
-        width: 42rem;
-        border: 1px solid red;
+        width: 45rem;
+        min-height: 40rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
     }
-    .sectionCheckout{
-        width: 100%;
-    }
-    .card{
-        border: 1px solid red;
-    }
-    .card-body{
-        border: 1px solid blue;
-    }
-    .priceProduct{
-        font-size: 1.4rem;
+}
+@media (min-width: 650px) and (max-width: 767px) {
+    .formDelivery{
+        width: 40rem;
+        min-height: 40rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
     }
     .pMethod{
         text-align: center;
     }
-    .h2Delivery{
-        text-align: center;
+    .buttonShippingMethod{
+        width: 18rem;
     }
 }
-@media screen and (min-width: 500px) and (max-width: 699px) {
+@media (min-width: 576px) and (max-width: 649px) {
     .formDelivery{
-        width: 30rem;
-        border: 1px solid red;
-    }
-    .sectionCheckout{
-        width: 100%;
-    }
-    .card{
-        border: 1px solid red;
-    }
-    .card-body{
-        border: 1px solid blue;
-    }
-    .priceProduct{
-        font-size: 1.4rem;
-    }
-    .h2Delivery{
-        text-align: center;
-    }
-    .form-label{
-        width: 15rem;
+        width: 35rem;
+        min-height: 40rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
     }
     .pMethod{
         text-align: center;
     }
+}
+@media (min-width: 320px) and (max-width: 575px) {
+    .formDelivery{
+        width: 100%;
+        min-height: 40rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    .pMethod{
+        text-align: center;
+    }
+
 }
