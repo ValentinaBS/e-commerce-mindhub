@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../assets/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/product-manager.css">
+    <title>Purity - Product Manager</title>
+</head>
+
+<body>
+    <section>
+        <h1 class="underline-text text-center mt-5">
+            Product Manager
+        </h1>
+        <form @submit.prevent class="product-manager-form row g-4 mx-auto mt-4 mt-md-5">
+            <div class="col-md-6">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="email" class="form-control" id="productName" placeholder="Eye shadow...">
+            </div>
+            <div class="col-md-6">
+                <label for="productBrand" class="form-label">Brand</label>
+                <input type="password" class="form-control" id="productBrand" placeholder="Purity">
+            </div>
+            <div class="col-md-6">
+                <label for="productPrice" class="form-label">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="moneySymbol">$</span>
+                    <input type="text" class="form-control" id="productPrice" aria-describedby="moneySymbol" min="1" placeholder="0.00">
+                </div>
+            </div>
+            <div class="col-md-6"> 
+                <label for="productStock" class="form-label">Stock</label>
+                <input type="text" class="form-control" id="productStock" placeholder="1">
+            </div>
+            <div class="col-12">
+                <label for="productCategory" class="form-label">Category</label>
+                <select class="form-select" id="productCategory">
+                    <option disabled selected>- Select a category -</option>
+                    <option value="lips">Lips</option>
+                    <option value="eyes">Eyes</option>
+                    <option value="skincare">Skincare</option>
+                    <option value="brushes">Brushes</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="productImage" class="form-label">Image</label>
+                <input class="form-control" type="file" id="formFile" accept="image/*">
+            </div>
+
+            <button type="submit" class="product-submit btn primary-btn mt-5 mx-auto">
+                <i class="bi bi-plus-lg"></i>
+                Create Product
+            </button>
+        </form>
+    </section>
+
+    <section>
+        <h2 class="underline-text text-center">
+            All Available Products
+        </h2>
+        <div class="d-flex my-5 mx-3 mx-md-5 justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5">
+            <article class="product-card">
+                <img class="img-fluid rounded-start object-fit-contain h-lg-100 " src="../../assets/image 1.jpg"
+                    alt="">
+                <div class="mt-4">
+                    <h5 class="fw-bold">
+                        Limitless Lash Mascara
+                    </h5>
+                    <p class="mb-1">
+                        LIFT. LENGTHEN. SEPARATE.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">MAC</p>
+                        <p class="mb-2">Stock: 20</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center fs-4 mb-3">
+                        <p class="fw-bold mb-0">
+                            $120
+                        </p>
+                        <div>
+                            <button class="btn btn-lg secondary-btn">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-100 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                        <i class="bi bi-trash-fill"></i>
+                        Remove Product
+                    </button>
+                </div>
+            </article>
+            <article class="product-card">
+                <img class="img-fluid rounded-start object-fit-contain h-lg-100 " src="../../assets/image 1.jpg"
+                    alt="">
+                <div class="mt-4">
+                    <h5 class="fw-bold">
+                        Limitless Lash Mascara
+                    </h5>
+                    <p class="mb-1">
+                        LIFT. LENGTHEN. SEPARATE.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">MAC</p>
+                        <p class="mb-2">Stock: 20</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center fs-4 mb-3">
+                        <p class="fw-bold mb-0">
+                            $120
+                        </p>
+                        <div>
+                            <button class="btn btn-lg secondary-btn">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-100 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                        <i class="bi bi-trash-fill"></i>
+                        Remove Product
+                    </button>
+                </div>
+            </article>
+            <article class="product-card">
+                <img class="img-fluid rounded-start object-fit-contain h-lg-100 " src="../../assets/image 1.jpg"
+                    alt="">
+                <div class="mt-4">
+                    <h5 class="fw-bold">
+                        Limitless Lash Mascara
+                    </h5>
+                    <p class="mb-1">
+                        LIFT. LENGTHEN. SEPARATE.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">MAC</p>
+                        <p class="mb-2">Stock: 20</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center fs-4 mb-3">
+                        <p class="fw-bold mb-0">
+                            $120
+                        </p>
+                        <div>
+                            <button class="btn btn-lg secondary-btn">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-100 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                        <i class="bi bi-trash-fill"></i>
+                        Remove Product
+                    </button>
+                </div>
+            </article>
+            <article class="product-card">
+                <img class="img-fluid rounded-start object-fit-contain h-lg-100 " src="../../assets/image 1.jpg"
+                    alt="">
+                <div class="mt-4">
+                    <h5 class="fw-bold">
+                        Limitless Lash Mascara
+                    </h5>
+                    <p class="mb-1">
+                        LIFT. LENGTHEN. SEPARATE.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">MAC</p>
+                        <p class="mb-2">Stock: 20</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center fs-4 mb-3">
+                        <p class="fw-bold mb-0">
+                            $120
+                        </p>
+                        <div>
+                            <button class="btn btn-lg secondary-btn">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-100 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                        <i class="bi bi-trash-fill"></i>
+                        Remove Product
+                    </button>
+                </div>
+            </article>
+            <article class="product-card">
+                <img class="img-fluid rounded-start object-fit-contain h-lg-100 " src="../../assets/image 1.jpg"
+                    alt="">
+                <div class="mt-4">
+                    <h5 class="fw-bold">
+                        Limitless Lash Mascara
+                    </h5>
+                    <p class="mb-1">
+                        LIFT. LENGTHEN. SEPARATE.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">MAC</p>
+                        <p class="mb-2">Stock: 20</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center fs-4 mb-3">
+                        <p class="fw-bold mb-0">
+                            $120
+                        </p>
+                        <div>
+                            <button class="btn btn-lg secondary-btn">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-100 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                        <i class="bi bi-trash-fill"></i>
+                        Remove Product
+                    </button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/product-manager.js"></script>
+</body>
+
+</html>

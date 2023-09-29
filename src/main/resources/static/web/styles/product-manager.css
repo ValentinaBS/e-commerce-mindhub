@@ -1,0 +1,22 @@
+.product-manager-form {
+    width: 90%;
+    margin-bottom: 6rem;
+}
+
+.product-submit {
+    max-width: 300px;
+}
+
+.product-card {
+    width: 90%;
+}
+
+@media screen and (min-width: 768px) {
+    .product-manager-form {
+        width: 500px;
+    }
+
+    .product-card {
+        width: 320px;
+    }
+}
