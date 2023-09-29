@@ -8,11 +8,11 @@ public class ProductDTO {
     private String name;
     private String descriptLong;
     private String descriptShort;
-    private double price;
+    private Double price;
 
     private String category;
     private String brand;
-    private int stock;
+    private Integer stock;
     private String imageUrl;
 
     public ProductDTO(Product product) {
@@ -62,7 +62,7 @@ public class ProductDTO {
         this.descriptShort = descriptShort;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -86,7 +86,7 @@ public class ProductDTO {
         this.brand = brand;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 

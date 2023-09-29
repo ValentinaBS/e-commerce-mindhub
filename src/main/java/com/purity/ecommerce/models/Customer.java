@@ -67,4 +67,12 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 }
