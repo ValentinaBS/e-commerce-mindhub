@@ -1,0 +1,33 @@
+.profile-list {
+    max-width: 300px;
+}
+
+.list-group-item {
+    border-color: rgba(77, 66, 58, 0.5);
+}
+
+.order {
+    width: 320px;
+}
+
+.order-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.order-divider {
+    border-bottom: 1px solid var(--black);
+}
+
+@media screen and (min-width: 768px) {
+    .order {
+        width: 650px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .order {
+        width: 1000px;
+    }
+}
