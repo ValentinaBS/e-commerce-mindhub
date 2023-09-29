@@ -13,15 +13,15 @@ public class CartItem {
     private int count;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     public CartItem() {
+    }
 
+    public CartItem(int count, Product product) {
+        this.count = count;
+        this.product = product;
     }
 
     public long getId() {
@@ -38,14 +38,6 @@ public class CartItem {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 
     public Product getProduct() {
