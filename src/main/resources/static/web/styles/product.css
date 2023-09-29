@@ -1,7 +1,9 @@
+
 .card {
-    width:100%;
+    max-width:90%;
     border: 0;
     padding: 1rem;
+
 }
 .anchorRoute{
     text-decoration: none;
@@ -13,6 +15,7 @@
 .card-body{
     width: 100%;
     min-height: 100%;
+    margin-left: 3rem;
 }
 
 .card2{
@@ -41,19 +44,8 @@
     font-weight: 600;
     font-size: 1.8rem;
 }
-.custom-button {
-    border-radius: 3rem;
-    background-color: #CDC6C3;
-    color: white; 
-    padding: 10px 20px; 
-    font-size: 16px; 
-    border: none;
-    cursor: pointer;
-}
-
-
-.custom-button:hover {
-    background-color: #CDC6C3;
+.primary-btn {
+    width: 20rem;
 }
 
 .input-group-custom {
@@ -223,7 +215,7 @@
 }
 @media screen and (min-width: 300px) and (max-width: 400px) {
     .card{
-        width: 18rem;
+        width: 20rem;
     }
     .card2{
         width: 15rem!important ;
