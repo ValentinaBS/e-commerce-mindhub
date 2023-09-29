@@ -1,12 +1,15 @@
 package com.purity.ecommerce.controllers;
 import com.purity.ecommerce.dtos.CustomerDTO;
+import com.purity.ecommerce.models.Cart;
 import com.purity.ecommerce.models.Customer;
+import com.purity.ecommerce.repositories.CartRepository;
 import com.purity.ecommerce.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -16,6 +19,8 @@ import static java.util.stream.Collectors.toList;
 public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
     @GetMapping("/customers")
     public List<CustomerDTO> getCustomers() {
@@ -26,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping ("/register")
-    public ResponseEntity<Object> registerNewCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Object> registerNewCustomer(@RequestBody Customer customer, HttpServletRequest httpServletRequest){
 
         if (customer.getName().isBlank() || customer.getEmail().isBlank() || customer.getAddress().isBlank() || customer.getPassword().isBlank()) {
 
@@ -46,6 +51,17 @@ public class CustomerController {
                 customer.getPassword());
         customerRepository.save(newCustomer);
 
-        return new ResponseEntity<>("Customer created successfully!",HttpStatus.CREATED);
+        String sesionToken = (String) httpServletRequest.getSession(true).getAttribute("sesionToken");
+        if (sesionToken != null) {
+            Cart cart = cartRepository.findBySesionToken(sesionToken);
+
+            if (cart != null) {
+                newCustomer.setCart(cart);
+                cart.setSesionToken(null);
+                customerRepository.save(newCustomer);
+            }
+        }
+
+        return new ResponseEntity<>("Customer created successfully",HttpStatus.CREATED);
     }
 }
