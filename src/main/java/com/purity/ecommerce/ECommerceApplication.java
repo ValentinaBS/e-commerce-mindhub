@@ -29,7 +29,7 @@ public class ECommerceApplication {
 			Customer admin = new Customer("admin", "admin@mindhub.com", passwordEncoder.encode("123456"), "Cl 1A 5B 53");
 			customerRepository.save(admin);
 
-			Product product1 = new Product("TRICLONE SKIN TECH HYDRATING", "DESCRPTION", "description1", 10.6, "Makeup", "HausLabs", 4, "https://raw.githubusercontent.com/nataliafuentesg/project-images/main/603aba80-4d6e-460d-900e-10b7eef48ece-fadzhkjsilo_11LIGHTNEUTRAL_720x.webp");
+			Product product1 = new Product("Ultra Plush Powder Makeup Brush", "Real Techniques Ultra Plush Powder Makeup Brush helps you create a flawless finish with its large, domed shape for all-over application. RT 201 powder brush has a plush large head for sheer application and a smooth, mattified finish. Best used with powder foundations, powder bronzers, and setting powders. Provides smooth, high-definition results with tapered bristles to help blend powders seamlessly. Extended aluminum ferrules that are light weight, easy to use, and color coded. 100% Cruelty-Free and Vegan. Flawless Results. Easy to clean with Real Techniques Brush Cleansing Gel or Spray. Long Lasting Makeup Application. UltraPlush Synthetic Bristles.", "Long Lasting Makeup Application.", 6.99, "Brushes", "Real Techniques", 6, "https://i.imgur.com/xbcGA7J.jpg");
 			productRepository.save(product1);
 
 		};
