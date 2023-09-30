@@ -1,6 +1,6 @@
 
 .formLogin-Signup{
-    width: 25rem;
+    width: 15rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +22,7 @@
 }
 .inputs{
     border: 0.5px solid #4D423A;
-    width: 25rem;
+    width: 100%;
 }
 .buttonFinal{
     border: none;
@@ -30,8 +30,10 @@
     text-decoration: underline;
     color: #4D423A;
 }
-@media screen and (max-width: 500px){
+@media screen and (min-width: 300px) and (max-width: 500px){
+    
     .formLogin-Signup{
         width: 15rem;
     }
+    
 }
