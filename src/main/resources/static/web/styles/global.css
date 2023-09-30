@@ -213,6 +213,10 @@ select:focus {
     }
 }
 
+.footer-center {
+    margin: 0 auto;
+}
+
 @media screen and (min-width: 768px) {
     .footer {
         height: 750px;
@@ -244,5 +248,9 @@ select:focus {
 
     .footer-down {
         padding-top: 6rem;
+    }
+
+    .footer-center {
+        margin: 0;
     }
 }
