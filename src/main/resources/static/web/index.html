@@ -261,8 +261,8 @@
             <div class="d-flex justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5 mt-5 mx-3 mx-md-5">
                 <template v-if="allProducts.length > 0" v-for="product in allProducts">
                     <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" :src="product.imageUrl" :alt="product.name">
+                        <a :href="'pages/product.html?id=' + product.id">
+                            <img class="product-img img-fluid object-fit-cover h-lg-100" :src="product.imageUrl" :alt="product.name">
                         </a>
                         <div class="mt-4">
                             <h5 class="fw-bold">
@@ -276,10 +276,10 @@
                                 <p class="mb-2">Stock: {{ product.stock }}</p>
                             </div>
                             <p class="fw-bold fs-4">
-                                ${{ product.price }}
+                                {{ moneyFormatter.format(product.price) }}
                             </p>
                             <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
+                                <a :href="'pages/product.html?id=' + product.id"
                                 class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
                                     Details
                                 </a>
