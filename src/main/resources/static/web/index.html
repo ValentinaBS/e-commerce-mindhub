@@ -44,31 +44,31 @@
                         </h5>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ms-3">
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="pages/products.html?category=all">
                                     <i class="bi bi-back"></i>
                                     All
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="pages/products.html?category=lips">
                                     <i class="bi bi-emoji-kiss-fill"></i>
                                     Lips
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="pages/products.html?category=eyes">
                                     <i class="bi bi-eye-fill"></i>
                                     Eyes
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="pages/products.html?category=skincare">
                                     <i class="bi bi-bandaid-fill"></i>
                                     Skincare
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="pages/products.html?category=brushes">
                                     <i class="bi bi-brush-fill"></i>
                                     Brushes
                                 </a>
@@ -261,8 +261,8 @@
             <div class="d-flex justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5 mt-5 mx-3 mx-md-5">
                 <template v-if="allProducts.length > 0" v-for="product in allProducts">
                     <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" :src="product.imageUrl" :alt="product.name">
+                        <a :href="'pages/product.html?id=' + product.id">
+                            <img class="product-img img-fluid object-fit-cover h-lg-100" :src="product.imageUrl" :alt="product.name">
                         </a>
                         <div class="mt-4">
                             <h5 class="fw-bold">
@@ -276,10 +276,10 @@
                                 <p class="mb-2">Stock: {{ product.stock }}</p>
                             </div>
                             <p class="fw-bold fs-4">
-                                ${{ product.price }}
+                                {{ moneyFormatter.format(product.price) }}
                             </p>
                             <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
+                                <a :href="'pages/product.html?id=' + product.id"
                                 class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
                                     Details
                                 </a>
@@ -383,23 +383,23 @@
                         <div class="footer-divider py-4 py-lg-0 col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                             <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
                             <div class="d-flex flex-column row-gap-2">
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="pages/products.html?category=all">
                                     <i class="bi bi-back"></i>
                                     All
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="pages/products.html?category=lips">
                                     <i class="bi bi-emoji-kiss-fill"></i>
                                     Lips
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="pages/products.html?category=eyes">
                                     <i class="bi bi-eye-fill"></i>
                                     Eyes
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="pages/products.html?category=skincare">
                                     <i class="bi bi-bandaid-fill"></i>
                                     Skincare
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="pages/products.html?category=brushes">
                                     <i class="bi bi-brush-fill"></i>
                                     Brushes
                                 </a>
