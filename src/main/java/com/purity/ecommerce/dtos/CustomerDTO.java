@@ -3,6 +3,8 @@ import com.purity.ecommerce.models.Customer;
 import com.purity.ecommerce.models.Product;
 import com.purity.ecommerce.models.PurchaseOrders;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +14,7 @@ public class CustomerDTO {
     private String name;
     private String email;
     private String address;
-    private List<CartItemDTO> cart;
+    private CartDTO cart;
     private List<PurchaseOrderDTO> purchasedOrders;
 
     public CustomerDTO(Customer customer){
@@ -20,10 +22,7 @@ public class CustomerDTO {
         this.name = customer.getName();
         this.email = customer.getEmail();
         this.address = customer.getAddress();
-        this.cart = customer.getCart().getItems()
-                .stream()
-                .map(CartItemDTO::new)
-                .collect(Collectors.toList());
+        this.cart = new CartDTO(customer.getCart());
         this.purchasedOrders = customer.getPurchaseOrders().stream()
                 .map(PurchaseOrderDTO::new)
                 .collect(Collectors.toList());
@@ -72,11 +71,11 @@ public class CustomerDTO {
         this.purchasedOrders = purchasedOrders;
     }
 
-    public List<CartItemDTO> getCart() {
+    public CartDTO getCart() {
         return cart;
     }
 
-    public void setCart(List<CartItemDTO> cart) {
+    public void setCart(CartDTO cart) {
         this.cart = cart;
     }
 }
