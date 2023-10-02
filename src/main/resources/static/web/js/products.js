@@ -26,7 +26,7 @@ const options = {
             .then(res => {
                 this.allProducts = res.data;
 
-                if(this.productsByCategory == "all") {
+                if(this.productCategory == "all") {
                     this.productsByCategory = this.allProducts;
                 } else {
                     this.productsByCategory = this.allProducts.filter(prod => prod.category == this.productCategory);
