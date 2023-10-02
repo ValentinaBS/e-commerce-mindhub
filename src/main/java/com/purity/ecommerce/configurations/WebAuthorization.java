@@ -20,10 +20,13 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/cart/{productID}").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/api/products/update/{productId}").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/products").permitAll()
-
                 .antMatchers("/web/**").permitAll()
+
+                .antMatchers(HttpMethod.GET, "/api/customers").hasAuthority("ADMIN")
+                .antMatchers("/api/customer/current").hasAuthority("CLIENT")
 
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/logout").authenticated()

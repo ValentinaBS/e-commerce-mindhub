@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -39,79 +42,37 @@ public class ProductController {
                 .orElse(null);
     }
 
+
     @PostMapping("/products/create")
-    public ResponseEntity<String> createProduct(
-            @ModelAttribute ProductDTO productDto,
-            @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-
-        // Validate product data
-        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank()) {
-            return ResponseEntity.badRequest().body("Product data is required.");
+    public ResponseEntity<String> createProduct(@RequestBody ProductDTO productDto) {
+        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank() || productDto.getStock() <= 0 || productDto.getImageUrl().isBlank()) {
+            return ResponseEntity.badRequest().body("Product data is invalid.");
         }
-
-        // Validate image file
-        if (imageFile == null || imageFile.isEmpty()) {
-            return ResponseEntity.badRequest().body("Image file is required.");
+        Product existingProduct = productRepository.findByName(productDto.getName());
+        if (existingProduct != null) {
+            return ResponseEntity.badRequest().body("A product with the same name already exists.");
         }
-
-        try {
-            // Convert the image to Base64
-            byte[] imageBytes = imageFile.getBytes();
-            String base64Image = Base64.encodeBase64String(imageBytes);
-            String uniqueFileName = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
-
-            // Construct the GitHub API URL for creating a new file
-            String githubApiUrl = "https://api.github.com/repos/nataliafuentesg/project-images/contents/" + uniqueFileName;
-
-            // Create a JSON request body with the Base64-encoded image
-            String requestBody = "{\"message\":\"Add image\",\"content\":\"" + base64Image + "\"}";
-
-            // Create an HTTP POST request to the GitHub API
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer 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"); // Replace with your GitHub token
-            headers.set("Content-Type", "application/json");
-            HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
-
-            // Send the request to create the image file
-            ResponseEntity<String> response = restTemplate.exchange(
-                    githubApiUrl,
-                    HttpMethod.PUT,
-                    entity,
-                    String.class
-            );
-
-            if (response.getStatusCode() == HttpStatus.CREATED) {
-                String githubRawImageUrl = "https://raw.githubusercontent.com/nataliafuentesg/project-images/main/" + uniqueFileName;
-
-
-                productDto.setImageUrl(githubRawImageUrl);
-
-                Product product = new Product(
-                        productDto.getName(),
-                        productDto.getDescriptLong(),
-                        productDto.getDescriptShort(),
-                        productDto.getPrice(),
-                        productDto.getCategory(),
-                        productDto.getBrand(),
-                        productDto.getStock(),
-                        productDto.getImageUrl(),
-                        productDto.isActive()
-                );
-
-                productRepository.save(product);
-
-                return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully.");
-
-            } else {
-                // Handle any error responses from GitHub here
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image to GitHub.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image to GitHub.");
+        String imageUrl = productDto.getImageUrl();
+        if (!isValidImageUrl(imageUrl)) {
+            return ResponseEntity.badRequest().body("Invalid image URL format.");
         }
+        Product product = new Product(
+                productDto.getName(),
+                productDto.getDescriptLong(),
+                productDto.getDescriptShort(),
+                productDto.getPrice(),
+                productDto.getCategory(),
+                productDto.getBrand(),
+                productDto.getStock(),
+                imageUrl,
+                true
+        );
+
+        productRepository.save(product);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully.");
     }
+
 
     @PatchMapping("/products/update/{productId}")
     public ResponseEntity<String> updateProduct(
@@ -139,6 +100,9 @@ public class ProductController {
         }
 
         if (productDto.getPrice() != null) {
+            if (productDto.getPrice() <= 0) {
+                return ResponseEntity.badRequest().body("Price must be a positive number.");
+            }
             existingProduct.setPrice(productDto.getPrice());
         }
 
@@ -151,13 +115,25 @@ public class ProductController {
         }
 
         if (productDto.getStock() != null) {
+            if (productDto.getStock() <= 0) {
+                return ResponseEntity.badRequest().body("Stock must be a positive number.");
+            }
             existingProduct.setStock(productDto.getStock());
+        }
+
+        if (productDto.getImageUrl() != null) {
+            String imageUrl = productDto.getImageUrl();
+            if (imageUrl.isBlank() || !isValidImageUrl(imageUrl)) {
+                return ResponseEntity.badRequest().body("Invalid image URL.");
+            }
+            existingProduct.setImageUrl(imageUrl);
         }
 
         productRepository.save(existingProduct);
 
         return ResponseEntity.ok("Product updated successfully.");
     }
+
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
@@ -172,6 +148,11 @@ public class ProductController {
         return ResponseEntity.ok("Product deactivated successfully.");
     }
 
-
+    private boolean isValidImageUrl(String imageUrl) {
+        String imageUrlPattern = "^(https?://)?(www\\.)?.+\\.(jpg|jpeg|png|gif)$";
+        Pattern pattern = Pattern.compile(imageUrlPattern);
+        Matcher matcher = pattern.matcher(imageUrl);
+        return matcher.matches();
+    }
 
 }
