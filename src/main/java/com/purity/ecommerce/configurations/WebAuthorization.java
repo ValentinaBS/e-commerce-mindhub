@@ -21,7 +21,7 @@ public class WebAuthorization {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PATCH, "/api/products/update/{productId}").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/products").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/products", "/api/product/{id}").permitAll()
 
                 .antMatchers("/web/**").permitAll()
 
