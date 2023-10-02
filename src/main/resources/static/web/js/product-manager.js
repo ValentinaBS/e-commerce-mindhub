@@ -12,6 +12,7 @@ const options = {
                 categoryInput: "",
                 shortDescriptInput: "",
                 longDescriptInput: "",
+                imageUrlInput: "",
             },
 
             errorMessage: "",
@@ -22,6 +23,7 @@ const options = {
         axios.get('/api/products')
             .then(res => {
                 this.allProducts = res.data.filter(prod => prod.active);
+                console.log(this.allProducts);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -55,17 +57,18 @@ const options = {
                 reverseButtons: true
             }).then(result => {
                 if (result.isConfirmed) {
-                    const formData = new FormData();
-                    formData.append('name', this.product.nameInput);
-                    formData.append('brand', this.product.brandInput);
-                    formData.append('price', this.product.priceInput);
-                    formData.append('stock', this.product.stockInput);
-                    formData.append('category', this.product.categoryInput);
-                    formData.append('descriptLong', this.product.longDescriptInput);
-                    formData.append('descriptShort', this.product.shortDescriptInput);
-                    formData.append('imageFile', this.$refs.fileInput.files[0]);
 
-                    axios.post('/api/products/create', formData)
+                    axios.post('/api/products/create', { 
+                        name: this.product.nameInput, 
+                        descriptLong: this.product.longDescriptInput,
+                        descriptShort: this.product.shortDescriptInput,
+                        price: this.product.priceInput,
+                        category: this.product.categoryInput,
+                        brand: this.product.brandInput,
+                        stock: this.product.stockInput,
+                        active: true,
+                        imageUrl: this.product.imageUrlInput
+                    })
                         .then(res => {
                             Swal.fire({
                                 position: 'center',
@@ -99,12 +102,18 @@ const options = {
                 }
             })
         },
-        previewFiles(e) {
-            this.product.imageInput = e.target.files[0];
-            console.log(this.product.imageInput);
-        },
-        editProduct(productId) {
-            axios.patch(`/api/products/update/${productId}`)
+        editProduct(productId, name, brand, price, stock, category, descriptShort, descriptLong, imageUrl) {
+            axios.patch(`/api/products/update/${productId}`, { 
+                name: name, 
+                descriptLong: descriptLong,
+                descriptShort: descriptShort,
+                price: price,
+                category: category,
+                brand: brand,
+                stock: stock,
+                active: true,
+                imageUrl: imageUrl
+            })
             .then(res => {
                 Swal.fire({
                     position: 'center',
