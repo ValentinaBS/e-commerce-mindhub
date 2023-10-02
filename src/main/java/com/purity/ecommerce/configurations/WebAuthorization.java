@@ -19,22 +19,23 @@ public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
+                .antMatchers("/api/products", "/api/login",
+                        "/web/index.html", "/web/pages/products.html", "/web/pages/product.html", "/web/pages/product.html", "/web/pages/login-signup.html", "/web/pages/contact.html", "/web/pages/about-us.html",
+                        "/web/styles/**", "/web/js/**", "/web/assets/**",
+                        "/web/pages/admin/**", "/api/products/{productId}", "/api/products/create", "/web/pages/profile.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/cart/{productID}").permitAll()
+
+                //.antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PATCH, "/api/products/update/{productId}").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/products").permitAll()
-                .antMatchers("/web/**").permitAll()
+                //.antMatchers("/web/pages/admin/**", "/api/products/{productId}").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET, "/api/customers").hasAuthority("ADMIN")
-                .antMatchers("/api/customer/current").hasAuthority("CLIENT")
+                //.antMatchers("/web/pages/profile.html", "/web/pages/checkout.html").hasAuthority("CLIENT")
 
-                .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/logout").authenticated()
 
-                .and()
+                .anyRequest().denyAll();
 
-
-                .formLogin()
+        http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login")

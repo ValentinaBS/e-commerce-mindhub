@@ -9,19 +9,14 @@ import com.purity.ecommerce.repositories.CartItemRepository;
 import com.purity.ecommerce.repositories.CartRepository;
 import com.purity.ecommerce.repositories.CustomerRepository;
 import com.purity.ecommerce.repositories.ProductRepository;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @RestController
@@ -36,11 +31,8 @@ public class CartController {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-    @PostMapping("/cart")
-    @Transactional
-    public ResponseEntity<String> addToCart(
-        @PathVariable long productID,
-        @RequestParam int count,
+    @GetMapping("/cart/current")
+    public ResponseEntity<Object> getCurrentCart(
         Authentication authentication,
         HttpServletRequest httpServletRequest
     ) {
@@ -49,6 +41,36 @@ public class CartController {
 
         if (authentication != null) {
             Customer customer = customerRepository.findByEmail(authentication.getName());
+
+            if (customer == null) {
+                return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            }
+
+            cart = customer.getCart();
+
+        } else {
+
+            cart = cartRepository.findBySesionToken(sesionToken);
+
+        }
+
+        return new ResponseEntity<>(new CartDTO(cart), HttpStatus.OK);
+    }
+
+    @PostMapping("/cart")
+    @Transactional
+    public ResponseEntity<String> addToCart(
+        @RequestParam long productID,
+        @RequestParam int count,
+        Authentication authentication,
+        HttpServletRequest httpServletRequest
+    ) {
+        String sesionToken = (String) httpServletRequest.getSession(true).getAttribute("sesionToken");
+        Cart cart = null;
+
+        if (authentication != null) {
+            Customer customer = customerRepository.findByEmail(authentication.getName());
+
             if (customer == null) {
                 return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
             }
@@ -56,24 +78,26 @@ public class CartController {
             if (customer.getCart() == null) {
                 cart = new Cart();
                 customer.setCart(cart);
-            } else {
-                cart = customer.getCart();
+                customerRepository.save(customer);
             }
-
 
         } else {
             if (sesionToken == null) {
                 sesionToken = UUID.randomUUID().toString();
                 httpServletRequest.getSession().setAttribute("sesionToken", sesionToken);
             }
+
             cart = cartRepository.findBySesionToken(sesionToken);
+
             if (cart == null) {
                 cart = new Cart();
                 cart.setSesionToken(sesionToken);
+                cartRepository.save(cart);
             }
         }
 
         Product product = productRepository.findById(productID);
+
         if (product == null) {
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
@@ -82,11 +106,19 @@ public class CartController {
                 .filter(item -> item.getProduct().getId() == product.getId())
                 .findFirst()
                 .orElse(null);
+
         if (existItem != null) {
-            existItem.setCount(count);
+            if (product.getStock() < existItem.getCount()) {
+                return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
+            } else {
+                existItem.setCount(count + 1);
+            }
         } else {
             CartItem cartItem = new CartItem(count, product);
+            cartItem.setCart(cart);
+            cartItemRepository.save(cartItem);
             cart.getItems().add(cartItem);
+            cartRepository.save(cart);
         }
 
         cartRepository.save(cart);

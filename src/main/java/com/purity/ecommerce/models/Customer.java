@@ -1,5 +1,6 @@
 package com.purity.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
@@ -74,6 +75,7 @@ public class Customer {
         this.address = address;
     }
 
+    @JsonIgnore
     public Cart getCart() {
         return cart;
     }

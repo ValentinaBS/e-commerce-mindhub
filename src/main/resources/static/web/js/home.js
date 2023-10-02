@@ -4,24 +4,14 @@ const options = {
     data() {
         return {
             allProducts: [],
-            cart: [],
-            localStorageQty: 0,
-            cartQty: 0,
-            oldItems: [],
-
+            cart: {},
             moneyFormatter: {},
         }
     },
     created() {
         axios.get('/api/products')
             .then(res => {
-                this.allProducts = res.data.slice(0, 4);
-
-                document.body.setAttribute("data-quantity", this.cartQty);
-                this.cart = JSON.parse(localStorage.getItem("cartProducts"));
-
-                this.localStorageQty = JSON.parse(localStorage.getItem("cartProducts")).length;
-                this.oldItems = JSON.parse(localStorage.getItem("cartProducts")) || [];
+                this.allProducts = res.data.filter(prod => prod.active).slice(0, 4);
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -29,32 +19,74 @@ const options = {
                 console.log(error.response.headers);
             })
 
+        axios.get('/api/cart/current')
+            .then(res => {
+                this.cart = res.data;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
         })
     },
-    computed: {
-        addQty() {
-            for (let product of this.cart) {
-                product.quantity = 1;
-            }
-        }
-    },
     methods: {
-        emptyCart() {
-            localStorage.removeItem("cartProducts");
-            this.cart = [];
+        addToCart(productId, count) {
+            axios.post('/api/cart', {
+                productID: productId,
+                count: count
+            }, {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(res => {
+                    this.loadCart();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         },
-        addCart(product) {
-            this.cartQty++;
-            this.cart.push(product);
-            this.oldItems = this.cart;
-            this.localStorageQty = this.oldItems.length;
-            localStorage.setItem(
-                "cartProducts",
-                JSON.stringify(this.oldItems)
-            );
+
+        updateCartItem(cartItemId, count) {
+            if (count <= 0) {
+                this.removeCartItem(cartItemId);
+                return;
+            }
+            axios.post('/api/cart/update', {
+                cartItemID: cartItemId,
+                count: count
+            }, {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(res => {
+                    this.loadCart();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+
+        removeCartItem(cartItemId) {
+            axios.delete('/api/cart/remove', {
+                params: {
+                    cartItemID: cartItemId
+                }
+            }, {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(res => {
+                    this.loadCart();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         },
     }
 }

@@ -31,7 +31,6 @@ public class ProductController {
                 .stream()
                 .map(ProductDTO::new)
                 .collect(toList());
-
     }
 
     @GetMapping("/product/{id}")
@@ -45,7 +44,7 @@ public class ProductController {
 
     @PostMapping("/products/create")
     public ResponseEntity<String> createProduct(@RequestBody ProductDTO productDto) {
-        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank() || productDto.getStock() <= 0 || productDto.getImageUrl().isBlank()) {
+        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getDescriptShort().isBlank() ||  productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank() || productDto.getStock() <= 0 || productDto.getImageUrl().isBlank()) {
             return ResponseEntity.badRequest().body("Product data is invalid.");
         }
         Product existingProduct = productRepository.findByName(productDto.getName());
@@ -56,6 +55,7 @@ public class ProductController {
         if (!isValidImageUrl(imageUrl)) {
             return ResponseEntity.badRequest().body("Invalid image URL format.");
         }
+      
         Product product = new Product(
                 productDto.getName(),
                 productDto.getDescriptLong(),
@@ -135,7 +135,7 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("/products/{productId}")
+    @PatchMapping("/products/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
         Optional<Product> optionalProduct = productRepository.findById(productId);
 
