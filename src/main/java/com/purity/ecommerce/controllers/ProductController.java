@@ -91,7 +91,8 @@ public class ProductController {
                         productDto.getCategory(),
                         productDto.getBrand(),
                         productDto.getStock(),
-                        productDto.getImageUrl()
+                        productDto.getImageUrl(),
+                        productDto.isActive()
                 );
 
                 product.setImageUrl(githubRawImageUrl);
@@ -156,15 +157,19 @@ public class ProductController {
         return ResponseEntity.ok("Product updated successfully.");
     }
 
-    @DeleteMapping("/products/delete/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
-        if (productRepository.existsById(productId)) {
-            productRepository.deleteById(productId);
-            return ResponseEntity.ok("Product deleted successfully.");
-        } else {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+
+        if (optionalProduct.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Product product = optionalProduct.get();
+        product.setActive(false);
+        productRepository.save(product);
+        return ResponseEntity.ok("Product deactivated successfully.");
     }
+
 
 
 }

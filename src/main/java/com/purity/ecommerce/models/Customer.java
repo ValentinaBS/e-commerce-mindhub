@@ -3,6 +3,8 @@ package com.purity.ecommerce.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Customer {
@@ -15,11 +17,15 @@ public class Customer {
     private String password;
     private String address;
   
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private Set<PurchaseOrders> purchaseOrders = new HashSet<>();
+
     public Customer() {
+        this.cart = new Cart(); // Initialize the cart
     }
 
     public Customer(String name, String email, String password, String address) {
@@ -76,5 +82,22 @@ public class Customer {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+        cart.setCustomer(this);
     }
+
+    public Set<PurchaseOrders> getPurchaseOrders() {
+        return purchaseOrders;
+    }
+
+    public void setPurchaseOrders(Set<PurchaseOrders> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
+    }
+
+    public void addPurchaseOrder(PurchaseOrders purchaseOrder) {
+        this.purchaseOrders.add(purchaseOrder);
+        purchaseOrder.setCustomer(this);
+    }
+
+
+
 }

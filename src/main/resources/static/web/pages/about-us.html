@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/about-us.css">
     <title>Purity - About Us</title>
@@ -20,7 +21,8 @@
 
 <body>
     <div class="small-header py-2 text-center fw-bold">
-        <p class="mb-0">15% off every Monday and Tuesday on MAC lipsticks!</p>
+        <p class="mb-0 animate__animated animate__flash animate__slower animate__infinite">15% off every Monday and
+            Tuesday on MAC lipsticks!</p>
     </div>
     <nav class="navbar bg-white px-2 border border-black border-end-0 border-start-0 sticky-top">
         <div class="container-fluid">
@@ -36,35 +38,35 @@
                 </div>
                 <div class="offcanvas-body">
                     <h5>
-                        Product Categories
+                        Categories
                     </h5>
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ms-3">
                         <li class="nav-item">
-                            <a class="nav-link nav-icons fs-5" href="#">
+                            <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=all">
                                 <i class="bi bi-back"></i>
                                 All
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-icons fs-5" href="#">
+                            <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=lips">
                                 <i class="bi bi-emoji-kiss-fill"></i>
                                 Lips
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-icons fs-5" href="#">
+                            <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=eyes">
                                 <i class="bi bi-eye-fill"></i>
                                 Eyes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-icons fs-5" href="#">
+                            <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=skincare">
                                 <i class="bi bi-bandaid-fill"></i>
                                 Skincare
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-icons fs-5" href="#">
+                            <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=brushes">
                                 <i class="bi bi-brush-fill"></i>
                                 Brushes
                             </a>
@@ -73,7 +75,7 @@
                     <div class="border-top border-secondary-subtle mt-4 pt-3">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="#">About Us</a>
+                                <a class="nav-link nav-icons fs-5" href="../pages/about-us.html">About Us</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-icons fs-5" href="../pages/contact.html">Contact Us</a>
@@ -106,26 +108,146 @@
                 <a class="btn nav-icons" href="../pages/profile.html">
                     <i class="bi bi-person-fill fs-2"></i>
                 </a>
-                <button class="btn nav-icons">
+                <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                     <i class="bi bi-bag-fill fs-4"></i>
                 </button>
+            </div>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header px-4">
+                    <h3 class="offcanvas-title fw-bold" id="offcanvasRightLabel">Cart</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body pt-0 pb-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item py-4 px-2">
+                            <div class="d-flex column-gap-3">
+                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
+                                <div class="d-flex flex-column">
+                                    <h3 class="fs-4">
+                                        Lipstick Red Rose
+                                    </h3>
+                                    <p class="mb-0 small-text">
+                                        Brand: MAC
+                                    </p>
+                                    <p class="mb-1 small-text">
+                                        Total Stock: 20
+                                    </p>
+                                    <span class="fs-5 fw-bold">
+                                        $145
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div class="input-group-custom d-flex">
+                                    <button @click="decrement" class="btn primary-btn">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    <input type="text" class="form-control input-number" v-model="count" :min="1"
+                                        :max="100" placeholder="1">
+                                    <button @click="increment" class="btn primary-btn">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                                <button class="btn secondary-btn">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <li class="list-group-item py-4 px-2">
+                            <div class="d-flex column-gap-3">
+                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
+                                <div class="d-flex flex-column">
+                                    <h3 class="fs-4">
+                                        Lipstick Red Rose
+                                    </h3>
+                                    <p class="mb-0 small-text">
+                                        Brand: MAC
+                                    </p>
+                                    <p class="mb-1 small-text">
+                                        Total Stock: 20
+                                    </p>
+                                    <span class="fs-5 fw-bold">
+                                        $145
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div class="input-group-custom d-flex">
+                                    <button @click="decrement" class="btn primary-btn">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    <input type="text" class="form-control input-number" v-model="count" :min="1"
+                                        :max="100" placeholder="1">
+                                    <button @click="increment" class="btn primary-btn">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                                <button class="btn secondary-btn">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <li class="list-group-item py-4 px-2">
+                            <div class="d-flex column-gap-3">
+                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
+                                <div class="d-flex flex-column">
+                                    <h3 class="fs-4">
+                                        Lipstick Red Rose
+                                    </h3>
+                                    <p class="mb-0 small-text">
+                                        Brand: MAC
+                                    </p>
+                                    <p class="mb-1 small-text">
+                                        Total Stock: 20
+                                    </p>
+                                    <span class="fs-5 fw-bold">
+                                        $145
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div class="input-group-custom d-flex">
+                                    <button @click="decrement" class="btn primary-btn">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    <input type="text" class="form-control input-number" v-model="count" :min="1"
+                                        :max="100" placeholder="1">
+                                    <button @click="increment" class="btn primary-btn">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                                <button class="btn secondary-btn">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="px-2">
+                        <a href="../pages/checkout.html" class="btn primary-btn w-100 my-3 py-2">
+                            Go to Checkout
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <button class="btn secondary-btn w-100">
+                            Clear Cart
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <section>
-        <div class="about-banner text-white text-center">
-            <h1 class="text-md-start">
-                Our Mission
-            </h1>
-            <h2 class="text-md-end mt-5">
-                Protect + Revive your skin.
-            </h2>
-        </div>
+    <section class="about-banner text-white text-center animate__animated animate__slideInLeft">
+        <h1 class="text-md-start">
+            Our Mission
+        </h1>
+        <h2 class="text-md-end mt-5">
+            Protect + Revive your skin.
+        </h2>
     </section>
 
     <section class="mt-5">
-        <article class="about-card card mb-3 border-0 mx-4 mx-md-auto">
+        <article class="about-card card mb-3 border-0 mx-4 mx-md-auto animate__animated animate__slideInUp">
             <div class="row g-0">
                 <div class="col-md-6">
                     <img src="../assets/about-us/about-1.png" class="about-img img-fluid rounded" alt="Make up set">
@@ -136,8 +258,10 @@
                             Clean, skin-centric beauty.
                         </h2>
                         <p class="card-text fs-5">
-                            We believe in skin that looks like skin—and radiance that comes naturally. With transparency as our
-                            guide and color as our vehicle, we challenge the conventions of clean beauty to create something
+                            We believe in skin that looks like skin—and radiance that comes naturally. With transparency
+                            as our
+                            guide and color as our vehicle, we challenge the conventions of clean beauty to create
+                            something
                             radically new, through safe, potent formulas that protect and revive your skin.
                         </p>
                     </div>
@@ -152,12 +276,16 @@
                             Skincare-powered makeup.
                         </h2>
                         <p class="card-text fs-5">
-                            We see skincare and makeup as one, and early on realized botanicals were not enough. Our potent formulas are designed with active levels of skincare ingredients that shield skin from environmental stressors. We strongly believe in SPF, as it is what protects and powers these actives, making them up to 200% more effective.
+                            We see skincare and makeup as one, and early on realized botanicals were not enough. Our
+                            potent formulas are designed with active levels of skincare ingredients that shield skin
+                            from environmental stressors. We strongly believe in SPF, as it is what protects and powers
+                            these actives, making them up to 200% more effective.
                         </p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <img src="../assets/about-us/about-2.png" class="about-img ms-md-4 img-fluid rounded" alt="Make up set">
+                    <img src="../assets/about-us/about-2.png" class="about-img ms-md-4 img-fluid rounded"
+                        alt="Make up set">
                 </div>
             </div>
         </article>
@@ -172,7 +300,10 @@
                             Wake up your skin.
                         </h2>
                         <p class="card-text fs-5">
-                            Our daily essentials are designed to instantly revive your look. It all comes back to vibrancy, vivid washes of color, and a fuss-free philosophy with a focus on making your skin look and feel alive. With many of our products multi-use, for easy application on-the-go, you can make it up or make it down—we’ll always make it simple.
+                            Our daily essentials are designed to instantly revive your look. It all comes back to
+                            vibrancy, vivid washes of color, and a fuss-free philosophy with a focus on making your skin
+                            look and feel alive. With many of our products multi-use, for easy application on-the-go,
+                            you can make it up or make it down—we’ll always make it simple.
                         </p>
                     </div>
                 </div>
@@ -186,12 +317,16 @@
                             Better is a balance.
                         </h2>
                         <p class="card-text fs-5">
-                            We learned early on that not every natural ingredient is good for the skin, nor is every synthetic bad. Clean beauty is where those two collide—with conscious, carefully-selected ingredients, and no compromises. Since our journey began in 2011, we have been continually working to push the boundaries of innovation—and the industry—forward.
+                            We learned early on that not every natural ingredient is good for the skin, nor is every
+                            synthetic bad. Clean beauty is where those two collide—with conscious, carefully-selected
+                            ingredients, and no compromises. Since our journey began in 2011, we have been continually
+                            working to push the boundaries of innovation—and the industry—forward.
                         </p>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <img src="../assets/about-us/about-4.png" class="about-img ms-md-4 img-fluid rounded" alt="Make up set">
+                    <img src="../assets/about-us/about-4.png" class="about-img ms-md-4 img-fluid rounded"
+                        alt="Make up set">
                 </div>
             </div>
         </article>
@@ -249,23 +384,23 @@
                     <div class="footer-divider py-4 py-lg-0 col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                         <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
                         <div class="d-flex flex-column row-gap-2">
-                            <a class="nav-link nav-footer" href="#">
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=all">
                                 <i class="bi bi-back"></i>
                                 All
                             </a>
-                            <a class="nav-link nav-footer" href="#">
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=lips">
                                 <i class="bi bi-emoji-kiss-fill"></i>
                                 Lips
                             </a>
-                            <a class="nav-link nav-footer" href="#">
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=eyes">
                                 <i class="bi bi-eye-fill"></i>
                                 Eyes
                             </a>
-                            <a class="nav-link nav-footer" href="#">
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=skincare">
                                 <i class="bi bi-bandaid-fill"></i>
                                 Skincare
                             </a>
-                            <a class="nav-link nav-footer" href="#">
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=brushes">
                                 <i class="bi bi-brush-fill"></i>
                                 Brushes
                             </a>

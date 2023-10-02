@@ -18,6 +18,10 @@
     --bs-btn-bg: var(--secondary);
 }
 
+.products-section {
+    width: 1500px;
+}
+
 @media screen and (min-width: 768px) {
     .products-filters {
         width: 80%;
