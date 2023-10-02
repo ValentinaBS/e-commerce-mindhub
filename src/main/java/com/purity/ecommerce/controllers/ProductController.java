@@ -28,7 +28,6 @@ public class ProductController {
                 .stream()
                 .map(ProductDTO::new)
                 .collect(toList());
-
     }
 
     @GetMapping("/product/{id}")
@@ -84,9 +83,6 @@ public class ProductController {
             if (response.getStatusCode() == HttpStatus.CREATED) {
                 String githubRawImageUrl = "https://raw.githubusercontent.com/nataliafuentesg/project-images/main/" + uniqueFileName;
 
-
-                productDto.setImageUrl(githubRawImageUrl);
-
                 Product product = new Product(
                         productDto.getName(),
                         productDto.getDescriptLong(),
@@ -97,6 +93,8 @@ public class ProductController {
                         productDto.getStock(),
                         productDto.getImageUrl()
                 );
+
+                product.setImageUrl(githubRawImageUrl);
 
                 productRepository.save(product);
 

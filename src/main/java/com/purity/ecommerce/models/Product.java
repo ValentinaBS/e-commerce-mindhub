@@ -21,9 +21,6 @@ public class Product {
     private int stock;
     private String imageUrl;
 
-    @OneToMany(mappedBy = "product", fetch= FetchType.EAGER)
-    private Set<CartItem> cartItems = new HashSet<>();
-
     public Product() {
     }
 
