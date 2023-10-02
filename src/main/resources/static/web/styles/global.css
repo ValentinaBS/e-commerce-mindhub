@@ -21,6 +21,11 @@ select:focus {
     border-color: var(--secondary);
 }
 
+textarea {
+    resize: none;
+    height: 200px;
+}
+
 [v-cloak] {
     display: none !important;
 }

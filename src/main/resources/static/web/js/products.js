@@ -24,7 +24,7 @@ const options = {
 
         axios.get('/api/products')
             .then(res => {
-                this.allProducts = res.data;
+                this.allProducts = res.data.filter(prod => prod.active);
 
                 if(this.productCategory == "all") {
                     this.productsByCategory = this.allProducts;
