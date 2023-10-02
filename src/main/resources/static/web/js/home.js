@@ -15,7 +15,7 @@ const options = {
     created() {
         axios.get('/api/products')
             .then(res => {
-                this.allProducts = res.data.slice(0, 4);
+                this.allProducts = res.data.filter(prod => prod.active).slice(0, 4);
 
                 document.body.setAttribute("data-quantity", this.cartQty);
                 this.cart = JSON.parse(localStorage.getItem("cartProducts"));

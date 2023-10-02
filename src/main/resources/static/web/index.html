@@ -126,7 +126,7 @@
                     </div>
                     <div class="offcanvas-body pt-0 pb-4">
                         <ul class="list-group list-group-flush">
-                            <template v-if="cartQty > 0" class="product in cart">
+                            <template v-if="cartQty > 0" v-for="product in cart">
                                 <li class="list-group-item py-4 px-2">
                                     <div class="d-flex column-gap-3">
                                         <img class="cart-img rounded-2" :src="imageUrl" :alt="product.name">
