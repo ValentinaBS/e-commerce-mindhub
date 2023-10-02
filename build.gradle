@@ -10,6 +10,9 @@ version = '0.0.1-SNAPSHOT'
 java {
 	sourceCompatibility = '11'
 }
+bootRun {
+	sourceResources sourceSets.main
+}
 
 bootRun {
 	sourceResources sourceSets.main
