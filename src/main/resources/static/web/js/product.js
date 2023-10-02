@@ -61,10 +61,7 @@ const app = createApp({
       });
   },
   methods: {
-    getCategoryUrl(category) {
-      // Lógica para construir la URL de la categoría
-      return `/products.html?category=${category}`;
-    },
+    
     getHomeUrl() {
       // Lógica para construir la URL de la página de todos los productos
       return "/products.html"; // Ajusta la URL según la ubicación real de tu página principal

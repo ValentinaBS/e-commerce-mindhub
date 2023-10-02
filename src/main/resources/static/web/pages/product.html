@@ -250,11 +250,18 @@
                 <section class="d-flex flex-column pt-2">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a class="anchorRoute" :href="getHomeUrl()">Home</a></li>
+                            <li class="breadcrumb-item"><a class="anchorRoute" href="../index.html">Home</a></li>
 
                             <li class="breadcrumb-item"><a class="anchorRoute"
-                                    :href="getCategoryUrl(product.category)">{{ product.category }}</a></li>
+                                    :href="'./products.html?category=' + product.category">{{ product.category.charAt(0).toUpperCase() + product.category.slice(1) }}
+                                </a></li>
 
+                                    <!-- <li class="breadcrumb-item">
+                                        <a class="anchorRoute"
+                                          :href="'./products.html?category=' + capitalizeFirstLetter(product.category)">
+                                          {{ capitalizeFirstLetter(product.category) }}
+                                        </a>
+                                      </li> -->
                             <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
                         </ol>
                     </nav>
@@ -308,26 +315,41 @@
                 <h2 class="underline-text text-center">You Might Also Like</h2>
                 <div
                     class="d-flex justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5 mt-5 mx-3 mx-md-5">
-                   
-                    <article v-for="(relatedProduct, index) in relatedProducts.slice(0, 4)" :key="relatedProduct.id">
-                        <a :href="getProductUrl(relatedProduct.id)">
-                          <img :src="relatedProduct.imageUrl" :alt="relatedProduct.name" class="product-img" />
-                        </a>
-                        <h5>{{ relatedProduct.name }}</h5>
-                        <p>{{ relatedProduct.descriptShort }}</p>
-                        <p> {{ moneyFormatter.format(relatedProduct.price) }}</p>
-                            <div class="d-flex column-gap-4">
-                                <a :href="'../pages/product.html?id=' + product.id"
+
+                    <template v-if="allProducts.length > 0 " v-for="(relatedProduct, index) in relatedProducts.slice(0, 5)" :key="relatedProduct.id">
+                        <article class="product-card" v-if="relatedProduct.id !== product.id">
+                            <a :href="'./product.html?id=' + relatedProduct.id">
+                                <img class="product-img img-fluid object-fit-cover h-lg-100" :src="relatedProduct.imageUrl" :alt="product.name">
+                            </a>
+                            <div class="mt-4">
+                                <h5 class="fw-bold">
+                                    {{ relatedProduct.name }}
+                                </h5>
+                                <p class="mb-1">
+                                    {{ relatedProduct.descriptShort }}
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-2">{{ relatedProduct.brand }}</p>
+                                    <p class="mb-2">Stock: {{ relatedProduct.stock }}</p>
+                                </div>
+                                <p class="fw-bold fs-4">
+                                    {{ moneyFormatter.format(relatedProduct.price) }}
+                                </p>
+                                <div class="d-flex column-gap-4">
+                                    <a :href="'./product.html?id=' + relatedProduct.id"
                                     class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    Details
-                                </a>
-                                <button @click="addToCart(relatedProduct)" :disabled="relatedProduct.stock <= 0" type="submit" :disabled="relatedProduct.stock <= 0"
-                                    class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    <i class="bi bi-bag-plus-fill"></i> Add to bag
-                                </button>
+                                        Details
+                                    </a>
+                                    <button @click="addToCart(product.id, 1)"
+                                        class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                                        <i class="bi bi-bag-plus-fill"></i>
+                                        Add to bag
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </template>
+
                 </div>
             </section>
 
