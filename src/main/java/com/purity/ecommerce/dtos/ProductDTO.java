@@ -13,6 +13,7 @@ public class ProductDTO {
     private String category;
     private String brand;
     private Integer stock;
+    private boolean active;
     private String imageUrl;
 
     public ProductDTO(Product product) {
@@ -24,6 +25,7 @@ public class ProductDTO {
         this.category = product.getCategory();
         this.brand = product.getBrand();
         this.stock = product.getStock();
+        this.active = product.isActive();
         this.imageUrl = product.getImageUrl();
     }
 
@@ -100,5 +102,21 @@ public class ProductDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
