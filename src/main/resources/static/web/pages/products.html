@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/products.css">
     <title>Purity - Products</title>
@@ -21,7 +22,7 @@
 <body>
     <div id="app">
         <div class="small-header py-2 text-center fw-bold">
-            <p class="mb-0">15% off every Monday and Tuesday on MAC lipsticks!</p>
+            <p class="mb-0 animate__animated animate__flash animate__slower animate__infinite">15% off every Monday and Tuesday on MAC lipsticks!</p>
         </div>
         <nav class="navbar bg-white px-2 border border-black border-end-0 border-start-0 sticky-top">
             <div class="container-fluid">
@@ -41,31 +42,31 @@
                         </h5>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ms-3">
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="../pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=all">
                                     <i class="bi bi-back"></i>
                                     All
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="../pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=lips">
                                     <i class="bi bi-emoji-kiss-fill"></i>
                                     Lips
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="../pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=eyes">
                                     <i class="bi bi-eye-fill"></i>
                                     Eyes
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="../pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=skincare">
                                     <i class="bi bi-bandaid-fill"></i>
                                     Skincare
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="../pages/products.html">
+                                <a class="nav-link nav-icons fs-5" href="../pages/products.html?category=brushes">
                                     <i class="bi bi-brush-fill"></i>
                                     Brushes
                                 </a>
@@ -74,10 +75,10 @@
                         <div class="border-top border-secondary-subtle mt-4 pt-3">
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link nav-icons fs-5" href="../pages/about-us.html">About Us</a>
+                                    <a class="nav-link nav-icons fs-5" href="about-us.html">About Us</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link nav-icons fs-5" href="../pages/contact.html">Contact Us</a>
+                                    <a class="nav-link nav-icons fs-5" href="contact.html">Contact Us</a>
                                 </li>
                             </ul>
                         </div>
@@ -104,7 +105,7 @@
                     <img class="nav-logo d-none d-md-block" src="../assets/logo.png" alt="Purity logo">
                 </a>
                 <div class="d-flex align-items-center">
-                    <a class="btn nav-icons" href="../pages/profile.html">
+                    <a class="btn nav-icons" href="profile.html">
                         <i class="bi bi-person-fill fs-2"></i>
                     </a>
                     <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
@@ -222,7 +223,7 @@
                             </li>
                         </ul>
                         <div class="px-2">
-                            <a href="../pages/checkout.html" class="btn primary-btn w-100 my-3 py-2">
+                            <a href="checkout.html" class="btn primary-btn w-100 my-3 py-2">
                                 Go to Checkout
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -240,13 +241,15 @@
                 <li class="breadcrumb-item">
                     <a class="nav-icons link-underline link-underline-opacity-0" href="../index.html">Home</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Lips</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ productCategory.charAt(0).toUpperCase() + productCategory.slice(1)}}
+                </li>
             </ol>
         </nav>
 
         <section class="my-5 mx-2 mx-md-4 d-flex column-gap-5">
             <form @submit.prevent
-                class="col-lg-6 products-filters d-none d-lg-block list-group list-group-flush mx-auto py-2 px-3 border rounded-4 border-black">
+                class="col-lg-6 products-filters d-none d-lg-block list-group list-group-flush mx-auto py-2 px-3 border rounded-4 border-black animate__animated animate__slideInLeft">
                 <div class="list-group-item px-2 py-3 d-flex justify-content-between align-items-center">
                     <h3>
                         Filters
@@ -254,28 +257,28 @@
                     <i class="bi bi-funnel-fill fs-5"></i>
                 </div>
                 <fieldset class="list-group-item py-4 px-2">
-                    <label for="search" class="form-label">
+                    <label for="searchInput" class="form-label">
                         <i class="bi bi-search"></i>
                         Search by name
                     </label>
-                    <input type="text" class="form-control" id="search" placeholder="Red rose lipstick...">
+                    <input v-model="searchInput" type="text" class="form-control" id="searchInput" placeholder="Red rose lipstick...">
                 </fieldset>
                 <fieldset class="list-group-item py-4 px-2">
                     <h3 class="fs-4">
                         Price
                     </h3>
                     <div class="d-flex flex-wrap gap-2 mt-3" role="group" aria-label="Price">
-                        <input type="radio" class="btn-check" name="priceRange" id="1-20" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="1-20">$1 to $20</label>
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="1-15" value="1-15" autocomplete="off">
+                        <label class="btn primary-btn fw-medium" for="1-15">$1 to $15</label>
 
-                        <input type="radio" class="btn-check" name="priceRange" id="20-50" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="20-50">$20 to $50</label>
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="15-30" value="15-30" autocomplete="off">
+                        <label class="btn primary-btn fw-medium" for="15-30">$15 to $30</label>
 
-                        <input type="radio" class="btn-check" name="priceRange" id="50-100" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="50-100">$50 to $100</label>
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="30-50" value="30-50" autocomplete="off">
+                        <label class="btn primary-btn fw-medium" for="30-50">$30 to $50</label>
 
-                        <input type="radio" class="btn-check" name="priceRange" id="+100" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="+100">More than $100</label>
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="+50" value="+50" autocomplete="off">
+                        <label class="btn primary-btn fw-medium" for="+50">More than $50</label>
                     </div>
                 </fieldset>
                 <fieldset class="list-group-item py-4 px-2">
@@ -283,14 +286,10 @@
                         Brands
                     </h3>
                     <div class="d-flex flex-wrap gap-2 mt-3" role="group" aria-label="Brands">
-                        <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="btncheck1">MAC</label>
-
-                        <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="btncheck2">Maybelline</label>
-
-                        <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                        <label class="btn primary-btn fw-medium" for="btncheck3">ILIA</label>
+                        <template v-for="brand of uniqueBrands">
+                            <input type="checkbox" class="btn-check" :id="brand" :value="brand" v-model="brandsChecked" autocomplete="off">
+                            <label class="btn primary-btn fw-medium" :for="brand">{{ brand }}</label>
+                        </template>
                     </div>
                 </fieldset>
                 <fieldset class="list-group-item border-bottom-0 py-4 px-2">
@@ -298,24 +297,25 @@
                         Stock
                     </h3>
                     <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" value="stock" id="stock">
+                        <input class="form-check-input" type="checkbox" v-model="stockChecked" value="stock" id="stock">
                         <label class="form-check-label ms-1" for="stock">
                             Show me products with available stock only
                         </label>
                     </div>
                 </fieldset>
-                <button type="submit" class="btn primary-btn fw-medium my-3 w-100">Apply filters</button>
+                <button @click="filter" type="submit" class="btn primary-btn fw-medium mt-3 w-100">Apply filters</button>
+                <button @click="clearFilters" type="submit" class="btn secondary-btn fw-medium my-3 w-100">Clear filters</button>
             </form>
 
-            <section class="mx-md-3">
+            <section class="products-section mx-md-3 animate__animated animate__slideInUp">
                 <div class="d-flex justify-content-between align-items-center mb-4 mx-3 mx-md-0">
                     <h2 class="fw-bold">
-                        Lips
+                        {{ productCategory.charAt(0).toUpperCase() + productCategory.slice(1)}}
                     </h2>
                     <div class="d-flex align-items-center column-gap-2">
                         <span class="d-none d-md-block">Choose an order:</span>
-                        <select class="rounded p-1" aria-label="Sort filters">
-                            <option disabled selected>- Sort by -</option>
+                        <select v-model="sortBy" class="rounded p-1" aria-label="Sort filters">
+                            <option disabled selected value="">- Sort by -</option>
                             <option value="A-Z">A-Z</option>
                             <option value="Z-A">Z-A</option>
                             <option value="highest-price">Highest Price</option>
@@ -328,167 +328,47 @@
                         </button>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5">
-                    <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" src="../assets/image 1.jpg"
-                                alt="">
-                        </a>
-                        <div class="mt-4">
-                            <h5 class="fw-bold">
-                                Limitless Lash Mascara
-                            </h5>
-                            <p class="mb-1">
-                                LIFT. LENGTHEN. SEPARATE.
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">MAC</p>
-                                <p class="mb-2">Stock: 20</p>
+                <div class="d-flex justify-content-center justify-content-md-around flex-wrap column-gap-3 row-gap-5">
+                    <template v-if="filteredProducts.length > 0" v-for="product in filteredProducts">
+                        <article class="product-card">
+                            <a :href="'../pages/product.html?id=' + product.id">
+                                <img class="product-img object-fit-cover w-100 h-lg-100" :src="product.imageUrl" :alt="product.name">
+                            </a>
+                            <div class="mt-4">
+                                <h5 class="fw-bold">
+                                    {{ product.name }}
+                                </h5>
+                                <p class="mb-1">
+                                    {{ product.descriptShort }}
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-2">{{ product.brand }}</p>
+                                    <p class="mb-2" :class="product.stock <= 0 ? 'text-danger' : ''">
+                                        Stock: {{ product.stock }}
+                                    </p>
+                                </div>
+                                <p class="fw-bold fs-4">
+                                    {{ moneyFormatter.format(product.price) }}
+                                </p>
+                                <div class="d-flex column-gap-4">
+                                    <a :href="'../pages/product.html?id=' + product.id"
+                                    class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                                        Details
+                                    </a>
+                                    <button type="submit" :disabled="product.stock <= 0"
+                                        class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                                        <i class="bi bi-bag-plus-fill"></i>
+                                        Add to bag
+                                    </button>
+                                </div>
                             </div>
-                            <p class="fw-bold fs-4">
-                                $120
-                            </p>
-                            <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
-                                class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    Details
-                                </a>
-                                <button type="submit"
-                                    class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    <i class="bi bi-bag-plus-fill"></i>
-                                    Add to bag
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" src="../assets/image 1.jpg"
-                                alt="">
-                        </a>
-                        <div class="mt-4">
-                            <h5 class="fw-bold">
-                                Limitless Lash Mascara
-                            </h5>
-                            <p class="mb-1">
-                                LIFT. LENGTHEN. SEPARATE.
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">MAC</p>
-                                <p class="mb-2">Stock: 20</p>
-                            </div>
-                            <p class="fw-bold fs-4">
-                                $120
-                            </p>
-                            <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
-                                class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    Details
-                                </a>
-                                <button type="submit"
-                                    class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    <i class="bi bi-bag-plus-fill"></i>
-                                    Add to bag
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" src="../assets/image 1.jpg"
-                                alt="">
-                        </a>
-                        <div class="mt-4">
-                            <h5 class="fw-bold">
-                                Limitless Lash Mascara
-                            </h5>
-                            <p class="mb-1">
-                                LIFT. LENGTHEN. SEPARATE.
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">MAC</p>
-                                <p class="mb-2">Stock: 20</p>
-                            </div>
-                            <p class="fw-bold fs-4">
-                                $120
-                            </p>
-                            <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
-                                class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    Details
-                                </a>
-                                <button type="submit"
-                                    class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    <i class="bi bi-bag-plus-fill"></i>
-                                    Add to bag
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" src="../assets/image 1.jpg"
-                                alt="">
-                        </a>
-                        <div class="mt-4">
-                            <h5 class="fw-bold">
-                                Limitless Lash Mascara
-                            </h5>
-                            <p class="mb-1">
-                                LIFT. LENGTHEN. SEPARATE.
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">MAC</p>
-                                <p class="mb-2">Stock: 20</p>
-                            </div>
-                            <p class="fw-bold fs-4">
-                                $120
-                            </p>
-                            <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
-                                class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    Details
-                                </a>
-                                <button type="submit"
-                                    class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    <i class="bi bi-bag-plus-fill"></i>
-                                    Add to bag
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="product-card">
-                        <a href="pages/product.html">
-                            <img class="product-img img-fluid object-fit-contain h-lg-100" src="../assets/image 1.jpg"
-                                alt="">
-                        </a>
-                        <div class="mt-4">
-                            <h5 class="fw-bold">
-                                Limitless Lash Mascara
-                            </h5>
-                            <p class="mb-1">
-                                LIFT. LENGTHEN. SEPARATE.
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-2">MAC</p>
-                                <p class="mb-2">Stock: 20</p>
-                            </div>
-                            <p class="fw-bold fs-4">
-                                $120
-                            </p>
-                            <div class="d-flex column-gap-4">
-                                <a href="pages/product.html"
-                                class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    Details
-                                </a>
-                                <button type="submit"
-                                    class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
-                                    <i class="bi bi-bag-plus-fill"></i>
-                                    Add to bag
-                                </button>
-                            </div>
-                        </div>
-                    </article>
+                        </article>
+                    </template>
+                    <template v-else>
+                        <p class="mx-auto mt-5 fs-2">
+                            No products match your search...
+                        </p>
+                    </template>
                 </div>
             </section>
         </section>
@@ -506,24 +386,24 @@
                             <i class="bi bi-search"></i>
                             Search by name
                         </label>
-                        <input type="text" class="form-control" id="search" placeholder="Red rose lipstick...">
+                        <input v-model="searchInput" type="text" class="form-control" id="search" placeholder="Red rose lipstick...">
                     </fieldset>
                     <fieldset class="list-group-item py-4 px-2">
                         <h3 class="fs-4">
                             Price
                         </h3>
                         <div class="d-flex flex-wrap gap-2 mt-3" role="group" aria-label="Price">
-                            <input type="radio" class="btn-check" name="priceRange" id="1-20" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="1-20">$1 to $20</label>
-
-                            <input type="radio" class="btn-check" name="priceRange" id="20-50" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="20-50">$20 to $50</label>
-
-                            <input type="radio" class="btn-check" name="priceRange" id="50-100" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="50-100">$50 to $100</label>
-
-                            <input type="radio" class="btn-check" name="priceRange" id="+100" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="+100">More than $100</label>
+                            <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="1-15" value="1-15" autocomplete="off">
+                            <label class="btn primary-btn fw-medium" for="1-15">$1 to $15</label>
+    
+                            <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="15-30" value="15-30" autocomplete="off">
+                            <label class="btn primary-btn fw-medium" for="15-30">$15 to $30</label>
+    
+                            <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="30-50" value="30-50" autocomplete="off">
+                            <label class="btn primary-btn fw-medium" for="30-50">$30 to $50</label>
+    
+                            <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="+50" value="+50" autocomplete="off">
+                            <label class="btn primary-btn fw-medium" for="+50">More than $50</label>
                         </div>
                     </fieldset>
                     <fieldset class="list-group-item py-4 px-2">
@@ -531,14 +411,10 @@
                             Brands
                         </h3>
                         <div class="d-flex flex-wrap gap-2 mt-3" role="group" aria-label="Brands">
-                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="btncheck1">MAC</label>
-
-                            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="btncheck2">Maybelline</label>
-
-                            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-                            <label class="btn primary-btn fw-medium" for="btncheck3">ILIA</label>
+                            <template v-for="brand of uniqueBrands">
+                                <input type="checkbox" class="btn-check" :id="brand" :value="brand" v-model="brandsChecked" autocomplete="off">
+                                <label class="btn primary-btn fw-medium" :for="brand">{{ brand }}</label>
+                            </template>
                         </div>
                     </fieldset>
                     <fieldset class="list-group-item border-bottom-0 py-4 px-2">
@@ -546,13 +422,18 @@
                             Stock
                         </h3>
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" value="stock" id="stock">
+                            <input class="form-check-input" type="checkbox" v-model="stockChecked" value="stock" id="stock">
                             <label class="form-check-label ms-1" for="stock">
                                 Show me products with available stock only
                             </label>
                         </div>
                     </fieldset>
-                    <button type="submit" class="btn primary-btn fw-medium my-3 w-100">Apply filters</button>
+                    <button @click="filter" type="submit" class="btn primary-btn fw-medium mt-3 w-100" data-bs-dismiss="offcanvas">
+                        Apply filters
+                    </button>
+                    <button @click="clearFilters" type="submit" class="btn secondary-btn fw-medium my-3 w-100" data-bs-dismiss="offcanvas">
+                        Clear filters
+                    </button>
                 </form>
             </div>
         </div>
@@ -610,23 +491,23 @@
                         <div class="footer-divider py-4 py-lg-0 col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                             <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
                             <div class="d-flex flex-column row-gap-2">
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="../pages/products.html?category=all">
                                     <i class="bi bi-back"></i>
                                     All
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="../pages/products.html?category=lips">
                                     <i class="bi bi-emoji-kiss-fill"></i>
                                     Lips
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="../pages/products.html?category=eyes">
                                     <i class="bi bi-eye-fill"></i>
                                     Eyes
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="../pages/products.html?category=skincare">
                                     <i class="bi bi-bandaid-fill"></i>
                                     Skincare
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="../pages/products.html?category=brushes">
                                     <i class="bi bi-brush-fill"></i>
                                     Brushes
                                 </a>
@@ -639,9 +520,9 @@
                             </h6>
                             <div class="d-flex flex-column row-gap-3">
                                 <a href="#" class="nav-link nav-footer">Join Our Club</a>
-                                <a href="../pages/profile.html" class="nav-link nav-footer">Your Account</a>
-                                <a href="../pages/about-us.html" class="nav-link nav-footer">About Us</a>
-                                <a href="../pages/contact.html" class="nav-link nav-footer">Help</a>
+                                <a href="profile.html" class="nav-link nav-footer">Your Account</a>
+                                <a href="about-us.html" class="nav-link nav-footer">About Us</a>
+                                <a href="contact.html" class="nav-link nav-footer">Help</a>
                             </div>
                         </div>
 

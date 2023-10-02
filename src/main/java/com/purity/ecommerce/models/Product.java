@@ -13,6 +13,7 @@ public class Product {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String name;
+    @Column(length = 1200)
     private String descriptLong;
     private String descriptShort;
     private double price;
