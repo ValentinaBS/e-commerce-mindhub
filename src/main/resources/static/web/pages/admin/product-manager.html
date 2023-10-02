@@ -133,32 +133,32 @@
                                 </div>
                                 <div class="modal-body row g-4 px-5 mt-1 mb-4">
                                     <div class="col-md-6">
-                                        <label for="productName" class="form-label">Product Name</label>
+                                        <label for="productNameEdit" class="form-label">Product Name</label>
                                         <input v-model="product.name" type="email" class="form-control"
-                                            id="productName">
+                                            id="productNameEdit">
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="productBrand" class="form-label">Brand</label>
+                                        <label for="productBrandEdit" class="form-label">Brand</label>
                                         <input v-model="product.brand" type="text" class="form-control"
-                                            id="productBrand">
+                                            id="productBrandEdit">
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="productPrice" class="form-label">Price</label>
+                                        <label for="productPriceEdit" class="form-label">Price</label>
                                         <div class="input-group">
-                                            <span class="input-group-text" id="moneySymbol">$</span>
+                                            <span class="input-group-text" id="moneySymbolEdit">$</span>
                                             <input v-model="product.price" type="text" class="form-control"
-                                                id="productPrice" aria-describedby="moneySymbol" min="1">
+                                                id="productPriceEdit" aria-describedby="moneySymbolEdit" min="1">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="productStock" class="form-label">Stock</label>
+                                        <label for="productStockEdit" class="form-label">Stock</label>
                                         <input v-model="product.stock" type="number" class="form-control"
-                                            id="productStock">
+                                            id="productStockEdit">
                                     </div>
                                     <div class="col-12">
-                                        <label for="productCategory" class="form-label">Category</label>
+                                        <label for="productCategoryEdit" class="form-label">Category</label>
                                         <select v-model="product.category" class="form-select"
-                                            id="productCategory">
+                                            id="productCategoryEdit">
                                             <option disabled selected>- Select a Category - </option>
                                             <option value="lips">Lips</option>
                                             <option value="eyes">Eyes</option>
@@ -167,19 +167,19 @@
                                         </select>
                                     </div>
                                     <div class="col-12">
-                                        <label for="productShortDescript" class="form-label">Short Description</label>
+                                        <label for="productShortDescriptEdit" class="form-label">Short Description</label>
                                         <input v-model="product.descriptShort" type="text" class="form-control"
-                                            id="productShortDescript">
+                                            id="productShortDescriptEdit">
                                     </div>
                                     <div class="col-12">
-                                        <label for="productLongDescript" class="form-label">Long Description</label>
+                                        <label for="productLongDescriptEdit" class="form-label">Long Description</label>
                                         <textarea v-model="product.descriptLong" class="form-control"
-                                            id="productLongDescript"></textarea>
+                                            id="productLongDescriptEdit"></textarea>
                                     </div>
                                     <div class="col-12">
-                                        <label for="productImageUrl" class="form-label">Image Url</label>
+                                        <label for="productImageUrlEdit" class="form-label">Image Url</label>
                                         <input v-model="product.imageUrl" class="form-control" type="text"
-                                            id="productImageUrl">
+                                            id="productImageUrlEdit">
                                     </div>
 
                                     <template v-if="errorMessage">
