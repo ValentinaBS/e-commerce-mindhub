@@ -1,28 +1,32 @@
 package com.purity.ecommerce.dtos;
 
 import com.purity.ecommerce.models.Cart;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartDTO {
     private long id;
-    private List<CartItemDTO> cartItems;
+    private Set<CartItemDTO> cartItems;
 
     public CartDTO(Cart cart) {
         this.id = cart.getId();
-        this.cartItems = cart.getItems().stream().map(cartItem -> new CartItemDTO(cartItem)).collect(Collectors.toList());
+        this.cartItems = cart.getItems().stream().map(CartItemDTO::new).collect(Collectors.toSet());
     }
 
     public long getId() {
         return id;
     }
 
-    public List<CartItemDTO> getCartItems() {
+    public Set<CartItemDTO> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(List<CartItemDTO> cartItems) {
-        this.cartItems = cartItems;
+    public int getCartCount() {
+        return cartItems.stream()
+                .mapToInt(CartItemDTO::getCount)
+                .sum();
     }
 }

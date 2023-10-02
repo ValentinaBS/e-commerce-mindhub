@@ -28,7 +28,6 @@ public class ProductController {
                 .stream()
                 .map(ProductDTO::new)
                 .collect(toList());
-
     }
 
     @GetMapping("/product/{id}")
@@ -45,7 +44,7 @@ public class ProductController {
             @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
 
         // Validate product data
-        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank()) {
+        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getDescriptShort().isBlank() || productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank()) {
             return ResponseEntity.badRequest().body("Product data is required.");
         }
 
@@ -69,7 +68,7 @@ public class ProductController {
             // Create an HTTP POST request to the GitHub API
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer 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"); // Replace with your GitHub token
+            headers.set("Authorization", "Bearer x"); // Replace with your GitHub token
             headers.set("Content-Type", "application/json");
             HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
 
@@ -84,9 +83,6 @@ public class ProductController {
             if (response.getStatusCode() == HttpStatus.CREATED) {
                 String githubRawImageUrl = "https://raw.githubusercontent.com/nataliafuentesg/project-images/main/" + uniqueFileName;
 
-
-                productDto.setImageUrl(githubRawImageUrl);
-
                 Product product = new Product(
                         productDto.getName(),
                         productDto.getDescriptLong(),
@@ -96,8 +92,10 @@ public class ProductController {
                         productDto.getBrand(),
                         productDto.getStock(),
                         productDto.getImageUrl(),
-                        productDto.isActive()
+                        true
                 );
+
+                product.setImageUrl(githubRawImageUrl);
 
                 productRepository.save(product);
 
@@ -159,7 +157,7 @@ public class ProductController {
         return ResponseEntity.ok("Product updated successfully.");
     }
 
-    @DeleteMapping("/products/{productId}")
+    @PatchMapping("/products/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
         Optional<Product> optionalProduct = productRepository.findById(productId);
 
