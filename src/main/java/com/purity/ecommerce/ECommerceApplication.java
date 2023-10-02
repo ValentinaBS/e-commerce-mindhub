@@ -1,15 +1,20 @@
 package com.purity.ecommerce;
 
-import com.purity.ecommerce.models.Customer;
-import com.purity.ecommerce.models.Product;
-import com.purity.ecommerce.repositories.CustomerRepository;
-import com.purity.ecommerce.repositories.ProductRepository;
+import com.purity.ecommerce.models.*;
+import com.purity.ecommerce.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+
 
 @SpringBootApplication
 public class ECommerceApplication {
@@ -21,14 +26,75 @@ public class ECommerceApplication {
 		SpringApplication.run(ECommerceApplication.class, args);
 	}
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Bean
-	public CommandLineRunner initData(ProductRepository productRepository, CustomerRepository customerRepository){
+	public CommandLineRunner initData(ProductRepository productRepository, CustomerRepository customerRepository,
+									  OrderRepository orderRepository, CartRepository cartRepository, OrderItemRepository orderItemRepository){
 		return (args) -> {
-			Customer customer1 = new Customer("Quione", "quione@mindhub.com", passwordEncoder.encode("123456"), "Cl 1A 5B 53");
-			customerRepository.save(customer1);
-			Customer admin = new Customer("admin", "admin@mindhub.com", passwordEncoder.encode("123456"), "Cl 1A 5B 53");
-			customerRepository.save(admin);
 
+			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
+			customerRepository.save(customer1);
+			Customer customer2 = new Customer("Customer2", "customer2@example.com", passwordEncoder.encode("password"), "Address 2");
+			customerRepository.save(customer2);
+			Customer customer3 = new Customer("Customer3", "customer3@example.com", passwordEncoder.encode("password"), "Address 3");
+			customerRepository.save(customer3);
+
+			Product product1 = new Product("TRICLONE SKIN TECH HYDRATING", "DESCRPTION", "description1", 10.6, "Makeup", "HausLabs", 4, "C:/Users/Guest/Documents/MindHubJava/images/fadzhkjsilo_11LIGHTNEUTRAL_720x.webp");
+			productRepository.save(product1);
+			Product product2 = new Product("Product 1", "Description 1", "Short description 1", 10.6, "Makeup", "Brand 1", 4, "Image 1");
+			productRepository.save(product2);
+			Product product3 = new Product("Product 2", "Description 2", "Short description 2", 15.2, "Skincare", "Brand 2", 8, "Image 2");
+			productRepository.save(product3);
+
+			Cart cart1 = new Cart();
+			cartRepository.save(cart1);
+			Cart cart2 = new Cart();
+			cartRepository.save(cart2);
+			Cart cart3 = new Cart();
+			cartRepository.save(cart3);
+
+			customer1.setCart(cart1);
+			customerRepository.save(customer1);
+			customer2.setCart(cart2);
+			customerRepository.save(customer2);
+			customer3.setCart(cart3);
+			customerRepository.save(customer3);
+
+			cart1.addItem(new CartItem(2, product1));
+			cart1.addItem(new CartItem(3, product3));
+			cartRepository.save(cart1);
+
+			cart2.addItem(new CartItem(3, product3));
+			cart2.addItem(new CartItem(1, product2));
+
+			cart3.addItem(new CartItem(1, product2));
+			cart3.addItem(new CartItem(2, product1));
+
+			OrderItem orderItem1 = new OrderItem(2, product1);
+			OrderItem orderItem2 = new OrderItem(3, product3);
+			OrderItem orderItem3 = new OrderItem(1, product2);
+
+			orderItemRepository.save(orderItem1);
+			orderItemRepository.save(orderItem2);
+			orderItemRepository.save(orderItem3);
+
+			PurchaseOrders purchaseOrders1 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.DELIVERED, 500);
+
+			PurchaseOrders purchaseOrders2 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.DELIVERED, 150);
+
+			PurchaseOrders purchaseOrders3 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.DELIVERED, 300);
+
+
+			customer1.addOrder(purchaseOrders1);
+			customer2.addOrder(purchaseOrders2);
+			customer3.addOrder(purchaseOrders3);
+
+			orderRepository.save(purchaseOrders1);
+			orderRepository.save(purchaseOrders2);
+			orderRepository.save(purchaseOrders3);
+      
+      /* Products */
 			Product productBrushes1 = new Product("Ultra Plush Powder Brush", "Real Techniques Ultra Plush Powder Makeup Brush helps you create a flawless finish with its large, domed shape for all-over application. RT 201 powder brush has a plush large head for sheer application and a smooth, mattified finish. Best used with powder foundations, powder bronzers, and setting powders. Provides smooth, high-definition results with tapered bristles to help blend powders seamlessly. Extended aluminum ferrules that are light weight, easy to use, and color coded. 100% Cruelty-Free and Vegan. Flawless Results. Easy to clean with Real Techniques Brush Cleansing Gel or Spray. Long Lasting Makeup Application. UltraPlush Synthetic Bristles.", "Long Lasting Makeup Application.", 6.99, "brushes", "Real Techniques", 6, "https://i.imgur.com/xbcGA7J.jpg");
 			Product productBrushes2 = new Product("Complexion Duo Brush", "2-IN-1 MAKEUP BRUSH: The e.l.f. Complexion Duo Brush is the only makeup brush you need for a flawless, airbrushed finish. This 2-in-1 brush is designed for the application of foundation and concealer. PRECISION APPLICATION: This face brush features a larger end for applying your foundation while the smaller end lends itself for precise application for the smaller areas you want to conceal. MULTI-USE: Ideal for use with liquids and powders. PERFECT PAIRING: e.l.f. Complexion Duo Brush is the only tool you need to apply Camo CC Cream Foundation and 16HR Camo Concealer. 100% VEGAN & SYNTHETIC BRISTLES: All e.l.f. brushes are made of synthetic, vegan fibers. All e.l.f. products are 100% cruelty-free and Vegan.", "Ideal for liquids and powders.", 7.50, "brushes", "e.l.f.", 14, "https://i.imgur.com/TVxloww.jpg");
 			Product productBrushes3 = new Product("Flawless Face Brush", "CREATES A NATURAL LOOK: The e.l.f. Flawless Face Brush is a soft, synthetic brush that lets you apply product with the lightest touch for a soft, sheer, natural-looking effect. PRECISE APPLICATION: It has a slight point at the tip that fits nicely into the contours of the face for more precise placement. MULTI-USE & VERSATILE: This 2-sided brush allows you to use the flat side for all over application of powders, or the skinny side for blush and bronzer. 100% VEGAN & SYNTHETIC BRISTLES: All e.l.f. brushes are made of synthetic, vegan fibers. All e.l.f. products are 100% cruelty-free and Vegan. CARE INSTRUCTIONS: Cleanse regularly with the e.l.f. Cosmetics Daily Brush Cleaner (not live on Amazon right now) e.l.f. Cosmetics Brush Shampoo to maintain perfect color application and to increase the longevity of your brush.", "Made of synthetic, vegan fibers.", 4.20, "brushes", "e.l.f.", 10, "https://i.imgur.com/yC5b78Q.jpg");
@@ -177,10 +243,8 @@ public class ECommerceApplication {
 			productRepository.save(productEye15);
 
 
-
-
-
-
 		};
-	}
+
+	};
+
 }
