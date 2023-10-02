@@ -22,13 +22,15 @@ public class Product {
     private int stock;
     private String imageUrl;
 
+    private boolean active;
+
     @OneToMany(mappedBy = "product", fetch= FetchType.EAGER)
     private Set<CartItem> cartItems = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(String name, String descriptLong, String descriptShort, double price, String category, String brand, int stock, String imageUrl) {
+    public Product(String name, String descriptLong, String descriptShort, double price, String category, String brand, int stock, String imageUrl, boolean active) {
         this.name = name;
         this.descriptLong = descriptLong;
         this.descriptShort = descriptShort;
@@ -37,6 +39,7 @@ public class Product {
         this.brand = brand;
         this.stock = stock;
         this.imageUrl = imageUrl;
+        this.active = active;
     }
 
     public long getId() {
@@ -109,5 +112,13 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
