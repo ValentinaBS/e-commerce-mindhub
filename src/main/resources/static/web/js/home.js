@@ -4,28 +4,14 @@ const options = {
     data() {
         return {
             allProducts: [],
+            products: [],
             cart: {},
             moneyFormatter: {},
         }
     },
     created() {
-        axios.get('/api/products')
-            .then(res => {
-                this.allProducts = res.data.filter(prod => prod.active).slice(0, 4);
-            })
-            .catch(error => {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            })
-
-        axios.get('/api/cart/current')
-            .then(res => {
-                this.cart = res.data;
-            })
-            .catch(err => {
-                console.error(err);
-            });
+        this.loadProducts();
+        this.loadCart();
 
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -33,6 +19,36 @@ const options = {
         })
     },
     methods: {
+        loadProducts() {
+            axios.get('/api/products')
+                .then(res => {
+                    this.allProducts = res.data.filter(prod => prod.active).slice(0, 4);
+                    this.products = res.data.filter(prod => prod.active);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+        loadCart() {
+            axios.get('/api/cart/current')
+                .then(res => {
+                    this.cart = res.data;
+                    console.log(this.cart);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+        getStockForProduct(productId) {
+            if (this.cart && this.cart.cartItems && Array.isArray(this.cart.cartItems)) {
+                const productInCart = this.cart.cartItems.find(prod => prod.productDTO.id === productId);
+                if (productInCart) {
+                    return productInCart.productDTO.stock;
+                }
+            }
+            const product = this.products.find(prod => prod.id === productId);
+            return product ? product.stock : 0;
+        },
         addToCart(productId, count) {
             axios.post('/api/cart', {
                 productID: productId,
@@ -44,12 +60,12 @@ const options = {
             })
                 .then(res => {
                     this.loadCart();
+                    console.log(this.cart);
                 })
                 .catch(err => {
                     console.error(err);
                 });
         },
-
         updateCartItem(cartItemId, count) {
             if (count <= 0) {
                 this.removeCartItem(cartItemId);
@@ -65,12 +81,12 @@ const options = {
             })
                 .then(res => {
                     this.loadCart();
+                    console.log(this.cart);
                 })
                 .catch(err => {
                     console.error(err);
                 });
         },
-
         removeCartItem(cartItemId) {
             axios.delete('/api/cart/remove', {
                 params: {
@@ -83,11 +99,26 @@ const options = {
             })
                 .then(res => {
                     this.loadCart();
+                    console.log(this.cart);
                 })
                 .catch(err => {
                     console.error(err);
                 });
         },
+        removeAllCartItems() {
+            axios.delete('/api/cart/remove/all', {
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(res => {
+                    this.loadCart();
+                    console.log(this.cart);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
     }
 }
 

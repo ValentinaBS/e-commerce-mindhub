@@ -21,7 +21,6 @@
 
 <body>
     <div id="app">
-    {{addQty}}
         <div class="small-header py-2 text-center fw-bold">
             <p class="mb-0 animate__animated animate__flash animate__slower animate__infinite">15% off every
                 Monday and Tuesday on MAC lipsticks!</p>
@@ -112,9 +111,9 @@
                     </a>
                     <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                         <i class="bi bi-bag-fill fs-4"></i>
-                        <template>
+                        <template v-if="cart.cartCount > 0">
                             <span class="cart-number">
-                                2
+                                {{ cart.cartCount }}
                             </span>
                         </template>
                     </button>
@@ -126,22 +125,19 @@
                     </div>
                     <div class="offcanvas-body pt-0 pb-4">
                         <ul class="list-group list-group-flush">
-                            <template v-if="cart.length <= 0" v-for="item in cart.cartItems" :key="item.id">
+                            <template v-if="cart.cartCount > 0" v-for="item in cart.cartItems" :key="item.id">
                                 <li class="list-group-item py-4 px-2">
                                     <div class="d-flex column-gap-3">
-                                        <img class="cart-img rounded-2" :src="item.imageUrl" :alt="item.name">
+                                        <img class="cart-img rounded-2" :src="item.productDTO.imageUrl" :alt="item.productDTO.name">
                                         <div class="d-flex flex-column">
                                             <h3 class="fs-4">
-                                                {{ item.name }}
+                                                {{ item.productDTO.name }}
                                             </h3>
                                             <p class="mb-0 small-text">
-                                                Brand: {{ item.brand }}
-                                            </p>
-                                            <p class="mb-1 small-text">
-                                                Total Stock: {{ item.stock }}
+                                                Brand: {{ item.productDTO.brand }}
                                             </p>
                                             <span class="fs-5 fw-bold">
-                                                {{ moneyFormatter.format(item.price) }}
+                                                {{ moneyFormatter.format(item.productDTO.price) }}
                                             </span>
                                         </div>
                                     </div>
@@ -163,7 +159,7 @@
                                 </li>
                             </template>
                             <template v-else>
-                                <p>You have no products in your bag...</p>
+                                <p class="my-5 text-center">You have no products in your bag...</p>
                             </template>
                         </ul>
                         <div class="px-2">
@@ -171,7 +167,7 @@
                                 Go to Checkout
                                 <i class="bi bi-arrow-right"></i>
                             </a>
-                            <button @click="emptyCart" class="btn secondary-btn w-100">
+                            <button @click="removeAllCartItems" class="btn secondary-btn w-100">
                                 Clear Cart
                             </button>
                         </div>
@@ -215,7 +211,7 @@
                             </p>
                             <div class="d-flex justify-content-between">
                                 <p class="mb-2">{{ product.brand }}</p>
-                                <p class="mb-2">Stock: {{ product.stock }}</p>
+                                <p class="mb-2" :class="getStockForProduct(product.id) <= 0 ? 'text-danger' : ''">Stock: {{ getStockForProduct(product.id) }}</p>
                             </div>
                             <p class="fw-bold fs-4">
                                 {{ moneyFormatter.format(product.price) }}
@@ -225,7 +221,7 @@
                                 class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
                                     Details
                                 </a>
-                                <button @click="addToCart(product.id, 1)"
+                                <button @click="addToCart(product.id, 1)" :disabled="getStockForProduct(product.id) <= 0"
                                     class="w-75 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
                                     <i class="bi bi-bag-plus-fill"></i>
                                     Add to bag

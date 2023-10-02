@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -112,6 +114,8 @@ public class CartController {
                 return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
             } else {
                 existItem.setCount(count + 1);
+                product.setStock(product.getStock() - 1);
+                productRepository.save(product);
             }
         } else {
             CartItem cartItem = new CartItem(count, product);
@@ -153,7 +157,7 @@ public class CartController {
         return new ResponseEntity<>("Cart Item update successfully", HttpStatus.OK);
     }
 
-    @DeleteMapping("cart/remove")
+    @DeleteMapping("/cart/remove")
     @Transactional
     public ResponseEntity<String> removeCartItem(
             @RequestParam long cartItemID
@@ -165,6 +169,20 @@ public class CartController {
         }
 
         cartItemRepository.delete(currentItem);
+
+        return new ResponseEntity<>("Cart item removed successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/cart/remove/all")
+    @Transactional
+    public ResponseEntity<String> removeAllCartItems() {
+        List<CartItem> cartItems = cartItemRepository.findAll();
+
+        if (cartItems == null) {
+            return new ResponseEntity<>("Cart item not found in cart", HttpStatus.NOT_FOUND);
+        }
+
+        cartItemRepository.deleteAll(cartItems);
 
         return new ResponseEntity<>("Cart item removed successfully", HttpStatus.OK);
     }
