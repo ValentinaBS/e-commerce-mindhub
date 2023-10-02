@@ -61,6 +61,10 @@ public class ProductDTO {
         return stock;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
