@@ -176,6 +176,11 @@ select:focus {
     width: 400px;
 }
 
+.product-img {
+    height: 320px;
+    width: 320px;
+}
+
 .product-img:hover {
     -webkit-animation: scale-top 0.6s ease-in-out both;
     animation: scale-top 0.6s ease-in-out both;
