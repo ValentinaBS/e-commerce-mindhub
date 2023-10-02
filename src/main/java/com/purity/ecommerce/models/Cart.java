@@ -21,7 +21,9 @@ public class Cart {
     @OneToOne(mappedBy = "cart", fetch= FetchType.EAGER)
     private Customer customer;
 
-    public Cart(){}
+    public Cart() {
+        this.items = new HashSet<>(); // Initialize the items collection
+    }
   
     public Cart(long id, Set<CartItem> items) {
         this.id = id;
@@ -59,4 +61,11 @@ public class Cart {
     public void setSesionToken(String sesionToken) {
         this.sesionToken = sesionToken;
     }
+
+    public void addItem(CartItem cartItem) {
+        items.add(cartItem);
+        cartItem.setCart(this);
+    }
+
+
 }
