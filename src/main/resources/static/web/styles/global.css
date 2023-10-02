@@ -65,6 +65,12 @@ select:focus {
     color: white;
 }
 
+.cart-number {
+    position: relative;
+    top: -10px;
+    left: 0;
+}
+
 .cart-img {
     width: 150px;
     height: 150px;
