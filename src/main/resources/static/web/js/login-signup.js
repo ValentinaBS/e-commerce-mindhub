@@ -1,4 +1,6 @@
-let { createApp } = Vue
+const { createApp } = Vue
+
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
 
 const options = {
     data() {
@@ -8,24 +10,35 @@ const options = {
             passwordInput: "",
             nameInput: "",
             addressInput: "",
+          
+      currentCustomer: [],
+      checkUser: false,
+      errorMessage: "",
 
-            currentCustomer: [],
-            checkUser: false,
-            errorMessage: ""
-        }
-    },
+      cart: {
+          cartItems: [],
+      },
 
-    created() {
-        axios.get('/api/customer/current')
-            .then(res => {
-                this.currentCustomer = res.data;
-                this.checkUser = true;
-            })
-            .catch(err => {
-                console.error(err);
-            });
+      moneyFormatter: {},
+    }
+  },
+  created() {
+    this.loadCart();
 
-    },
+    axios.get('/api/customer/current')
+      .then(res => {
+          this.currentCustomer = res.data;
+          this.checkUser = true;
+      })
+      .catch(err => {
+          console.error(err);
+
+    this.moneyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    })
+  });
+},
     methods: {
         showForms() {
             this.showForm = !this.showForm;
@@ -67,6 +80,11 @@ const options = {
                     console.log(error.config);
                 })
         },
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart,
         logOut() {
             Swal.fire({
                 title: 'Are you sure you want to log out?',

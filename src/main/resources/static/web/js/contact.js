@@ -1,14 +1,25 @@
 const { createApp } = Vue;
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const options = {
     data() {
         return {
             currentCustomer: [],
             checkUser: false,
+
+             cart: {
+                 cartItems: [],
+             },
+
+            moneyFormatter: {},
             responseMessage: ""
+
         }
     },
     created() {
+        this.loadCart();
+
         axios.get('/api/customer/current')
             .then(res => {
                 this.currentCustomer = res.data;
@@ -17,6 +28,19 @@ const options = {
             .catch(err => {
                 console.error(err);
             });
+
+        this.moneyFormatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        })
+    },
+
+    methods: {
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart
     },
     methods: {
         sendEmail() {

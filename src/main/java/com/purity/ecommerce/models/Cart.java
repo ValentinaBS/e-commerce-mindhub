@@ -67,6 +67,4 @@ public class Cart {
         items.add(cartItem);
         cartItem.setCart(this);
     }
-
-
 }

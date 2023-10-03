@@ -1,5 +1,7 @@
 const { createApp } = Vue;
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const options = {
     data() {
         return {
@@ -18,9 +20,15 @@ const options = {
             moneyFormatter: {},
             currentCustomer: [],
             checkUser: false,
+
+            cart: {
+                cartItems: [],
+            },
         }
     },
     created() {
+        this.loadCart();
+
         let urlParams = new URLSearchParams(location.search);
         this.productCategory = urlParams.get("category");
         console.log(this.productCategory);
@@ -102,6 +110,13 @@ const options = {
             this.brandsChecked = [];
             this.stockChecked = false;
         },
+
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart,
+
         logOut() {
             Swal.fire({
                 title: 'Are you sure you want to log out?',

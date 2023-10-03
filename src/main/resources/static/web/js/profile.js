@@ -1,5 +1,7 @@
 const { createApp } = Vue
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const options = {
     data() {
         return {
@@ -9,11 +11,19 @@ const options = {
             filteredOrders: [],
             searchInput: "",
 
-            moneyFormatter: {},
+            moneyFormatter: {}
+
+            cart: {
+                cartItems: [],
+            },
+              
             checkUser: false
         }
     },
+
     created() {
+        this.loadCart();
+
         axios.get('/api/customer/current')
             .then(res => {
                 this.currentCustomer = res.data;
@@ -27,6 +37,12 @@ const options = {
         })
     },
     methods: {
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart,
+  
         downloadOrder(orderId) {
             this.selectedOrder = this.customerOrders.find(order => order.id == orderId)
             console.log(this.selectedOrder);

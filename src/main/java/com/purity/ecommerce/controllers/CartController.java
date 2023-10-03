@@ -49,9 +49,18 @@ public class CartController {
             cart = customer.getCart();
 
         } else {
+            if (sesionToken == null) {
+                sesionToken = UUID.randomUUID().toString();
+                httpServletRequest.getSession().setAttribute("sesionToken", sesionToken);
+            }
 
             cart = cartRepository.findBySesionToken(sesionToken);
 
+            if (cart == null) {
+                cart = new Cart();
+                cart.setSesionToken(sesionToken);
+                cartRepository.save(cart);
+            }
         }
 
         return new ResponseEntity<>(new CartDTO(cart), HttpStatus.OK);
@@ -66,7 +75,7 @@ public class CartController {
         HttpServletRequest httpServletRequest
     ) {
         String sesionToken = (String) httpServletRequest.getSession(true).getAttribute("sesionToken");
-        Cart cart = null;
+        Cart cart;
 
         if (authentication != null) {
             Customer customer = customerRepository.findByEmail(authentication.getName());
@@ -75,25 +84,12 @@ public class CartController {
                 return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
             }
 
-            if (customer.getCart() == null) {
-                return new ResponseEntity<>("Customer cart not found", HttpStatus.NOT_FOUND);
-            }
-
             cart = customer.getCart();
 
         } else {
-            if (sesionToken == null) {
-                sesionToken = UUID.randomUUID().toString();
-                httpServletRequest.getSession().setAttribute("sesionToken", sesionToken);
-            }
 
             cart = cartRepository.findBySesionToken(sesionToken);
 
-            if (cart == null) {
-                cart = new Cart();
-                cart.setSesionToken(sesionToken);
-                cartRepository.save(cart);
-            }
         }
 
         Product product = productRepository.findById(productID);
@@ -111,9 +107,15 @@ public class CartController {
             if (product.getStock() < existItem.getCount()) {
                 return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
             } else {
-                existItem.setCount(count + 1);
+                if (product.getStock() < existItem.getCount() + 1) {
+                    return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
+                }
+                existItem.setCount(existItem.getCount() + 1);
             }
         } else {
+            if (count <= 0) {
+                return new ResponseEntity<>("Invalid count", HttpStatus.BAD_REQUEST);
+            }
             CartItem cartItem = new CartItem(count, product);
             cartItem.setCart(cart);
             cartItemRepository.save(cartItem);
@@ -142,9 +144,13 @@ public class CartController {
         if (product == null) {
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
+        if (count <= 0) {
+            return new ResponseEntity<>("Invalid count", HttpStatus.BAD_REQUEST);
+        }
         if (product.getStock() < count) {
             return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
         }
+
 
         currentItem.setCount(count);
 
@@ -201,6 +207,10 @@ public class CartController {
             if (cart == null) {
                 return new ResponseEntity<>("Cart not found", HttpStatus.NOT_FOUND);
             }
+        }
+
+        for (CartItem item : cart.getItems()) {
+            cartItemRepository.delete(item);
         }
 
         cart.getItems().clear();

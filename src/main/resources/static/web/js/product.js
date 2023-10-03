@@ -1,5 +1,7 @@
 const { createApp } = Vue;
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const app = createApp({
   data() {
     return {
@@ -16,9 +18,14 @@ const app = createApp({
 
       currentCustomer: [],
       checkUser: false,
+
+      cart: {
+          cartItems: [],
+      },
     };
   },
   created() {
+    this.loadCart();
     
     let urlParams = new URLSearchParams(location.search);
     this.productId = urlParams.get("id");
@@ -72,9 +79,13 @@ const app = createApp({
       .catch(err => {
           console.error(err);
   });
+
+  this.moneyFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+  })
   },
   methods: {
-    
     getHomeUrl() {
       // Lógica para construir la URL de la página de todos los productos
       return "/products.html"; // Ajusta la URL según la ubicación real de tu página principal
@@ -93,6 +104,13 @@ const app = createApp({
         // Lógica para construir la URL del producto
         return `/product.html?id=${productId}`;
       },
+
+    loadCart,
+    addToCart,
+    updateCartItem,
+    removeCartItem,
+    emptyCart,
+    
     logOut() {
         Swal.fire({
             title: 'Are you sure you want to log out?',
