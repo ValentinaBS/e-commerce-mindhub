@@ -1,5 +1,4 @@
 package com.purity.ecommerce.configurations;
-
 import com.purity.ecommerce.models.Customer;
 import com.purity.ecommerce.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,6 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
                 throw new UsernameNotFoundException("Unknown user: " + inputName);
 
             }
-
         });
 
     }

@@ -21,8 +21,6 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/api")
 public class ProductController {
-
-
     @Autowired
     private ProductRepository productRepository;
 
