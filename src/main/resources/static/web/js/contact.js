@@ -5,6 +5,7 @@ const options = {
         return {
             currentCustomer: [],
             checkUser: false,
+            responseMessage: ""
         }
     },
     created() {
@@ -16,6 +17,16 @@ const options = {
             .catch(err => {
                 console.error(err);
             });
+    },
+    methods: {
+        sendEmail() {
+            emailjs.sendForm('service_ahuaxmq', 'template_5o5busd', this.$refs.form, '8n-mlNrupz3rdpU0s')
+                .then((result) => {
+                    this.responseMessage = "Your message has been sent successfully. We'll get back to you shortly!"
+                }, (error) => {
+                    this.responseMessage = "Your message couldn't be sent. Try again!"
+                });
+        }
     },
     computed: {
         checkUserLogged() {
