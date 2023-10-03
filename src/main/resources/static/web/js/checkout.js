@@ -1,43 +1,55 @@
-const app = Vue.createApp({
+const { createApp } = Vue
+
+const app = createApp({
     data() {
         return {
-            paymentMethodId: '',
+            paymentMethodId: 'pm_card_visa',
             processing: false,
-            amount: 1000,
-            clientSecret: '', // Store the client_secret here
+            clientSecret: 'pi_3NxDZUDxOCV4zZt42jEtY98j_secret_JuMhECF70tB8EejcI2Rruciq',
+            amount : 50,
         };
     },
     methods: {
-        async fetchClientSecret() {
-            try {
-                const response = await axios.post('http://localhost:8080/api/process-payment'); // Replace with your server endpoint
-                this.clientSecret = response.data;
-                console.log('Response:', response.data)
-            } catch (error) {
-                console.error(error);
-            }
-        },
         async submitPayment() {
-            if (!this.paymentMethodId) {
-                alert('Please select a payment method.');
-                return;
-            }
 
             this.processing = true;
 
             try {
-                const stripe = await Stripe('pk_test_51NwuHdDxOCV4zZt44VYaKELS3gbPPPUSvFZws6LWik79iadJyMbC9uOoyp2yAQxoBQ9k0RYmRLoBncONFSuhubw700kEJZZfvg');
-                const { error } = await stripe.confirmCardPayment(this.clientSecret, {
-                    payment_method: this.paymentMethodId,
-                    amount: this.amount,
-                    currency: 'usd',
+                const response = await axios.post('http://localhost:8080/api/process-payment', {
+                    paymentMethodId: this.paymentMethodId,
+                    amount : this.amount
                 });
 
-                if (error) {
-                    alert('Payment processing failed.');
-                    console.error(error);
+                if (response.status === 200) {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thanks for your purchase!',
+                        confirmButtonText: 'OK',
+                        buttonsStyling: false,
+                        customClass: {
+                        confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                    
+                },
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "http://localhost:8080/web/pages/profile.html";
+                        }
+                    });
+
+                    axios.post('/api/order/create')
+                        .then(response => {
+                            
+                
+                
+                
+                        })
+                        .catch((error) => console.log(error));
+                    
+                    // Redirect to a success page or perform other actions as needed.
                 } else {
-                    alert('Payment processed successfully.');
+                    alert('Payment processing failed.');
+                    console.error(response.data);
                 }
             } catch (error) {
                 alert('Payment processing failed.');
@@ -47,10 +59,7 @@ const app = Vue.createApp({
             }
         },
     },
-    mounted() {
-        // Fetch the client_secret when the component is mounted
-        this.fetchClientSecret();
-    },
+    
 });
 
-app.mount('#app');
+app.mount("#app");
