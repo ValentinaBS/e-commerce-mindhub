@@ -268,16 +268,16 @@
                         Price
                     </h3>
                     <div class="d-flex flex-wrap gap-2 mt-3" role="group" aria-label="Price">
-                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="1-15" value="1-15" autocomplete="off">
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="1-to-15" value="1-15" autocomplete="off">
                         <label class="btn primary-btn fw-medium" for="1-15">$1 to $15</label>
 
-                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="15-30" value="15-30" autocomplete="off">
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="15-to-30" value="15-30" autocomplete="off">
                         <label class="btn primary-btn fw-medium" for="15-30">$15 to $30</label>
 
-                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="30-50" value="30-50" autocomplete="off">
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="30-to-50" value="30-50" autocomplete="off">
                         <label class="btn primary-btn fw-medium" for="30-50">$30 to $50</label>
 
-                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id="+50" value="+50" autocomplete="off">
+                        <input v-model="priceInput" type="radio" class="btn-check" name="priceRange" id=" plus-50" value="+50" autocomplete="off">
                         <label class="btn primary-btn fw-medium" for="+50">More than $50</label>
                     </div>
                 </fieldset>
@@ -297,8 +297,8 @@
                         Stock
                     </h3>
                     <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" v-model="stockChecked" value="stock" id="stock">
-                        <label class="form-check-label ms-1" for="stock">
+                        <input class="form-check-input" type="checkbox" v-model="stockChecked" value="stock" id="stockOnly">
+                        <label class="form-check-label ms-1" for="stockOnly">
                             Show me products with available stock only
                         </label>
                     </div>
@@ -535,7 +535,7 @@
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
                                 <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
                                     <i class="bi bi-envelope-fill"></i>
-                                    puritymakeupcontact@gmail.com</a>
+                                    puritymakeupcontact@gmail.com
                                 </div>
                             </a>
                             <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
