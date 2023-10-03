@@ -38,6 +38,8 @@ dependencies {
 	implementation 'com.stripe:stripe-java:20.40.0'
 	implementation 'javax.mail:javax.mail-api'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 
 	runtimeOnly 'com.h2database:h2'
 
