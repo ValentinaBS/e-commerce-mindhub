@@ -8,7 +8,9 @@ const options = {
             selectedOrder: {},
             filteredOrders: [],
             searchInput: "",
-            moneyFormatter: {}
+
+            moneyFormatter: {},
+            checkUser: false
         }
     },
     created() {
@@ -16,8 +18,7 @@ const options = {
             .then(res => {
                 this.currentCustomer = res.data;
                 this.customerOrders = this.currentCustomer.purchasedOrders.sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
-                console.log(this.currentCustomer);
-                console.log(this.customerOrders);
+                this.checkUser = true;
             })
 
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
@@ -48,6 +49,29 @@ const options = {
                     // Cleans the URL object
                     window.URL.revokeObjectURL(url);
                 })
+        },
+        logOut() {
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                    cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Log out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/api/logout')
+                        .then(() => {
+                            window.location.href = '../index.html'
+                            this.checkUser = false;
+                        })
+                }
+            })
         }
     },
     computed: {
