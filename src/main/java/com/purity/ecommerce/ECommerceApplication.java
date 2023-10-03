@@ -30,16 +30,6 @@ public class ECommerceApplication {
 	public CommandLineRunner initData(ProductRepository productRepository, CustomerRepository customerRepository,
 									  OrderRepository orderRepository, CartRepository cartRepository, OrderItemRepository orderItemRepository){
 		return (args) -> {
-
-			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
-			customerRepository.save(customer1);
-			Customer customer2 = new Customer("Customer2", "customer2@example.com", passwordEncoder.encode("password"), "Address 2");
-			customerRepository.save(customer2);
-			Customer customer3 = new Customer("Customer3", "customer3@example.com", passwordEncoder.encode("password"), "Address 3");
-			customerRepository.save(customer3);
-			Customer admin = new Customer("admin", "admin3@example.com", passwordEncoder.encode("password"), "Address 3");
-			customerRepository.save(admin);
-
       
       /* Products */
 			Product productBrushes1 = new Product("Ultra Plush Powder Brush", "Real Techniques Ultra Plush Powder Makeup Brush helps you create a flawless finish with its large, domed shape for all-over application. RT 201 powder brush has a plush large head for sheer application and a smooth, mattified finish. Best used with powder foundations, powder bronzers, and setting powders. Provides smooth, high-definition results with tapered bristles to help blend powders seamlessly. Extended aluminum ferrules that are light weight, easy to use, and color coded. 100% Cruelty-Free and Vegan. Flawless Results. Easy to clean with Real Techniques Brush Cleansing Gel or Spray. Long Lasting Makeup Application. UltraPlush Synthetic Bristles.", "Long Lasting Makeup Application.", 6.99, "brushes", "Real Techniques", 6, "https://i.imgur.com/xbcGA7J.jpg", true);
@@ -191,6 +181,14 @@ public class ECommerceApplication {
 
 
 			//test customers
+			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
+			customerRepository.save(customer1);
+			Customer customer2 = new Customer("Customer2", "customer2@example.com", passwordEncoder.encode("password"), "Address 2");
+			customerRepository.save(customer2);
+			Customer customer3 = new Customer("Customer3", "customer3@example.com", passwordEncoder.encode("password"), "Address 3");
+			customerRepository.save(customer3);
+			Customer admin = new Customer("admin", "admin3@example.com", passwordEncoder.encode("password"), "Address 3");
+			customerRepository.save(admin);
 
 			Cart cart1 = new Cart();
 			cartRepository.save(cart1);
@@ -238,6 +236,7 @@ public class ECommerceApplication {
 
 			customer1.addPurchaseOrder(purchaseOrders1);
 			customer1.addPurchaseOrder(purchaseOrders2);
+
 			customer3.addPurchaseOrder(purchaseOrders3);
 
 			orderRepository.save(purchaseOrders1);
@@ -261,7 +260,6 @@ public class ECommerceApplication {
 			orderItemRepository.save(orderItem5);
 			orderRepository.save(purchaseOrders3);
 			orderItemRepository.save(orderItem6);
-
 
 		};
 

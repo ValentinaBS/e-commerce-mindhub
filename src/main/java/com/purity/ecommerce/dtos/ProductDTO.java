@@ -16,6 +16,8 @@ public class ProductDTO {
     private boolean active;
     private String imageUrl;
 
+    public ProductDTO() {}
+
     public ProductDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();

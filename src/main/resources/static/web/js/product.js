@@ -16,6 +16,8 @@ const app = createApp({
     };
   },
   created() {
+
+    
     let urlParams = new URLSearchParams(location.search);
     this.productId = urlParams.get("id");
 

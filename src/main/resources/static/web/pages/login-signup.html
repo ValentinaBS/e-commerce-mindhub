@@ -240,56 +240,72 @@
     <main class=" ">
 
         <section class=" d-flex flex-column align-items-center p-4 gap-4 mt-5">
+            <!-- <section class=" d-flex  align-items-center gap-4 "> -->
 
             <!-- FORM LOGIN -->
-            <form class="formLogin-Signup animate__animated animate__zoomIn" v-if="showForm == false">
-                <h2><span class="underline-text">Log In</span></h2>
-                <div class="mb-3">
-                  <label for="exampleInputEmail3" class="form-label">Email</label>
-                  <input type="email" class="inputs form-control" id="exampleInputEmail3" aria-describedby="emailHelp" placeholder="email@gmail.com">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Password</label>
-                  <input type="password" class="inputs form-control" id="exampleInputPassword1">
-                </div>
-                <button type="submit" class="buttonsignlog btn btn-primary">Log In</button>
-                <div class="divAccount d-flex flex-column align-items-center">
-                    <p>Don't have an account?</p>
-                    <button class="buttonFinal" type="button" @click="showForms" >Sign up</button>
-                </div>
-                
-              </form>
+            <section v-if="showForm == false" class="d-flex gap-5">
+
+                <form @submit.prevent class="formLogin-Signup animate__animated animate__zoomIn" v-if="showForm == false">
+                    <h2><span class="underline-text">Log In</span></h2>
+                    <div class="mb-3 w-100">
+                      <label for="exampleInputEmail3" class="form-label">Email</label>
+                      <input v-model="emailInput" type="email" class="inputs form-control" id="exampleInputEmail3" aria-describedby="emailHelp" placeholder="email@gmail.com">
+                    </div>
+                    <div class="mb-3 w-100">
+                      <label for="exampleInputPassword1" class="form-label">Password</label>
+                      <input v-model="passwordInput" type="password" class="inputs form-control" id="exampleInputPassword1">
+                    </div>
+                    <template v-if="errorMessage">
+                        <p class="text-danger fs-5 text-center mb-0">
+                            {{ errorMessage }}
+                        </p>
+                    </template>
+                    <button @click="submitLogin" type="submit" class="btn primary-btn">Log In</button>
+                    <div class="divAccount d-flex flex-column align-items-center">
+                        <p>Don't have an account?</p>
+                        <button class="buttonFinal" type="button" @click="showForms" >Sign up</button>
+                    </div>
+                    
+                  </form>
+
+                  <img class="imgLogin" src="../assets/login-images/IMG-LOGIN.jpg" alt="">
+            </section>
     
 
               <!-- FORM SIGN UP -->
              
-
-              <form class="formLogin-Signup" v-if="showForm == true">
-                <h2><span class="underline-text">Sign Up</span></h2>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                    <input type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe">
+              <section v-if="showForm == true" class="d-flex flex-row-reverse gap-5">
+                <form @submit.prevent class="formLogin-Signup" >
+                    <h2><span class="underline-text">Sign Up</span></h2>
+                    <div class="mb-3 w-100">
+                        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+                        <input v-model="nameInput" type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe">
                     </div>
-                <div class="mb-3">
-                    <label for="inputAddress" class="form-label">Address</label>
-                    <input type="text" class="inputs form-control" id="inputAddress" placeholder="Street 123">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email</label>
-                    <input type="email" class="inputs  form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@gmail.com">
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleInputPassword2" class="form-label">Password</label>
-                    <input type="password" class="inputs form-control" id="exampleInputPassword2">
-                  </div>
-                
-                  <button type="submit" class="buttonsignlog btn btn-primary">Sign Up</button>
-                  <div class="divAccount d-flex flex-column align-items-center">
-                    <p>Already have an account?</p>
-                    <button class="buttonFinal" type="button" @click="showForms">Log In</button>
-                  </div>
-                  
-              </form>
+                    <div class="mb-3 w-100">
+                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <input v-model="emailInput" type="email" class="inputs  form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@gmail.com">
+                    </div>
+                    <div class="mb-3 w-100">
+                        <label for="exampleInputPassword2" class="form-label">Password</label>
+                        <input v-model="passwordInput" type="password" class="inputs form-control" id="exampleInputPassword2">
+                    </div>
+                    <div class="mb-3 w-100">
+                        <label for="inputAddress" class="form-label">Address</label>
+                        <input v-model="addressInput" type="text" class="inputs form-control" id="inputAddress" placeholder="Street 123">
+                    </div>
+                    
+                      <button @click="submitSignUp" type="submit" class="btn primary-btn">Sign Up</button>
+                      <div class="divAccount d-flex flex-column align-items-center">
+                        <p>Already have an account?</p>
+                        <button class="buttonFinal" type="button" @click="showForms">Log In</button>
+                      </div>
+    
+                      
+                      
+                  </form>
+                  <img class="imgSignUp" src="../assets/login-images/signup2.jpeg" alt="">
+              </section>
+              
 
 
 

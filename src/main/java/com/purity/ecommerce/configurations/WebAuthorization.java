@@ -22,15 +22,15 @@ public class WebAuthorization {
                 .antMatchers("/api/products", "/api/login",
                         "/web/index.html", "/web/pages/products.html", "/web/pages/product.html", "/web/pages/product.html", "/web/pages/login-signup.html", "/web/pages/contact.html", "/web/pages/about-us.html",
                         "/web/styles/**", "/web/js/**", "/web/assets/**",
-                        "/web/pages/admin/**", "/api/products/{productId}", "/api/products/create", "/web/pages/profile.html", "/api/product/{id}").permitAll()
+                        "/api/products/{productId}", "/api/product/{id}").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/cart/{productID}","/api/process-payment").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/customers", "/api/current/orders/generate-pdf").permitAll()
 
-                //.antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.PATCH, "/api/products/update/{productId}").hasAuthority("ADMIN")
-                //.antMatchers("/web/pages/admin/**", "/api/products/{productId}").hasAuthority("ADMIN")
+                .antMatchers("/web/pages/admin/**").hasAuthority("ADMIN")
 
-                //.antMatchers("/web/pages/profile.html", "/web/pages/checkout.html").hasAuthority("CLIENT")
+                .antMatchers("/web/pages/profile.html", "/web/pages/checkout.html", "/api/customer/current").hasAuthority("CLIENT")
 
                 .antMatchers("/api/logout").authenticated()
 
