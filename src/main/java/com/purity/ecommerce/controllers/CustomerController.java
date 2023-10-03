@@ -7,6 +7,7 @@ import com.purity.ecommerce.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,11 @@ public class CustomerController {
                 .stream()
                 .map(CustomerDTO::new)
                 .collect(toList());
+    }
+
+    @GetMapping("/customer/current")
+    public CustomerDTO getAuthenticatedCustomer(Authentication authentication) {
+        return new CustomerDTO(customerRepository.findByEmail(authentication.getName()));
     }
 
     @PostMapping ("/register")
