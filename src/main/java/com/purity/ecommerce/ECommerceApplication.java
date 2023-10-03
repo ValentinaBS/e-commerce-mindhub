@@ -30,67 +30,6 @@ public class ECommerceApplication {
 	public CommandLineRunner initData(ProductRepository productRepository, CustomerRepository customerRepository,
 									  OrderRepository orderRepository, CartRepository cartRepository, OrderItemRepository orderItemRepository){
 		return (args) -> {
-
-			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
-			customerRepository.save(customer1);
-			Customer customer2 = new Customer("Customer2", "customer2@example.com", passwordEncoder.encode("password"), "Address 2");
-			customerRepository.save(customer2);
-			Customer customer3 = new Customer("Customer3", "customer3@example.com", passwordEncoder.encode("password"), "Address 3");
-			customerRepository.save(customer3);
-
-			Product product1 = new Product("TRICLONE SKIN TECH HYDRATING", "DESCRPTION", "description1", 10.6, "Makeup", "HausLabs", 4, "C:/Users/Guest/Documents/MindHubJava/images/fadzhkjsilo_11LIGHTNEUTRAL_720x.webp", true);
-			productRepository.save(product1);
-			Product product2 = new Product("Product 1", "Description 1", "Short description 1", 10.6, "Makeup", "Brand 1", 4, "Image 1", true);
-			productRepository.save(product2);
-			Product product3 = new Product("Product 2", "Description 2", "Short description 2", 15.2, "Skincare", "Brand 2", 8, "Image 2", true);
-			productRepository.save(product3);
-
-			Cart cart1 = new Cart();
-			cartRepository.save(cart1);
-			Cart cart2 = new Cart();
-			cartRepository.save(cart2);
-			Cart cart3 = new Cart();
-			cartRepository.save(cart3);
-
-			customer1.setCart(cart1);
-			customerRepository.save(customer1);
-			customer2.setCart(cart2);
-			customerRepository.save(customer2);
-			customer3.setCart(cart3);
-			customerRepository.save(customer3);
-
-			//cart1.addItem(new CartItem(2, product1));
-			//cart1.addItem(new CartItem(3, product3));
-			cartRepository.save(cart1);
-
-			//cart2.addItem(new CartItem(3, product3));
-			//cart2.addItem(new CartItem(1, product2));
-
-			//cart3.addItem(new CartItem(1, product2));
-			//cart3.addItem(new CartItem(2, product1));
-
-			OrderItem orderItem1 = new OrderItem(2, product1);
-			OrderItem orderItem2 = new OrderItem(3, product3);
-			OrderItem orderItem3 = new OrderItem(1, product2);
-
-			orderItemRepository.save(orderItem1);
-			orderItemRepository.save(orderItem2);
-			orderItemRepository.save(orderItem3);
-
-			PurchaseOrders purchaseOrders1 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.DELIVERED, 500);
-
-			PurchaseOrders purchaseOrders2 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.DELIVERED, 150);
-
-			PurchaseOrders purchaseOrders3 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.DELIVERED, 300);
-
-
-			//customer1.addOrder(purchaseOrders1);
-			//customer2.addOrder(purchaseOrders2);
-			//customer3.addOrder(purchaseOrders3);
-
-			orderRepository.save(purchaseOrders1);
-			orderRepository.save(purchaseOrders2);
-			orderRepository.save(purchaseOrders3);
       
       /* Products */
 			Product productBrushes1 = new Product("Ultra Plush Powder Brush", "Real Techniques Ultra Plush Powder Makeup Brush helps you create a flawless finish with its large, domed shape for all-over application. RT 201 powder brush has a plush large head for sheer application and a smooth, mattified finish. Best used with powder foundations, powder bronzers, and setting powders. Provides smooth, high-definition results with tapered bristles to help blend powders seamlessly. Extended aluminum ferrules that are light weight, easy to use, and color coded. 100% Cruelty-Free and Vegan. Flawless Results. Easy to clean with Real Techniques Brush Cleansing Gel or Spray. Long Lasting Makeup Application. UltraPlush Synthetic Bristles.", "Long Lasting Makeup Application.", 6.99, "brushes", "Real Techniques", 6, "https://i.imgur.com/xbcGA7J.jpg", true);
@@ -137,38 +76,38 @@ public class ECommerceApplication {
 			Product productSkincare16 = new Product("Deep Clean Facial Cream", "7-fluid ounce tube of Neutrogena Deep Clean Cream Facial Cleanser to help improve dull complexion, for skin that looks and feels healthier. This daily facial cleanser is made with beta hydroxy acid and goes deep down into pores to dissolve dirt, oil and makeup, and wash away dead surface cells. Oil-free and alcohol-free, the face wash features a creamy, deep-cleansing lather that won't dry your skin. It's dermatologist-tested and rinses clean without leaving behind any pore-clogging residue, for fresher, healthier-looking skin. From a dermatologist recommended skincare brand, the deep clean face wash is non-comedogenic so it won't clog pores.", "Oil and alcohol-free.", 5.80, "skincare", "Neutrogena", 0, "https://i.imgur.com/owqsFsk.jpg", true);
 
 			/*LIPS*/
-			Product productLips1= new Product ("Color block lipstick", "What it is: A clean, handcrafted lipstick with high-impact color and supreme hydration, for all-day wear and care.How it works: Clean color, big impact. This full-coverage lipstick is handcrafted with custom pigments in organic castor seed oil—giving you four times the intensity with a creamy finish. For a bold, longwearing lip that stays smooth. In a range of ultra-wearable nudes, reds, and berries.What else you need to know: A balanced mix of classic shades including soft nudes, bold reds, and vibrant berries offers a solid block of color with even textures and smooth, creamy finishes."
-			, " Soft oxblood with neutral undertones rosewood", 28.00 , "lip" , "Ilia"  , 5, "https://i.imgur.com/630kNBj.jpg", true);
-			Product productLips2= new Product("Color block lipstick", "What it is: A clean, handcrafted lipstick with high-impact color and supreme hydration, for all-day wear and care.How it works: Clean color, big impact. This full-coverage lipstick is handcrafted with custom pigments in organic castor seed oil—giving you four times the intensity with a creamy finish. For a bold, longwearing lip that stays smooth. In a range of ultra-wearable nudes, reds, and berries.What else you need to know: A balanced mix of classic shades including soft nudes, bold reds, and vibrant berries offers a solid block of color with even textures and smooth, creamy finishes. " , "Real red with cool undertones true red", 28.00, "lip","Ilia" , 3, "https://i.imgur.com/9n2GU34.jpg", true);
-			Product productLips3= new Product("Multi-Stick", "What it is: A buildable wash of color for cheeks and lips—now with 12 swipe-and-go shades.How it works: This creamy cheek and lip color comes in a twist-up stick for easy application on the go. No tools required: Simply swipe and blend for skin that looks and feels alive. Keep it simple with your favorite Multi-Stick shade, or mix, match, and layer to create a customized look. Available in both natural and luminous finishes.What else you need to know:", " Mauve rose,at last", 36.00, "lip", "Ilia", 7, "https://i.imgur.com/4mHyksb.jpg", true);
-			Product productLips4= new Product("Super Stay Vynil Ink" , " Meet Super Stay Vinyl Ink liquid lipstick for budge-resistant vinyl color and up to 16 hour wear. This longwear lipstick’s Color Lock formula defies smudging and transfer and provides an instant shine finish. Shake before applying on clean, dry lips. Now available in 10 additional Nude Shock shades inspired by the bold electric attitude of New York. Choose from a total of 20 high-impact vinyl shades for your every lip look", "Longwear liquid lipcolor ", 12.99, "lip", "Maybelline", 2, "https://i.imgur.com/H2vu1Lh.jpg", true);
-			Product productLips5= new Product("Super Stay Vynil Ink " , "Meet Super Stay Vinyl Ink liquid lipstick for budge-resistant vinyl color and up to 16 hour wear. This longwear lipstick’s Color Lock formula defies smudging and transfer and provides an instant shine finish. Shake before applying on clean, dry lips. Now available in 10 additional Nude Shock shades inspired by the bold electric attitude of New York. Choose from a total of 20 high-impact vinyl shades for your every lip look ", "Longwear liquid lipcolor" , 12.99, "lip" , "Maybelline", 4, "https://i.imgur.com/fT92nXV.jpg", true);
-			Product productLips6= new Product("Lifter Gloss", "Hydrated lips. Fuller look. This breakthrough formula with Hyaluronic Acid visibly smooths lip surface and enhances lip contour with high shine for hydrated, fuller looking lips. Plus, its XL wand transforms lips in an easy, one swipe application. Available in 20 shades.", "Lip gloss makeup with hyaluronic acid", 10.99, "lip","Maybelline", 7, "https://i.imgur.com/iZoUuZG.jpg", true);
-			Product productLips7= new Product( " Super Stay Matte ink spiced up", " Highly pigmented liquid matte lipstick that lasts up to 16 hours, now in reddish tones for a hotter look. You will love its arrow-type applicator that will make you outline your lips with greater precision. On top of everything, they are non-transferable, so you only have to worry about showing off red lips and feeling powerful.", " Exhilator Long-Lasting liquid lipstick", 7.98, "lip","Maybelline", 1, "https://i.imgur.com/RcYkI0M.jpg", true);
-			Product productLips8= new Product(" Superstay matte ink pinks", "Long-lasting liquid lipstick with a comfortable matte finish. Intense color in a single pass.", "Pink Pathfinder", 10.99, "lip", "Maybelline", 6, "https://i.imgur.com/jzIyVxZ.jpg", true);
-			Product productLips9= new Product("Superstay matte ink crayon", "Long Lasting Matte Lip Color: Maybelline Super Stay Ink Crayon in shade Accept A Dare, glides a rich layer of smudge and transfer resistant matte berry wine color across your lips. Lasts for up to 8 hours of wear. Use to line and fill your lips.Effortless Control: The built in sharpener of this award-winning matte lipstick keeps the tip ultra precise, so you can easily apply lip color wherever you are. Easily outline, shape, and color your lips in 1 swipe with no hassle and no fadingLet Your Lips Do the Talking: A matte lip color that glides on crayon-easy, so draw it on and wear it all day with no smudges or fading. Choose from our beautiful selection of longwear shades. The final step in your lip care routine.", "Lead the WAY", 10.99, "lip", "Maybelline", 3, "https://i.imgur.com/WQ2An1x.jpg", true);
-			Product productLips10= new Product("Matte lipstick", "A creamy rich Lipstick formula with high colour payoff in a no-shine matte finish.", "Intense Orange Brown (Matte), Marrakesh", 23.00, "lip", "MAC", 8, "https://i.imgur.com/hwIBrXk.jpg", true);
-			Product productLips11= new Product("Powder kidd liquid lipcolour", "A liquid lipcolour with a whipped, mousse-like texture that delivers Soft-focus moisture-matte, comfortable colour with ten hours of hydration.","Deep wine",27.00, "lip", "MAC", 10, "https://i.imgur.com/BQ2BBdf.jpg", true);
-			Product productLips12= new Product("M·A·C loqued kiss ink 24HR lipcolour", "A kissproof, transfer-proof and waterproof liquid lipstick with 24 hours of weightless wear and rich matte colour.", "Light Pinky Nude", 33.00, "lip", "MAC", 9, "https://i.imgur.com/4hAoyER.jpg", true);
-			Product productLips13= new Product("Retro matte lipstick", " A long-wearing Lipstick formula with intense colour payoff and a completely matte finish.","Bright plum matte", 23.00, "lip", "MAC", 8, "https://i.imgur.com/M4P4eaT.jpg", true);
-			Product productLips14= new Product("Matte lipstick", "A creamy rich Lipstick formula with high colour payoff in a no-shine matte finish.", "Intense Brown",  23.00, "lip","MAC",5," https://i.imgur.com/aXh9Pjj.jpg", true);
-			Product productLips15= new Product(" ILIA Beauty Tinted Lip Conditioner","Infused with cocoa butter and jojoba oil to soften and vitamin e and pomegranate seed extract to heal and moisturise, hydrating, anti-aging benefits to the lips. a sheer touch of colour that can be built up in intensity when applied liberally. "," Lust For Life", 44.78, "lip", "Ilia", 0, "https://i.imgur.com/hLN2XKP.jpg", true);
-			Product productLips16= new Product("Color Haze", "What it is: A game-changing cream blush and lip color in one—stays dewy on cheeks and transforms to a modern-matte finish on lips.How it works: A little color goes a long way. Made with jojoba and coconut oil, this two-in-one lip and cheek cream nourishes skin and blends out to a soft wash of color. With a precise metal applicator for fuss-free application on-the-go.What else you need to know:Size: 0.23 fl oz | 7 ml . About this shade: Universally flattering coral pink with warm undertones for subtle, face brightening flush.","Stutter (orange)", 32.00, "lip","Ilia", 6, "https://i.imgur.com/3yBFNr6.jpg", true);
-			Product productEye1= new Product("Fullest Voluminizing Mascara", "What It Is: A clean volumizing mascara that wraps each lash in weightless, buildable volume without flaking, smudging, or irritating even the most sensitive eyes.What It Does: Fullest Volumizing Mascara thickens and defines lashes from root to tip with fullness you can’t miss. Clean, nourishing ingredients condition with every coat for lashes that look fuller, thicker, and healthier. The smudge-free, flake-free formula washes off easily with your favorite cleanser—no scrubbing, tugging, or heavy-duty makeup remover needed.Fullest Volumizing Mascara is ophthalmologist-tested, safe for sensitive eyes, and safe for contact lens wearers.", "Classic black", 28.00, "eye", "Ilia", 9,"https://i.imgur.com/OFXAO9F.jpg", true);
-			Product productEye2= new Product("The Necessary Eyeshadow Palette", "What it is: Our 6 pan, Talc-free and cleanly formulated powder eyeshadow palettes have a buttery texture that allows for a smooth application.How it works: This new formula delivers high pigment and blends easily to a soft, wash of color with little fall out. Each of our palettes comes with an assortment of matte, satin and metallic finishes to achieve any look from day to night.","Cool toned matte", 40.00, "eye", "Ilia", 5, "https://i.imgur.com/QSJjEvP.jpg", true);
-			Product productEye3= new Product("Clean Line Gel Liner", "What it is: Our cleanly formulated (Carbon Black and Cyclomethicone-free) soft tip gel eyeliner.How it works: Clean Line Gel Liner glides effortlessly and allows you to blend out easily before setting. Once set, it stays put. Saturated and water resistant, this formula has the precision of a pencil with the ease of a gel.0.01 oz | 0.4 g", "Brown", 26.00, "eye", "Ilia", 5,"https://i.imgur.com/ZVvlMrj.jpg", true);
-			Product productEye4= new Product("Liquid Powder Eye Tint","What it is: A clean, cream-to-powder eyeshadow that dries down to a smudge-resistant finish. Choose from 16 matte and chromatic shades.How it works: Glides like a cream. Dries like a powder. Liquid Powder Eye Tint is a quick-dry eyeshadow that swipes on effortlessly and locks in without budging or fading. Blend the weightless, water-based formula for a diffused wash of color, or build it up for a bolder look that lasts.What else you need to know:Size: 0.12 fl oz | 3.5 ml","Warm Sand", 28.00, "eye", "Ilia", 6, "https://i.imgur.com/gbsfCBw.jpg", true);
-			Product productEye5= new Product("In Full Micro-Tip Eyebrow Pencil", "The art of the arch—made easy. This foolproof pencil creates thin, hairlike strokes that blend into brows like magic. The micro-fine tip delivers the perfect amount of soft, buildable pigment that’s clinically proven to resist fading and budging throughout the day. Choose from eight versatile shades, each with a built-in spoolie for brushing and blending.", "Soft Black - For deep brown to black hair with cool undertones", 24.00, "eye", "Ilia", 6, "https://i.imgur.com/wrzx0lm.jpg", true);
-			Product productEye6= new Product("Extra Dimensioned Eye Shadow", "SMOKY MAUVE Extra Dimension Eyeshadow", "Purple", 21.00, "eye", "MAC", 5, "ttps://i.imgur.com/AyyVdhM.jpg", true);
-			Product productEye7= new Product("MAC Extra Dimension Eye Shadow", "Give a gift with flare! Wow your crowd this holiday season with a flashy collection bursting with glitter, shimmer and festive shine. Limited-edition colours for the eyes, lips and skin sparkle brightly, while curated kits burst with all-time favourites and all-new wonders. Each is wrapped in specially designed, flare-embossed, frosted-pink packaging. Like a firework, be one of a kind!. Eyes light up with five luminous shades of Extra Dimension Foil Eye Shadow. The lightweight formula has highly pigmented colour payoff with a shimmer-metallic finish. The results illuminate the day and scintillate at night. Shadow features an embossed burst design. All wrapped in specially designed, flare-embossed, frosted-pink packaging.", "Frosted Fireworks Firewerk The Room", 26.25, "eye", "MAC", 3, "https://i.imgur.com/3TMSRMt.jpg", true);
-			Product productEye8= new Product("Mac In Extreme Dimension Waterproof Lash", "A mascara with a lightweight, waterproof formula that lengthens, curls and volumizes lashes while conditioning them for softness and flexibility. The brush is designed to store the necessary amount of product in three reservoirs that allow as much as possible to be applied without leaving lumps or stains. The brush tip allows you to apply the product precisely to the lower lashes.", "A waterproof mascara with a lightweight formula that volumizes, lengthens and curls lashes.", 24.60, "eye", "MAC", 4, "https://i.imgur.com/KZlytsG.jpg", true);
-			Product productEye9= new Product("Eye brows styler", "Self-sharpening, rotating brow defining pencil – and now made with an updated waterproof formula. With an integrated eyebrow brush, it offers brushing along with maximum color precision in a dynamic, micro-fine pencil that emulates fine eyebrow hairs with each stroke for a perfect appearance. Confidently add what you need: shape, color and/or add intensity. Precision and accuracy, create your exact point for a surprising arch. Easy to take with you – no pencil sharpener needed.", "Eyebrow defining pencil", 23.00, "eye", "MAC", 3, "https://i.imgur.com/bWeIFz0.jpg", true);
-			Product productEye10= new Product("MAC Eyeshadow Palette"," A well-edited palette of dusky rose hues offering countless colour combinations. It provides textures from matte to satin to frost for creating looks for both day and night. The saturated, soft and smooth shades are packaged in one pocket-sized compact for easy portability.", "Dusky Rose Times Nine",38.50, "eye", "MAC", 3, "https://i.imgur.com/pVTbzFV.jpg", true);
-			Product productEye11= new Product("Art Library Nude Model Eyeshadow Palette Powder", "Bare your soul with the 12 intensely pigmented neutrals of Nude Model developed by M∙A∙C Pro Artists. The highly pigmented powder applies evenly and blends well. Can be used wet or dry. Available in a wide variety of textures and finishes.", "An eye palette developed by m∙a∙c pro artists in 12 intensely pigmented neutrals.",25.50,"eye", "MAC", 7, "https://i.imgur.com/mDSODxo.jpg", true);
-			Product productEye12= new Product("Palate pleaser eye shadow palette", "Enjoy this incredible selection of eye color: a palette of 12 exclusive eyeshadows with Matte and Frost and Dazzleshadow Extreme textures in the best-selling shades. Its saturated eyeshadow formula stays on all day, lasting for eight hours and an intense color. Dazzleshadow Extreme's formula has a molten metallic finish that saturates in just one swipe and lasts for 12 hours. In limited edition packaging with bubbles and bows, all made with sustainability in mind.", "A limited edition palette of 12 eyeshadows with Matte and Frost textures.", 34.37, "eye" , "MAC", 0, "https://i.imgur.com/L7dN844.jpg", true);
-			Product productEye13= new Product("Maybelline New York The Nudes Eyeshadow Palette", "12 shades, from subtle grays to electric blues, matte and satin textures. Infinite combinations, in a single palette! Be bold with the variety of shades to create infinite looks with a single palette. Ultra pigmented colors.", "Highly pigmented", 13.99, "eye","Maybelline", 4, "https://i.imgur.com/5X6rtMj.jpg", true);
-			Product productEye14= new Product("Maybelline New York Total Temptation", "Total Temptation Maybelline Brow Pencil: Fill in brows with this must-have defining brow pencil, with a teardrop tip; Shape and blend with the brow brush, for a softly defined, natural-looking brow. Define your brow: No eye look is complete without Maybelline brow makeup - frame your eyes and fill in those brows with our precise micro brow pencil, with TattooStudio waterproof brow gel and arch-defining Total Temptation brow defining pencil", "Brow Definer Pencil, Soft Brown", 9.99, "eye","Maybelline", 4, "https://i.imgur.com/MNxaNAy.jpg", true);
-			Product productEye15= new Product("Instant Age Rewinds", "Concealer covers dark circles and bags, corrects imperfections, brightens the look and defines the face. Thanks to its formula with Goji Berries, it hydrates the eye area for up to 12 hours, treats and firms dark circles and bags. Its unique sponge applicator covers easily with precision and achieves coverage that does not dry out or crack. Correct, Contour and Brighten your face with Maybelline New York's Instant Age Rewinder.", "Instant Age Rewind multipurpose concealer for the treatment of dark circles", 10.99, "eye", "Maybelline",3,"https://i.imgur.com/pqJYvM4.jpg", true);
+			Product productLips1= new Product ("Color Block Lipstick", "What it is: A clean, handcrafted lipstick with high-impact color and supreme hydration, for all-day wear and care.How it works: Clean color, big impact. This full-coverage lipstick is handcrafted with custom pigments in organic castor seed oil—giving you four times the intensity with a creamy finish. For a bold, longwearing lip that stays smooth. In a range of ultra-wearable nudes, reds, and berries.What else you need to know: A balanced mix of classic shades including soft nudes, bold reds, and vibrant berries offers a solid block of color with even textures and smooth, creamy finishes."
+			, "Soft oxblood, neutral undertones.", 28.00 , "lips" , "Ilia"  , 5, "https://i.imgur.com/FyjykS6.jpg", true);
+			Product productLips2= new Product("Color Block Lipstick", "What it is: A clean, handcrafted lipstick with high-impact color and supreme hydration, for all-day wear and care.How it works: Clean color, big impact. This full-coverage lipstick is handcrafted with custom pigments in organic castor seed oil—giving you four times the intensity with a creamy finish. For a bold, longwearing lip that stays smooth. In a range of ultra-wearable nudes, reds, and berries.What else you need to know: A balanced mix of classic shades including soft nudes, bold reds, and vibrant berries offers a solid block of color with even textures and smooth, creamy finishes. " , "Real red with cool undertones true red", 28.00, "lips","Ilia" , 3, "https://i.imgur.com/WQF2MSv.jpg", true);
+			Product productLips3= new Product("Multi-Stick", "What it is: A buildable wash of color for cheeks and lips—now with 12 swipe-and-go shades.How it works: This creamy cheek and lip color comes in a twist-up stick for easy application on the go. No tools required: Simply swipe and blend for skin that looks and feels alive. Keep it simple with your favorite Multi-Stick shade, or mix, match, and layer to create a customized look. Available in both natural and luminous finishes.What else you need to know:", " Mauve rose,at last", 36.00, "lips", "Ilia", 7, "https://i.imgur.com/4mHyksb.jpg", true);
+			Product productLips4= new Product("Super Stay Vynil Ink" , " Meet Super Stay Vinyl Ink liquid lipstick for budge-resistant vinyl color and up to 16 hour wear. This longwear lipstick’s Color Lock formula defies smudging and transfer and provides an instant shine finish. Shake before applying on clean, dry lips. Now available in 10 additional Nude Shock shades inspired by the bold electric attitude of New York. Choose from a total of 20 high-impact vinyl shades for your every lip look", "Longwear liquid lipcolor ", 12.99, "lips", "Maybelline", 2, "https://i.imgur.com/Y9yZIC1.jpg", true);
+			Product productLips5= new Product("Super Stay Vynil Ink " , "Meet Super Stay Vinyl Ink liquid lipstick for budge-resistant vinyl color and up to 16 hour wear. This longwear lipstick’s Color Lock formula defies smudging and transfer and provides an instant shine finish. Shake before applying on clean, dry lips. Now available in 10 additional Nude Shock shades inspired by the bold electric attitude of New York. Choose from a total of 20 high-impact vinyl shades for your every lip look ", "Longwear liquid lipcolor" , 12.99, "lips" , "Maybelline", 4, "https://i.imgur.com/aWcakLf.jpg", true);
+			Product productLips6= new Product("Lifter Gloss", "Hydrated lips. Fuller look. This breakthrough formula with Hyaluronic Acid visibly smooths lip surface and enhances lip contour with high shine for hydrated, fuller looking lips. Plus, its XL wand transforms lips in an easy, one swipe application. Available in 20 shades.", "Lip gloss makeup with hyaluronic acid", 10.99, "lips","Maybelline", 7, "https://i.imgur.com/AA090Tf.jpg", true);
+			Product productLips7= new Product( "Super Stay Matte Ink", " Highly pigmented liquid matte lipstick that lasts up to 16 hours, now in reddish tones for a hotter look. You will love its arrow-type applicator that will make you outline your lips with greater precision. On top of everything, they are non-transferable, so you only have to worry about showing off red lips and feeling powerful.", " Exhilator Long-Lasting liquid lipstick", 7.98, "lips","Maybelline", 1, "https://i.imgur.com/bZgkMRP.jpg", true);
+			Product productLips8= new Product(" Superstay Matte Ink Pinks", "Long-lasting liquid lipstick with a comfortable matte finish. Intense color in a single pass.", "Pink Pathfinder", 10.99, "lips", "Maybelline", 6, "https://i.imgur.com/hI2ADra.jpg", true);
+			Product productLips9= new Product("Superstay Matte Ink Crayon", "Long Lasting Matte Lip Color: Maybelline Super Stay Ink Crayon in shade Accept A Dare, glides a rich layer of smudge and transfer resistant matte berry wine color across your lips. Lasts for up to 8 hours of wear. Use to line and fill your lips.Effortless Control: The built in sharpener of this award-winning matte lipstick keeps the tip ultra precise, so you can easily apply lip color wherever you are. Easily outline, shape, and color your lips in 1 swipe with no hassle and no fadingLet Your Lips Do the Talking: A matte lip color that glides on crayon-easy, so draw it on and wear it all day with no smudges or fading. Choose from our beautiful selection of longwear shades. The final step in your lip care routine.", "Lead the WAY", 10.99, "lips", "Maybelline", 3, "https://i.imgur.com/nDhcoSY.jpg", true);
+			Product productLips10= new Product("Matte Lipstick", "A creamy rich Lipstick formula with high colour payoff in a no-shine matte finish.", "Intense Orange Brown (Matte)", 23.00, "lips", "MAC", 8, "https://i.imgur.com/hwIBrXk.jpg", true);
+			Product productLips11= new Product("Powder Kidd Liquid Lip Color", "A liquid lipcolour with a whipped, mousse-like texture that delivers Soft-focus moisture-matte, comfortable colour with ten hours of hydration.","Deep wine",27.00, "lips", "MAC", 10, "https://i.imgur.com/BQ2BBdf.jpg", true);
+			Product productLips12= new Product("Loqued Kiss Ink Lip Color", "A kissproof, transfer-proof and waterproof liquid lipstick with 24 hours of weightless wear and rich matte colour.", "Light Pinky Nude", 33.00, "lips", "MAC", 9, "https://i.imgur.com/4hAoyER.jpg", true);
+			Product productLips13= new Product("Retro Matte Lipstick", " A long-wearing Lipstick formula with intense colour payoff and a completely matte finish.","Bright plum matte", 23.00, "lips", "MAC", 8, "https://i.imgur.com/dwAmPXv.jpg", true);
+			Product productLips14= new Product("Matte Lipstick", "A creamy rich Lipstick formula with high colour payoff in a no-shine matte finish.", "Intense Brown",  23.00, "lips","MAC",5," https://i.imgur.com/aXh9Pjj.jpg", true);
+			Product productLips15= new Product("Tinted Lip Conditioner","Infused with cocoa butter and jojoba oil to soften and vitamin e and pomegranate seed extract to heal and moisturise, hydrating, anti-aging benefits to the lips. a sheer touch of colour that can be built up in intensity when applied liberally. "," Lust For Life", 44.78, "lips", "Ilia", 0, "https://i.imgur.com/Cxei196.jpg", true);
+			Product productLips16= new Product("Color Haze", "What it is: A game-changing cream blush and lip color in one—stays dewy on cheeks and transforms to a modern-matte finish on lips.How it works: A little color goes a long way. Made with jojoba and coconut oil, this two-in-one lip and cheek cream nourishes skin and blends out to a soft wash of color. With a precise metal applicator for fuss-free application on-the-go.What else you need to know:Size: 0.23 fl oz | 7 ml . About this shade: Universally flattering coral pink with warm undertones for subtle, face brightening flush.","Stutter (pink)", 32.00, "lips","Ilia", 6, "https://i.imgur.com/94P8L9Q.jpg", true);
+			Product productEye1= new Product("Fullest Voluminizing Mascara", "What It Is: A clean volumizing mascara that wraps each lash in weightless, buildable volume without flaking, smudging, or irritating even the most sensitive eyes.What It Does: Fullest Volumizing Mascara thickens and defines lashes from root to tip with fullness you can’t miss. Clean, nourishing ingredients condition with every coat for lashes that look fuller, thicker, and healthier. The smudge-free, flake-free formula washes off easily with your favorite cleanser—no scrubbing, tugging, or heavy-duty makeup remover needed.Fullest Volumizing Mascara is ophthalmologist-tested, safe for sensitive eyes, and safe for contact lens wearers.", "Classic black", 28.00, "eyes", "Ilia", 9,"https://i.imgur.com/OFXAO9F.jpg", true);
+			Product productEye2= new Product("The Necessary Eyeshadow", "What it is: Our 6 pan, Talc-free and cleanly formulated powder eyeshadow palettes have a buttery texture that allows for a smooth application.How it works: This new formula delivers high pigment and blends easily to a soft, wash of color with little fall out. Each of our palettes comes with an assortment of matte, satin and metallic finishes to achieve any look from day to night.","Cool toned matte", 40.00, "eyes", "Ilia", 5, "https://i.imgur.com/QSJjEvP.jpg", true);
+			Product productEye3= new Product("Clean Line Gel Liner", "What it is: Our cleanly formulated (Carbon Black and Cyclomethicone-free) soft tip gel eyeliner.How it works: Clean Line Gel Liner glides effortlessly and allows you to blend out easily before setting. Once set, it stays put. Saturated and water resistant, this formula has the precision of a pencil with the ease of a gel.0.01 oz | 0.4 g", "Brown", 26.00, "eyes", "Ilia", 5,"https://i.imgur.com/LSbV412.jpg", true);
+			Product productEye4= new Product("Liquid Powder Eye Tint","What it is: A clean, cream-to-powder eyeshadow that dries down to a smudge-resistant finish. Choose from 16 matte and chromatic shades.How it works: Glides like a cream. Dries like a powder. Liquid Powder Eye Tint is a quick-dry eyeshadow that swipes on effortlessly and locks in without budging or fading. Blend the weightless, water-based formula for a diffused wash of color, or build it up for a bolder look that lasts.What else you need to know:Size: 0.12 fl oz | 3.5 ml","Warm Sand", 28.00, "eyes", "Ilia", 6, "https://i.imgur.com/gbsfCBw.jpg", true);
+			Product productEye5= new Product("Micro-Tip Eyebrow Pencil", "The art of the arch—made easy. This foolproof pencil creates thin, hairlike strokes that blend into brows like magic. The micro-fine tip delivers the perfect amount of soft, buildable pigment that’s clinically proven to resist fading and budging throughout the day. Choose from eight versatile shades, each with a built-in spoolie for brushing and blending.", "For deep brown to black hair.", 24.00, "eyes", "Ilia", 6, "https://i.imgur.com/wrzx0lm.jpg", true);
+			Product productEye6= new Product("Extra Dimension Eyeshadow", "SMOKY MAUVE Extra Dimension Eyeshadow", "Purple", 21.00, "eyes", "MAC", 5, "https://i.imgur.com/yebg7Fm.jpg", true);
+			Product productEye7= new Product("Extra Dimension Eyeshadow", "Give a gift with flare! Wow your crowd this holiday season with a flashy collection bursting with glitter, shimmer and festive shine. Limited-edition colours for the eyes, lips and skin sparkle brightly, while curated kits burst with all-time favourites and all-new wonders. Each is wrapped in specially designed, flare-embossed, frosted-pink packaging. Like a firework, be one of a kind!. Eyes light up with five luminous shades of Extra Dimension Foil Eye Shadow. The lightweight formula has highly pigmented colour payoff with a shimmer-metallic finish. The results illuminate the day and scintillate at night. Shadow features an embossed burst design. All wrapped in specially designed, flare-embossed, frosted-pink packaging.", "Frosted Fireworks Firewerk The Room", 26.25, "eyes", "MAC", 3, "https://i.imgur.com/3TMSRMt.jpg", true);
+			Product productEye8= new Product("In Extreme Dimension Lash", "A mascara with a lightweight, waterproof formula that lengthens, curls and volumizes lashes while conditioning them for softness and flexibility. The brush is designed to store the necessary amount of product in three reservoirs that allow as much as possible to be applied without leaving lumps or stains. The brush tip allows you to apply the product precisely to the lower lashes.", "A waterproof mascara.", 24.60, "eyes", "MAC", 4, "https://i.imgur.com/lsHN3pf.jpg", true);
+			Product productEye9= new Product("Eyebrows Styler", "Self-sharpening, rotating brow defining pencil – and now made with an updated waterproof formula. With an integrated eyebrow brush, it offers brushing along with maximum color precision in a dynamic, micro-fine pencil that emulates fine eyebrow hairs with each stroke for a perfect appearance. Confidently add what you need: shape, color and/or add intensity. Precision and accuracy, create your exact point for a surprising arch. Easy to take with you – no pencil sharpener needed.", "Eyebrow defining pencil", 23.00, "eyes", "MAC", 3, "https://i.imgur.com/bWeIFz0.jpg", true);
+			Product productEye10= new Product("Eyeshadow Palette"," A well-edited palette of dusky rose hues offering countless colour combinations. It provides textures from matte to satin to frost for creating looks for both day and night. The saturated, soft and smooth shades are packaged in one pocket-sized compact for easy portability.", "Dusky Rose Times Nine",38.50, "eyes", "MAC", 3, "https://i.imgur.com/pVTbzFV.jpg", true);
+			Product productEye11= new Product("Art Library Eyeshadow", "Bare your soul with the 12 intensely pigmented neutrals of Nude Model developed by M∙A∙C Pro Artists. The highly pigmented powder applies evenly and blends well. Can be used wet or dry. Available in a wide variety of textures and finishes.", "Intensely pigmented neutrals.",25.50,"eyes", "MAC", 7, "https://i.imgur.com/Fzt4beM.jpg", true);
+			Product productEye12= new Product("Palate Pleaser Eyeshadow", "Enjoy this incredible selection of eye color: a palette of 12 exclusive eyeshadows with Matte and Frost and Dazzleshadow Extreme textures in the best-selling shades. Its saturated eyeshadow formula stays on all day, lasting for eight hours and an intense color. Dazzleshadow Extreme's formula has a molten metallic finish that saturates in just one swipe and lasts for 12 hours. In limited edition packaging with bubbles and bows, all made with sustainability in mind.", "Limited edition palette.", 34.37, "eyes" , "MAC", 0, "https://i.imgur.com/L7dN844.jpg", true);
+			Product productEye13= new Product("The Nudes Eyeshadow Palette", "12 shades, from subtle grays to electric blues, matte and satin textures. Infinite combinations, in a single palette! Be bold with the variety of shades to create infinite looks with a single palette. Ultra pigmented colors.", "Highly pigmented", 13.99, "eyes","Maybelline", 4, "https://i.imgur.com/5X6rtMj.jpg", true);
+			Product productEye14= new Product("Total Temptation", "Total Temptation Maybelline Brow Pencil: Fill in brows with this must-have defining brow pencil, with a teardrop tip; Shape and blend with the brow brush, for a softly defined, natural-looking brow. Define your brow: No eye look is complete without Maybelline brow makeup - frame your eyes and fill in those brows with our precise micro brow pencil, with TattooStudio waterproof brow gel and arch-defining Total Temptation brow defining pencil", "Brow Definer Pencil, Soft Brown", 9.99, "eyes","Maybelline", 4, "https://i.imgur.com/Ds2r78a.jpg", true);
+			Product productEye15= new Product("Instant Age Rewinds", "Concealer covers dark circles and bags, corrects imperfections, brightens the look and defines the face. Thanks to its formula with Goji Berries, it hydrates the eye area for up to 12 hours, treats and firms dark circles and bags. Its unique sponge applicator covers easily with precision and achieves coverage that does not dry out or crack. Correct, Contour and Brighten your face with Maybelline New York's Instant Age Rewinder.", "Instant age rewind.", 10.99, "eyes", "Maybelline",3,"https://i.imgur.com/pqJYvM4.jpg", true);
 
 
 
@@ -240,6 +179,85 @@ public class ECommerceApplication {
 			productRepository.save(productEye14);
 			productRepository.save(productEye15);
 
+
+			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
+			customerRepository.save(customer1);
+			Customer customer2 = new Customer("Customer2", "customer2@example.com", passwordEncoder.encode("password"), "Address 2");
+			customerRepository.save(customer2);
+			Customer customer3 = new Customer("Customer3", "customer3@example.com", passwordEncoder.encode("password"), "Address 3");
+			customerRepository.save(customer3);
+			Customer admin = new Customer("admin", "admin3@example.com", passwordEncoder.encode("password"), "Address 3");
+			customerRepository.save(admin);
+
+			Cart cart1 = new Cart();
+			cartRepository.save(cart1);
+			Cart cart2 = new Cart();
+			cartRepository.save(cart2);
+			Cart cart3 = new Cart();
+			cartRepository.save(cart3);
+
+			customer1.setCart(cart1);
+			customerRepository.save(customer1);
+			customer2.setCart(cart2);
+			customerRepository.save(customer2);
+			customer3.setCart(cart3);
+			customerRepository.save(customer3);
+
+			cart1.addItem(new CartItem(2, productBrushes1));
+			cart1.addItem(new CartItem(3, productLips3));
+			cartRepository.save(cart1);
+
+			cart2.addItem(new CartItem(3, productLips3));
+			cart2.addItem(new CartItem(1, productSkincare2));
+
+			cart3.addItem(new CartItem(1, productSkincare2));
+			cart3.addItem(new CartItem(2, productBrushes1));
+
+			OrderItem orderItem1 = new OrderItem(2, productBrushes1);
+			OrderItem orderItem2 = new OrderItem(3, productLips3);
+			OrderItem orderItem3 = new OrderItem(1, productSkincare2);
+			OrderItem orderItem4 = new OrderItem(1, productBrushes1);
+			OrderItem orderItem5 = new OrderItem(4, productLips3);
+			OrderItem orderItem6 = new OrderItem(1, productSkincare2);
+
+			orderItemRepository.save(orderItem1);
+			orderItemRepository.save(orderItem2);
+			orderItemRepository.save(orderItem3);
+
+			PurchaseOrders purchaseOrders1 = new PurchaseOrders(LocalDateTime.now().minusDays(6), OrderStatus.DELIVERED, 500);
+			purchaseOrders1.addOrderItem(orderItem1);
+
+			PurchaseOrders purchaseOrders2 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.PROCESSING, 150);
+			purchaseOrders2.addOrderItem(orderItem2);
+
+			PurchaseOrders purchaseOrders3 = new PurchaseOrders(LocalDateTime.now().minusDays(1), OrderStatus.SHIPPED, 300);
+			purchaseOrders3.addOrderItem(orderItem3);
+
+			customer1.addPurchaseOrder(purchaseOrders1);
+			customer2.addPurchaseOrder(purchaseOrders2);
+			customer3.addPurchaseOrder(purchaseOrders3);
+
+			orderRepository.save(purchaseOrders1);
+			orderItemRepository.save(orderItem1);
+			orderRepository.save(purchaseOrders2);
+			orderItemRepository.save(orderItem2);
+			orderRepository.save(purchaseOrders3);
+			orderItemRepository.save(orderItem3);
+
+			purchaseOrders1.addOrderItem(orderItem4);
+			purchaseOrders2.addOrderItem(orderItem5);
+			purchaseOrders3.addOrderItem(orderItem6);
+
+			customer1.addPurchaseOrder(purchaseOrders1);
+			customer2.addPurchaseOrder(purchaseOrders2);
+			customer3.addPurchaseOrder(purchaseOrders3);
+
+			orderRepository.save(purchaseOrders1);
+			orderItemRepository.save(orderItem4);
+			orderRepository.save(purchaseOrders2);
+			orderItemRepository.save(orderItem5);
+			orderRepository.save(purchaseOrders3);
+			orderItemRepository.save(orderItem6);
 
 		};
 

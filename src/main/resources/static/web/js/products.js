@@ -21,12 +21,13 @@ const options = {
     created() {
         let urlParams = new URLSearchParams(location.search);
         this.productCategory = urlParams.get("category");
-
+        console.log(this.productCategory);
         axios.get('/api/products')
             .then(res => {
-                this.allProducts = res.data;
-
-                if(this.productsByCategory == "all") {
+                this.allProducts = res.data.filter(prod => prod.active);
+                console.log(this.allProducts);
+                
+                if(this.productCategory == "all") {
                     this.productsByCategory = this.allProducts;
                 } else {
                     this.productsByCategory = this.allProducts.filter(prod => prod.category == this.productCategory);

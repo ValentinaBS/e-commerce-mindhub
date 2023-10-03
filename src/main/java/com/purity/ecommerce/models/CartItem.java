@@ -1,5 +1,6 @@
 package com.purity.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -44,6 +45,7 @@ public class CartItem {
         this.count = count;
     }
 
+    @JsonIgnore
     public Product getProduct() {
         return product;
     }
@@ -52,6 +54,7 @@ public class CartItem {
         this.product = product;
     }
 
+    @JsonIgnore
     public Cart getCart() {
         return cart;
     }
