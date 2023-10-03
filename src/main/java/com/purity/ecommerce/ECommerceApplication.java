@@ -180,6 +180,7 @@ public class ECommerceApplication {
 			productRepository.save(productEye15);
 
 
+			//test customers
 			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
 			customerRepository.save(customer1);
 			Customer customer2 = new Customer("Customer2", "customer2@example.com", passwordEncoder.encode("password"), "Address 2");
@@ -203,38 +204,39 @@ public class ECommerceApplication {
 			customer3.setCart(cart3);
 			customerRepository.save(customer3);
 
-			cart1.addItem(new CartItem(2, productBrushes1));
-			cart1.addItem(new CartItem(3, productLips3));
+			cart1.addItem(new CartItem(2, productSkincare11));
+			cart1.addItem(new CartItem(3, productEye15));
 			cartRepository.save(cart1);
 
-			cart2.addItem(new CartItem(3, productLips3));
-			cart2.addItem(new CartItem(1, productSkincare2));
+			cart2.addItem(new CartItem(3, productLips1));
+			cart2.addItem(new CartItem(1, productBrushes12));
 
-			cart3.addItem(new CartItem(1, productSkincare2));
-			cart3.addItem(new CartItem(2, productBrushes1));
+			cart3.addItem(new CartItem(1, productEye5));
+			cart3.addItem(new CartItem(2, productSkincare16));
 
-			OrderItem orderItem1 = new OrderItem(2, productBrushes1);
-			OrderItem orderItem2 = new OrderItem(3, productLips3);
-			OrderItem orderItem3 = new OrderItem(1, productSkincare2);
-			OrderItem orderItem4 = new OrderItem(1, productBrushes1);
-			OrderItem orderItem5 = new OrderItem(4, productLips3);
-			OrderItem orderItem6 = new OrderItem(1, productSkincare2);
+			OrderItem orderItem1 = new OrderItem(2, productLips16);
+			OrderItem orderItem2 = new OrderItem(3, productBrushes6);
+			OrderItem orderItem3 = new OrderItem(1, productLips11);
+			OrderItem orderItem4 = new OrderItem(1, productLips3);
+			OrderItem orderItem5 = new OrderItem(4, productEye12);
+			OrderItem orderItem6 = new OrderItem(1, productSkincare8);
 
 			orderItemRepository.save(orderItem1);
 			orderItemRepository.save(orderItem2);
 			orderItemRepository.save(orderItem3);
 
-			PurchaseOrders purchaseOrders1 = new PurchaseOrders(LocalDateTime.now().minusDays(6), OrderStatus.DELIVERED, 500);
+			PurchaseOrders purchaseOrders1 = new PurchaseOrders(LocalDateTime.now().minusDays(6), OrderStatus.DELIVERED, 100);
 			purchaseOrders1.addOrderItem(orderItem1);
 
-			PurchaseOrders purchaseOrders2 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.PROCESSING, 150);
+			PurchaseOrders purchaseOrders2 = new PurchaseOrders(LocalDateTime.now(), OrderStatus.PROCESSING, 161.45);
 			purchaseOrders2.addOrderItem(orderItem2);
 
-			PurchaseOrders purchaseOrders3 = new PurchaseOrders(LocalDateTime.now().minusDays(1), OrderStatus.SHIPPED, 300);
+			PurchaseOrders purchaseOrders3 = new PurchaseOrders(LocalDateTime.now().minusDays(1), OrderStatus.SHIPPED, 49);
 			purchaseOrders3.addOrderItem(orderItem3);
 
 			customer1.addPurchaseOrder(purchaseOrders1);
-			customer2.addPurchaseOrder(purchaseOrders2);
+			customer1.addPurchaseOrder(purchaseOrders2);
+
 			customer3.addPurchaseOrder(purchaseOrders3);
 
 			orderRepository.save(purchaseOrders1);
@@ -249,7 +251,7 @@ public class ECommerceApplication {
 			purchaseOrders3.addOrderItem(orderItem6);
 
 			customer1.addPurchaseOrder(purchaseOrders1);
-			customer2.addPurchaseOrder(purchaseOrders2);
+			customer1.addPurchaseOrder(purchaseOrders2);
 			customer3.addPurchaseOrder(purchaseOrders3);
 
 			orderRepository.save(purchaseOrders1);
