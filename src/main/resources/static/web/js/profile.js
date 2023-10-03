@@ -11,7 +11,7 @@ const options = {
             filteredOrders: [],
             searchInput: "",
 
-            moneyFormatter: {}
+            moneyFormatter: {},
 
             cart: {
                 cartItems: [],
@@ -95,7 +95,13 @@ const options = {
             this.filteredOrders = this.customerOrders.filter(order => {
                 return order.id.toString() == this.searchInput || this.searchInput === "";
             }) 
-        }
+        },
+        checkUserLoggedCheckout() {
+            if(this.checkUser) {
+                return 'checkout.html'
+            }
+            return 'login-signup.html'
+        },
     }
 }
 

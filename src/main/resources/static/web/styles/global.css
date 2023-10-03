@@ -71,9 +71,7 @@ textarea {
 }
 
 .cart-number {
-    position: relative;
-    top: -10px;
-    left: 0;
+    width: 22px;
 }
 
 .cart-img {

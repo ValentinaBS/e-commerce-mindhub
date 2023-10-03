@@ -115,8 +115,13 @@ const options = {
                 return '../pages/profile.html'
             }
             return '#'
-        }
-
+        },
+        checkUserLoggedCheckout() {
+            if(this.checkUser) {
+                return 'checkout.html'
+            }
+            return '#'
+        },
     }
 }
 

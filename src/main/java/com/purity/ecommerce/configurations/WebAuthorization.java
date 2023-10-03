@@ -19,7 +19,7 @@ public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/products", "/api/login",
+                .antMatchers("/api/products", "/api/login", "/api/register",
                         "/web/index.html", "/web/pages/products.html", "/web/pages/product.html", "/web/pages/product.html", "/web/pages/login-signup.html", "/web/pages/contact.html", "/web/pages/about-us.html",
                         "/web/styles/**", "/web/js/**", "/web/assets/**",
                         "/api/products/{productId}", "/api/product/{id}", "/api/customer/current",
@@ -36,7 +36,7 @@ public class WebAuthorization {
 
                 .antMatchers("/api/logout").authenticated()
 
-                .anyRequest().permitAll();
+                .anyRequest().denyAll();
 
         http.formLogin()
                 .usernameParameter("email")

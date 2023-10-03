@@ -108,13 +108,11 @@
                     <a class="btn nav-icons" :href="checkUserLogged">
                         <i class="bi bi-person-fill fs-2"></i>
                     </a>
-                    <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                    <button class="btn nav-icons d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                         <i class="bi bi-bag-fill fs-4"></i>
-                        <template v-if="cart.cartCount > 0">
-                            <span class="cart-number">
-                                {{ cart.cartCount }}
-                            </span>
-                        </template>
+                        <span class="cart-number">
+                            {{ cart.cartCount }}
+                        </span>
                     </button>
                     <template v-if="checkUser">
                         <button @click="logOut" class="btn nav-icons">
@@ -171,7 +169,7 @@
                             </template>
                         </ul>
                         <div class="px-2">
-                            <a href="pages/checkout.html" class="btn primary-btn w-100 my-3 py-2">
+                            <a :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
                                 Go to Checkout
                                 <i class="bi bi-arrow-right"></i>
                             </a>

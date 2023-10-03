@@ -69,7 +69,13 @@ const options = {
                 return '../pages/profile.html'
             }
             return '../pages/login-signup.html'
-        }
+        },
+        checkUserLoggedCheckout() {
+            if(this.checkUser) {
+                return 'checkout.html'
+            }
+            return 'login-signup.html'
+        },
     }
 }
 
