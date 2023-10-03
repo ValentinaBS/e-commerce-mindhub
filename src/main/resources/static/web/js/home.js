@@ -3,12 +3,23 @@ const { createApp } = Vue;
 const options = {
     data() {
         return {
+            currentCustomer: [],
+            checkUser: false,
             allProducts: [],
             cart: {},
             moneyFormatter: {},
         }
     },
     created() {
+        axios.get('/api/customer/current')
+        .then(res => {
+            this.currentCustomer = res.data;
+            this.checkUser = true;
+        })
+        .catch(err => {
+            console.error(err);
+        });
+
         axios.get('/api/products')
             .then(res => {
                 this.allProducts = res.data.filter(prod => prod.active).slice(0, 4);
@@ -88,6 +99,14 @@ const options = {
                     console.error(err);
                 });
         },
+    },
+    computed: {
+        checkUserLogged() {
+            if(this.checkUser) {
+                return 'pages/profile.html'
+            }
+            return 'pages/login-signup.html'
+        }
     }
 }
 

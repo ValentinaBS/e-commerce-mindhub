@@ -16,12 +16,14 @@ const options = {
             sortBy: "",
 
             moneyFormatter: {},
+            currentCustomer: [],
+            checkUser: false,
         }
     },
     created() {
         let urlParams = new URLSearchParams(location.search);
         this.productCategory = urlParams.get("category");
-        console.log(this.productCategory);
+
         axios.get('/api/products')
             .then(res => {
                 this.allProducts = res.data.filter(prod => prod.active);
@@ -42,6 +44,14 @@ const options = {
                 console.log(error.response.headers);
             })
 
+        axios.get('/api/customer/current')
+            .then(res => {
+                this.currentCustomer = res.data;
+                this.checkUser = true;
+            })
+            .catch(err => {
+                console.error(err);
+        });
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
@@ -99,6 +109,14 @@ const options = {
     watch: {
         sortBy: "sortProducts"
     },    
+    computed: {
+        checkUserLogged() {
+            if(this.checkUser) {
+                return '../pages/profile.html'
+            }
+            return '../pages/login-signup.html'
+        }
+    }
 }
 
 const app = createApp(options);

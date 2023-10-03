@@ -5,7 +5,8 @@ const options = {
         return {
             currentCustomer: [],
             customerOrders: [],
-
+            filteredOrders: [],
+            searchInput: "",
             moneyFormatter: {}
         }
     },
@@ -13,7 +14,7 @@ const options = {
         axios.get('/api/customer/current')
             .then(res => {
                 this.currentCustomer = res.data;
-                this.customerOrders = this.currentCustomer.purchasedOrders;
+                this.customerOrders = this.currentCustomer.purchasedOrders.sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
                 console.log(this.currentCustomer);
                 console.log(this.customerOrders);
             })
@@ -23,9 +24,12 @@ const options = {
             currency: 'USD'
         })
     },
-
-    methods: {
-
+    computed: {
+        filterOrders(){
+            this.filteredOrders = this.customerOrders.filter(order => {
+                return order.id.toString() == this.searchInput || this.searchInput === "";
+            }) 
+        }
     }
 }
 
