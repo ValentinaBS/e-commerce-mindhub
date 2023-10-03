@@ -117,6 +117,11 @@
                             </span>
                         </template>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
 
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -369,7 +374,7 @@
                                 New York, NY 10012, US
                             </div>
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                     <i class="bi bi-envelope-fill"></i>
                                     puritymakeupcontact@gmail.com
                                 </div>

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <div class="small-header py-2 text-center fw-bold">
             <p class="mb-0 animate__animated animate__flash animate__slower animate__infinite">15% off every Monday and Tuesday on MAC lipsticks!</p>
         </div>
@@ -116,6 +116,11 @@
                             </span>
                         </template>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
 
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -180,16 +185,61 @@
             </div>
         </nav>
 
-        <nav class="mx-4 mx-md-5 mt-4 mt-md-5" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a class="nav-icons link-underline link-underline-opacity-0" href="../index.html">Home</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    {{ productCategory.charAt(0).toUpperCase() + productCategory.slice(1)}}
-                </li>
-            </ol>
-        </nav>
+            <nav class="mx-3 mx-md-5 mt-5 d-flex flex-wrap gap-1 justify-content-center justify-content-md-start" aria-label="breadcrumbCategories">
+                <a class="nav-icons link-underline link-underline-opacity-0" href="../index.html">Home - </a>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" :class="this.productCategory == 'all' ? 'active' : ''">
+                        <template v-if="this.productCategory == 'all'">
+                            <span class="underline-text">
+                                All
+                            </span>
+                        </template>
+                        <template v-else>
+                            <a class="nav-icons link-underline link-underline-opacity-0" href="../pages/products.html?category=all">All</a>
+                        </template>
+                    </li>
+                    <li class="breadcrumb-item" :class="this.productCategory == 'lips' ? 'active' : ''">
+                        <template v-if="this.productCategory == 'lips'">
+                            <span class="underline-text">
+                                Lips
+                            </span>
+                        </template>
+                        <template v-else>
+                            <a class="nav-icons link-underline link-underline-opacity-0" href="../pages/products.html?category=lips">Lips</a>
+                        </template>
+                    </li>
+                    <li class="breadcrumb-item" :class="this.productCategory == 'eyes' ? 'active' : ''">
+                        <template v-if="this.productCategory == 'eyes'">
+                            <span class="underline-text">
+                                Eyes
+                            </span>
+                        </template>
+                        <template v-else>
+                            <a class="nav-icons link-underline link-underline-opacity-0" href="../pages/products.html?category=eyes">Eyes</a>
+                        </template>
+                    </li>
+                    <li class="breadcrumb-item" :class="this.productCategory == 'skincare' ? 'active' : ''">
+                        <template v-if="this.productCategory == 'skincare'">
+                            <span class="underline-text">
+                                Skincare
+                            </span>
+                        </template>
+                        <template v-else>
+                            <a class="nav-icons link-underline link-underline-opacity-0" href="../pages/products.html?category=skincare">Skincare</a>
+                        </template>
+                    </li>
+                    <li class="breadcrumb-item" :class="this.productCategory == 'brushes' ? 'active' : ''">
+                        <template v-if="this.productCategory == 'brushes'">
+                            <span class="underline-text">
+                                Brushes
+                            </span>
+                        </template>
+                        <template v-else>
+                            <a class="nav-icons link-underline link-underline-opacity-0" href="../pages/products.html?category=brushes">Brushes</a>
+                        </template>
+                    </li>
+                </ol>
+            </nav>
 
         <section class="my-5 mx-2 mx-md-4 d-flex column-gap-5">
             <form @submit.prevent
@@ -477,7 +527,7 @@
                                 New York, NY 10012, US
                             </div>
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                     <i class="bi bi-envelope-fill"></i>
                                     puritymakeupcontact@gmail.com
                                 </div>

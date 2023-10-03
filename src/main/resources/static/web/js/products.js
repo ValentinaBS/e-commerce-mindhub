@@ -31,6 +31,7 @@ const options = {
 
         let urlParams = new URLSearchParams(location.search);
         this.productCategory = urlParams.get("category");
+        console.log(this.productCategory);
 
         axios.get('/api/products')
             .then(res => {
@@ -68,10 +69,6 @@ const options = {
     methods: {
         filter(){
             this.filteredProducts = this.productsByCategory.filter(prod => {
-                console.log(this.searchInput);
-                console.log(this.priceInput);
-                console.log(this.brandsChecked);
-                console.log(this.stockChecked);
 
                 const nameMatch = prod.name.toLowerCase().includes(this.searchInput.toLowerCase()) || this.searchInput === "";
                 const brandMatch = this.brandsChecked.includes(prod.brand) || this.brandsChecked.length === 0;
@@ -118,7 +115,31 @@ const options = {
         addToCart,
         updateCartItem,
         removeCartItem,
-        emptyCart
+        emptyCart,
+
+        logOut() {
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                    cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Log out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/api/logout')
+                        .then(() => {
+                            window.location.href = '../index.html'
+                            this.checkUser = false;
+                        })
+                }
+            })
+        }
     },
     watch: {
         sortBy: "sortProducts"

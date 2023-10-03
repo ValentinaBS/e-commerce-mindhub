@@ -4,6 +4,11 @@ const options = {
     data() {
         return {
             allProducts: [],
+            productsByCategory: [],
+            productCategory: "",
+            filteredProducts: [],
+            searchInput: "",
+
             product: {
                 nameInput: "",
                 brandInput: "",
@@ -20,10 +25,23 @@ const options = {
         }
     },
     created() {
+        let urlParams = new URLSearchParams(location.search);
+        this.productCategory = urlParams.get("category");
+        console.log(this.productCategory);
+
         axios.get('/api/products')
             .then(res => {
                 this.allProducts = res.data.filter(prod => prod.active);
                 console.log(this.allProducts);
+                
+                if(this.productCategory == "all") {
+                    this.productsByCategory = this.allProducts;
+                } else {
+                    this.productsByCategory = this.allProducts.filter(prod => prod.category == this.productCategory);
+                }
+
+                this.filteredProducts = this.productsByCategory;
+                this.uniqueBrands = Array.from(new Set(this.productsByCategory.map(prod => prod.brand)))
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -178,6 +196,36 @@ const options = {
                 }
             })
         },
+        logOut() {
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                    cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Log out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/api/logout')
+                        .then(() => {
+                            window.location.href = '../../index.html'
+                        })
+                }
+            })
+        },
+        searchProducts(){
+            this.filteredProducts = this.productsByCategory.filter(prod => {
+                return prod.name.toLowerCase().includes(this.searchInput.toLowerCase()) || this.searchInput === "";
+            }) 
+        }
+    },
+    watch: {
+        searchInput: "searchProducts"
     }
 }
 

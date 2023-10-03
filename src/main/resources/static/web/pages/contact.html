@@ -114,6 +114,11 @@
                             </span>
                         </template>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
 
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -178,26 +183,72 @@
         </nav>
     
     
-        <main class="d-flex flex-column align-items-center ">
-            <section class="d-flex flex-column align-items-center pt-3 gap-4 animate__animated animate__zoomIn mt-5">
+        <main class="d-flex flex-column flex-xl-row justify-content-evenly align-items-center ">
+            <section class="d-flex flex-column align-items-center  gap-4 animate__animated animate__zoomIn mt-5">
                     <h2><span class="underline-text">Contact Us</span></h2>
     
-                    <form class="formcontact d-flex flex-column gap-3">
-                        <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                        <input type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe">
-                        </div>
-                        <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Email</label>
-                        <input type="email" class="inputs form-control" id="exampleFormControlInput2" placeholder="email@gmail.com">
-                        </div>
-                        <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Your Message</label>
-                        <textarea class="textArea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I'd like to ask about..."></textarea>
-                        </div>
-                    <button type="submit" class="buttonSend btn btn-primary">Send</button>
-                    </form>
+                    <template v-if="responseMessage">
+                        <p class="text-center fs-5 my-5">
+                            {{ responseMessage }}
+                        </p>
+                    </template>
+                    <template v-else>
+                        <form ref="form" @submit.prevent="sendEmail" class="formcontact d-flex flex-column gap-3">
+                            <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+                            <input name="name" type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleFormControlInput2" class="form-label">Email</label>
+                            <input name="email" type="email" class="inputs form-control" id="exampleFormControlInput2" placeholder="email@gmail.com" required>
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Your Message</label>
+                            <textarea name="message" class="textArea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I'd like to ask about..." required></textarea>
+                            </div>
+                        <button type="submit" class="buttonSend btn primary-btn">Send</button>
+                        </form>
+                    </template>
     
+                </section>
+
+                <section class="sectionContact d-flex flex-column align-items-center mt-5">
+                    <h2 class="text-center">Do you want to chat with our Purity specialists?</h2>
+                    
+                    
+                    <div class="pt-5 d-flex flex-column align-items-center">
+                        <h5 class="name">Valentina Belen Sanchez</h5>
+                        <div class="d-flex gap-5 pt-3">
+                            <a class="anchorContact" href="https://www.linkedin.com/in/valentina-belen-sanchez/">Linkedin <span><i class="bi bi-linkedin"></i></span></a>
+                            <a class="anchorContact" href="https://github.com/ValentinaBS">Github <span><i class="bi bi-github"></i></span></a>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    <div class="pt-3 d-flex flex-column align-items-center">
+                        <h5 class="name">Weixing (Franco) Ou</h5>
+                        <div class="d-flex gap-5 pt-3">
+                            <a class="anchorContact" href="https://www.linkedin.com/in/weixingou/">Linkedin <span><i class="bi bi-linkedin"></i></span></a>
+                            <a class="anchorContact" href="https://github.com/WeixingOu">Github <span><i class="bi bi-github"></i></span></a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="pt-3 d-flex flex-column align-items-center">
+                        <h5 class="name">Aldana Priscila Araujo</h5>
+                        <div class="d-flex gap-5 pt-3">
+                            <a class="anchorContact" href="https://www.linkedin.com/in/aldana-priscila-araujo-169905166/">Linkedin <span><i class="bi bi-linkedin"></i></span></a>
+                            <a class="anchorContact" href="https://github.com/priara">Github <span><i class="bi bi-github"></i></span></a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="pt-3 d-flex flex-column align-items-center">
+                        <h5 class="name">Natalia Fuentes</h5>
+                        <div class="d-flex gap-5 pt-3">
+                            <a class="anchorContact" href="https://www.linkedin.com/in/natalia-fuentes-24b14215b/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">Linkedin <span><i class="bi bi-linkedin"></i></span></a>
+                            <a class="anchorContact" href="https://github.com/nataliafuentesg">Github <span><i class="bi bi-github"></i></span></a>
+                        </div>
+                    </div>
+                    
                 </section>
         </main>
     
@@ -295,7 +346,7 @@
                                 New York, NY 10012, US
                             </div>
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                     <i class="bi bi-envelope-fill"></i>
                                     puritymakeupcontact@gmail.com
                                 </div>
@@ -337,6 +388,14 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="../js/contact.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("8n-mlNrupz3rdpU0s");
+        })();
+    </script>
+    <script src="../js/contact.js"></script>
 </body>
 </html>
