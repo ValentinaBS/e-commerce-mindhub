@@ -54,12 +54,19 @@ public class CartController {
             }
 
             if (customer.getCart() == null) {
+<<<<<<< Updated upstream
                 cart = new Cart();
                 customer.setCart(cart);
             } else {
                 cart = customer.getCart();
             }
 
+=======
+                return new ResponseEntity<>("Customer cart not found", HttpStatus.NOT_FOUND);
+            }
+
+            cart = customer.getCart();
+>>>>>>> Stashed changes
 
         } else {
             if (sesionToken == null) {
@@ -135,5 +142,46 @@ public class CartController {
         cartItemRepository.delete(currentItem);
 
         return new ResponseEntity<>("Cart item removed successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("cart/empty")
+    @Transactional
+    public ResponseEntity<String> emptyCart(
+            Authentication authentication,
+            HttpServletRequest httpServletRequest
+    ) {
+        String sesionToken = (String) httpServletRequest.getSession(true).getAttribute("sesionToken");
+        Cart cart;
+
+        if (authentication != null) {
+            Customer customer = customerRepository.findByEmail(authentication.getName());
+
+            if (customer == null) {
+                return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            }
+
+            cart = customer.getCart();
+
+            if (cart == null) {
+                return new ResponseEntity<>("Cart not found", HttpStatus.NOT_FOUND);
+            }
+
+        } else {
+            if (sesionToken == null) {
+                return new ResponseEntity<>("Session token not found", HttpStatus.BAD_REQUEST);
+            }
+
+            cart = cartRepository.findBySesionToken(sesionToken);
+
+            if (cart == null) {
+                return new ResponseEntity<>("Cart not found", HttpStatus.NOT_FOUND);
+            }
+        }
+
+        cart.getItems().clear();
+
+        cartRepository.save(cart);
+
+        return new ResponseEntity<>("Cart emptied successfully", HttpStatus.OK);
     }
 }

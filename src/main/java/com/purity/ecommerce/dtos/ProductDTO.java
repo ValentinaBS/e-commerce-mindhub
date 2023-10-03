@@ -90,8 +90,13 @@ public class ProductDTO {
         return stock;
     }
 
+<<<<<<< Updated upstream
     public void setStock(int stock) {
         this.stock = stock;
+=======
+    public boolean isActive() {
+        return active;
+>>>>>>> Stashed changes
     }
 
     public String getImageUrl() {
