@@ -1,5 +1,5 @@
 .profile-list {
-    max-width: 300px;
+    max-width: 90%;
 }
 
 .list-group-item {
@@ -21,6 +21,9 @@
 }
 
 @media screen and (min-width: 768px) {
+    .profile-list {
+        max-width: 320px;
+    }
     .order {
         width: 650px;
     }
