@@ -13,10 +13,12 @@ const app = createApp({
       relatedProducts: [],
       allProducts: [],
       productCategory: "",
+
+      currentCustomer: [],
+      checkUser: false,
     };
   },
   created() {
-
     
     let urlParams = new URLSearchParams(location.search);
     this.productId = urlParams.get("id");
@@ -61,6 +63,15 @@ const app = createApp({
       .catch(error => {
         console.error("Error al obtener todos los productos:", error);
       });
+
+    axios.get('/api/customer/current')
+      .then(res => {
+          this.currentCustomer = res.data;
+          this.checkUser = true;
+      })
+      .catch(err => {
+          console.error(err);
+  });
   },
   methods: {
     
@@ -83,6 +94,14 @@ const app = createApp({
         return `/product.html?id=${productId}`;
       },
   },
+  computed: {
+    checkUserLogged() {
+        if(this.checkUser) {
+            return '../pages/profile.html'
+        }
+        return '../pages/login-signup.html'
+    }
+}
 });
 
 app.mount("#app");

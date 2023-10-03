@@ -6,6 +6,10 @@
     border-color: rgba(77, 66, 58, 0.5);
 }
 
+.search-profile {
+    width: 300px;
+}
+
 .order {
     width: 320px;
 }

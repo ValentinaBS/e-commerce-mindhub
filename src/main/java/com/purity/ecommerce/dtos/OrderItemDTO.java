@@ -8,6 +8,7 @@ public class OrderItemDTO {
     private String productDescription;
     private double productPrice;
     private int quantity;
+    private String imageUrl;
 
     public OrderItemDTO() {
     }
@@ -18,6 +19,7 @@ public class OrderItemDTO {
         this.productDescription = orderItem.getProduct().getDescriptShort();
         this.productPrice = orderItem.getProduct().getPrice();
         this.quantity = orderItem.getQuantity();
+        this.imageUrl = orderItem.getProduct().getImageUrl();
     }
 
 
@@ -60,5 +62,9 @@ public class OrderItemDTO {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

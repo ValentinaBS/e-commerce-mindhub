@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,7 @@
 </head>
 <body>
     <div id="app">
+        {{ filterOrders }}
         <div class="small-header py-2 text-center fw-bold">
             <p class="mb-0 animate__animated animate__flash animate__slower animate__infinite">15% off every Monday and Tuesday on MAC lipsticks!</p>
         </div>
@@ -255,7 +256,14 @@
             <h2 class="text-center underline-text">
                 Orders
             </h2>
-            <template v-if="customerOrders.length > 0" v-for="order in customerOrders">
+            <div class="search-profile py-4 pt-5 px-2 mx-auto">
+                <label for="searchInput" class="form-label">
+                    <i class="bi bi-search"></i>
+                    Search by order number:
+                </label>
+                <input v-model="searchInput" type="text" class="form-control" id="searchInput" placeholder="245">
+            </div>
+            <template v-if="customerOrders.length > 0 && filteredOrders.length > 0" v-for="order in filteredOrders">
                 <article class="order border border-black mx-auto rounded-3 p-4 my-5">
                     <div class="order-divider d-flex flex-column flex-md-row justify-content-between row-gap-3 pb-4 pt-2 px-4">
                         <div>
@@ -279,7 +287,7 @@
                         <template v-for="item in order.orderItems">
                             <li class="list-group-item py-4 px-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
                                 <div class="d-flex flex-wrap justify-content-center column-gap-3 row-gap-3">
-                                    <img class="order-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
+                                    <img class="order-img" :src="item.imageUrl" :alt="item.productName">
                                     <div class="d-flex flex-column justify-content-center">
                                         <h3 class="fs-3">
                                             {{ item.productName }}
@@ -299,6 +307,12 @@
                         </template>
                     </ul>
                 </article>
+            </template>
+            <template v-else-if="filteredOrders.length <= 0">
+                <p class="fs-3 text-center my-5"> No orders match your search... </p>
+            </template>
+            <template v-else>
+                <p class="fs-3 text-center my-5"> You haven't made an order yet... </p>
             </template>
         </section>
     
@@ -395,10 +409,12 @@
                                 <i class="bi bi-house-fill"></i>
                                 New York, NY 10012, US
                             </div>
-                            <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
-                                <i class="bi bi-envelope-fill"></i>
-                                puritycontact@gmail.com
-                            </div>
+                            <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
+                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    puritymakeupcontact@gmail.com
+                                </div>
+                            </a>
                             <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
                                 <i class="bi bi-telephone-fill"></i>
                                 +01 234 567 88
@@ -410,7 +426,7 @@
                         </div>
                     </div>
                 </section>
-    
+
                 <div class="footer-divider-bottom p-3">
                     <div class="row d-flex align-items-center p-3">
                         <div class="col-md-6 col-lg-5 text-center text-md-start mb-3 mb-md-0">

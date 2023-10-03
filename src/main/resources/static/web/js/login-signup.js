@@ -9,16 +9,23 @@ const options = {
       nameInput: "",
       addressInput: "",
 
+      currentCustomer: [],
+      checkUser: false,
       errorMessage: ""
     }
   },
 
   created() {
-
-
+    axios.get('/api/customer/current')
+      .then(res => {
+          this.currentCustomer = res.data;
+          this.checkUser = true;
+      })
+      .catch(err => {
+          console.error(err);
+  });
 
   },
-
   methods: {
     showForms() {
       this.showForm = !this.showForm;
@@ -59,10 +66,19 @@ const options = {
             }
             console.log(error.config);
         })
-}
-
+  },
+  
+},
+  computed: {
+    checkUserLogged() {
+        if(this.checkUser) {
+            return '../pages/profile.html'
+        }
+        return '#'
   }
-}
+
+}}
+
 
 
 
