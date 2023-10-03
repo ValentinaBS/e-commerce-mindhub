@@ -82,19 +82,19 @@
                         </div>
                     </div>
                     <div class="d-flex column-gap-4 justify-content-end me-2 mb-2">
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://twitter.com/" target="_blank">
                             <i class="bi bi-twitter fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.facebook.com/" target="_blank">
                             <i class="bi bi-facebook fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.pinterest.co.uk/" target="_blank">
                             <i class="bi bi-pinterest fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.instagram.com/" target="_blank">
                             <i class="bi bi-instagram fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.tiktok.com/" target="_blank">
                             <i class="bi bi-tiktok fs-2"></i>
                         </a>
                     </div>
@@ -181,8 +181,8 @@
         </nav>
     
     
-        <main class="d-flex flex-column flex-xl-row justify-content-evenly align-items-center ">
-            <section class="d-flex flex-column align-items-center  gap-4 animate__animated animate__zoomIn mt-5">
+        <main class="d-flex flex-column justify-content-evenly align-items-center ">
+            <section class="d-flex flex-column align-items-center gap-4 animate__animated animate__zoomIn mt-5">
                     <h2><span class="underline-text">Contact Us</span></h2>
     
                     <template v-if="responseMessage">
@@ -204,14 +204,14 @@
                             <label for="exampleFormControlTextarea1" class="form-label">Your Message</label>
                             <textarea name="message" class="textArea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I'd like to ask about..." required></textarea>
                             </div>
-                        <button type="submit" class="buttonSend btn primary-btn">Send</button>
+                        <button type="submit" class="buttonSend btn primary-btn">{{ loadingText }}</button>
                         </form>
                     </template>
     
                 </section>
 
                 <section class="sectionContact d-flex flex-column align-items-center mt-5">
-                    <h2 class="text-center">Do you want to chat with our Purity specialists?</h2>
+                    <h2 class="text-center mx-3">Do you want to chat with our Purity specialists?</h2>
                     
                     
                     <div class="pt-5 d-flex flex-column align-items-center">
@@ -281,19 +281,19 @@
                                 enhance your natural radiance.
                             </p>
                             <div class="d-flex column-gap-4 mt-4 me-2 justify-content-center justify-content-lg-start">
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://twitter.com/" target="_blank">
                                     <i class="bi bi-twitter fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.facebook.com/" target="_blank">
                                     <i class="bi bi-facebook fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.pinterest.co.uk/" target="_blank">
                                     <i class="bi bi-pinterest fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.instagram.com/" target="_blank">
                                     <i class="bi bi-instagram fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.tiktok.com/" target="_blank">
                                     <i class="bi bi-tiktok fs-5"></i>
                                 </a>
                             </div>
@@ -394,6 +394,6 @@
             emailjs.init("8n-mlNrupz3rdpU0s");
         })();
     </script>
-    <script src="../js/contact.js"></script>
+    <script type="module" src="../js/contact.js"></script>
 </body>
 </html>
