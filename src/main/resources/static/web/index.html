@@ -118,6 +118,11 @@
                             </span>
                         </template>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header px-4">

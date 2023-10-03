@@ -20,8 +20,14 @@
 
 <body>
     <div id="app">
+        <div class="d-flex justify-content-end">
+            <button @click="logOut" class="btn nav-icons mt-4 mx-3 d-flex align-items-center column-gap-2">
+                <i class="bi bi-box-arrow-left fs-4"></i>
+                Log Out
+            </button>
+        </div>
         <section>
-            <h1 class="underline-text text-center mt-5">
+            <h1 class="underline-text text-center mt-3">
                 Product Manager
             </h1>
             <form @submit.prevent class="product-manager-form row g-4 mx-auto mt-4 mt-md-5">

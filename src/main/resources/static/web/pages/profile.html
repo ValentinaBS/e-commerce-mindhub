@@ -101,12 +101,17 @@
                     <img class="nav-logo d-none d-md-block" src="../assets/logo.png" alt="Purity logo">
                 </a>
                 <div class="d-flex align-items-center">
-                    <a class="btn nav-icons" href="../pages/profile.html">
+                    <a class="btn nav-icons" href="#">
                         <i class="bi bi-person-fill fs-2"></i>
                     </a>
                     <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                         <i class="bi bi-bag-fill fs-4"></i>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header px-4">
