@@ -22,7 +22,7 @@ public class CustomerDTO {
         this.name = customer.getName();
         this.email = customer.getEmail();
         this.address = customer.getAddress();
-        this.cart = new CartDTO(customer.getCart());
+       // this.cart = new CartDTO(customer.getCart());
         this.purchasedOrders = customer.getPurchaseOrders().stream()
                 .map(PurchaseOrderDTO::new)
                 .collect(Collectors.toList());
