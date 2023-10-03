@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,9 @@ public class CustomerController {
     private CustomerRepository customerRepository;
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/customers")
     public List<CustomerDTO> getCustomers() {
@@ -32,11 +36,14 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/current")
-    public CustomerDTO getAuthenticatedCustomer(Authentication authentication) {
-        return new CustomerDTO(customerRepository.findByEmail(authentication.getName()));
+    public ResponseEntity<CustomerDTO> getAuthenticatedCustomer(Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.ok(null);
+        }
+        return ResponseEntity.ok(new CustomerDTO(customerRepository.findByEmail(authentication.getName())));
     }
 
-    @PostMapping ("/register")
+    @PostMapping ("/customer")
     public ResponseEntity<Object> registerNewCustomer(@RequestBody Customer customer, HttpServletRequest httpServletRequest){
 
         if (customer.getName().isBlank() || customer.getEmail().isBlank() || customer.getAddress().isBlank() || customer.getPassword().isBlank()) {
@@ -53,8 +60,9 @@ public class CustomerController {
         Customer newCustomer = new Customer(
                 customer.getName(),
                 customer.getEmail(),
-                customer.getAddress(),
-                customer.getPassword());
+                passwordEncoder.encode(customer.getPassword()),
+                customer.getAddress()
+                );
         customerRepository.save(newCustomer);
 
         String sesionToken = (String) httpServletRequest.getSession(true).getAttribute("sesionToken");

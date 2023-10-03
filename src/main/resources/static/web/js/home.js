@@ -22,7 +22,9 @@ const options = {
         axios.get('/api/customer/current')
         .then(res => {
             this.currentCustomer = res.data;
-            this.checkUser = true;
+            if (this.currentCustomer) {
+                 this.checkUser = true;
+            }
         })
         .catch(err => {
             console.error(err);
@@ -49,6 +51,7 @@ const options = {
         updateCartItem,
         removeCartItem,
         emptyCart,
+
         logOut() {
             Swal.fire({
                 title: 'Are you sure you want to log out?',

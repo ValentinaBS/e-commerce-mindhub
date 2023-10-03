@@ -107,10 +107,10 @@ public class CartController {
             if (product.getStock() < existItem.getCount()) {
                 return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
             } else {
-                if (product.getStock() < existItem.getCount() + 1) {
+                if (product.getStock() < existItem.getCount() + count) {
                     return new ResponseEntity<>("Not enough stock available", HttpStatus.FORBIDDEN);
                 }
-                existItem.setCount(existItem.getCount() + 1);
+                existItem.setCount(existItem.getCount() + count);
             }
         } else {
             if (count <= 0) {
