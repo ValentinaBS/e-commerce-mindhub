@@ -3,14 +3,14 @@ package com.purity.ecommerce.dtos;
 public class PaymentRequestDTO {
 
     private Long amount;
-    private String PaymentMethodId;
+    private String paymentMethodId;
 
     public PaymentRequestDTO() {
     }
 
     public PaymentRequestDTO(Long amount, String paymentMethodId) {
         this.amount = amount;
-        PaymentMethodId = paymentMethodId;
+        this.paymentMethodId = paymentMethodId;
     }
 
     public Long getAmount() {
@@ -22,10 +22,10 @@ public class PaymentRequestDTO {
     }
 
     public String getPaymentMethodId() {
-        return PaymentMethodId;
+        return paymentMethodId;
     }
 
     public void setPaymentMethodId(String paymentMethodId) {
-        PaymentMethodId = paymentMethodId;
+        paymentMethodId = paymentMethodId;
     }
 }
