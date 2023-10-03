@@ -19,13 +19,13 @@ public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/products", "/api/login", "/api/register",
+                .antMatchers("/api/products", "/api/register",
                         "/web/index.html", "/web/pages/products.html", "/web/pages/product.html", "/web/pages/product.html", "/web/pages/login-signup.html", "/web/pages/contact.html", "/web/pages/about-us.html",
                         "/web/styles/**", "/web/js/**", "/web/assets/**",
                         "/api/products/{productId}", "/api/product/{id}", "/api/customer/current",
                         "/api/cart/**").permitAll()
 
-                .antMatchers(HttpMethod.POST, "/api/cart/**", "/api/process-payment").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/cart/**", "/api/process-payment", "/api/customer", "/api/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/customers", "/api/cart/**", "/api/current/orders/generate-pdf").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/api/products/create").hasAuthority("ADMIN")
@@ -36,7 +36,7 @@ public class WebAuthorization {
 
                 .antMatchers("/api/logout").authenticated()
 
-                .anyRequest().denyAll();
+                .anyRequest().permitAll();
 
         http.formLogin()
                 .usernameParameter("email")

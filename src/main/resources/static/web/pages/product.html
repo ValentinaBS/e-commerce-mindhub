@@ -231,7 +231,7 @@
                                             <button @click="increment" class="btn btn-number"><i
                                                     class="fas fa-plus"></i>+</button>
                                         </div>
-                                        <button type="submit" :disabled="product.stock <= 0"
+                                        <button @click="addToCart(product.id, count)" type="submit" :disabled="product.stock <= 0"
                                             class="buttonBag1 w-100 btn primary-btn">
                                             <i class="bi bi-bag-plus-fill me-2"></i>
                                             Add to bag

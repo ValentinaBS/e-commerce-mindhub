@@ -28,16 +28,15 @@ const options = {
     axios.get('/api/customer/current')
       .then(res => {
           this.currentCustomer = res.data;
-          this.checkUser = true;
       })
       .catch(err => {
           console.error(err);
+      })
 
     this.moneyFormatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD'
     })
-  });
 },
     methods: {
         showForms() {
@@ -61,7 +60,7 @@ const options = {
                 })
         },
         submitSignUp() {
-            axios.post("/api/register", { name: this.nameInput, email: this.emailInput, password: this.passwordInput, address: this.addressInput })
+            axios.post("/api/customer", { name: this.nameInput, email: this.emailInput, password: this.passwordInput, address: this.addressInput })
                 .then(() => {
                     this.submitLogin();
                 })

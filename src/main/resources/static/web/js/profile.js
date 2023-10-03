@@ -28,7 +28,9 @@ const options = {
             .then(res => {
                 this.currentCustomer = res.data;
                 this.customerOrders = this.currentCustomer.purchasedOrders.sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
-                this.checkUser = true;
+                if (this.currentCustomer) {
+                                 this.checkUser = true;
+                            }
             })
 
         this.moneyFormatter = new Intl.NumberFormat('en-US', {

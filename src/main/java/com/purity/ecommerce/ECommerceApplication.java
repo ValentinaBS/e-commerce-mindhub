@@ -178,13 +178,7 @@ public class ECommerceApplication {
 			productRepository.save(productEye13);
 			productRepository.save(productEye14);
 			productRepository.save(productEye15);
-
-			Customer customer1 = new Customer("Customer1", "customer1@example.com", passwordEncoder.encode("password"), "Address 1");
-			customerRepository.save(customer1);
-			Customer admin = new Customer("admin", "admin3@example.com", passwordEncoder.encode("password"), "Address 3");
-			customerRepository.save(admin);
 		};
-
 	};
 
 }
