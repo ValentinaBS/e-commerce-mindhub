@@ -28,7 +28,7 @@
 }
 .sectionPayment{
     width: 100%;
-    height: 18rem;
+    min-height: 18rem;
 }
 .divCard{
     display: flex;
