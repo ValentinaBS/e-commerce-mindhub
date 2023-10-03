@@ -28,7 +28,7 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.PATCH, "/api/products/update/{productId}").hasAuthority("ADMIN")
                 .antMatchers("/web/pages/admin/**").hasAuthority("ADMIN")
 
-                .antMatchers("/web/pages/profile.html", "/web/pages/checkout.html").hasAuthority("CLIENT")
+                .antMatchers("/web/pages/profile.html", "/web/pages/checkout.html", "/api/customer/current").hasAuthority("CLIENT")
 
                 .antMatchers("/api/logout").authenticated()
 
