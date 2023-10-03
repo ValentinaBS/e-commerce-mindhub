@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -79,57 +80,55 @@ public class ProductController {
             @PathVariable Long productId,
             @RequestBody ProductDTO productDto) {
 
-        Optional<Product> optionalProduct = productRepository.findById(productId);
+        Product product = productRepository.findById(productId).orElse(null);
 
-        if (optionalProduct.isEmpty()) {
+        if (product == null) {
             return ResponseEntity.notFound().build();
         }
 
-        Product existingProduct = optionalProduct.get();
-
-        if (productDto.getName() != null) {
-            existingProduct.setName(productDto.getName());
+        if (productDto.getName() != null && !Objects.equals(product.getName(), productDto.getName())) {
+            product.setName(productDto.getName());
         }
 
-        if (productDto.getDescriptLong() != null) {
-            existingProduct.setDescriptLong(productDto.getDescriptLong());
+        if (productDto.getDescriptLong() != null && !Objects.equals(product.getDescriptLong(), productDto.getDescriptLong())) {
+            product.setDescriptLong(productDto.getDescriptLong());
         }
 
-        if (productDto.getDescriptShort() != null) {
-            existingProduct.setDescriptShort(productDto.getDescriptShort());
+        if (productDto.getDescriptShort() != null && !Objects.equals(product.getDescriptShort(), productDto.getDescriptShort())) {
+            product.setDescriptShort(productDto.getDescriptShort());
         }
 
-        if (productDto.getPrice() != null) {
+        if (productDto.getPrice() != null && productDto.getPrice() != product.getPrice()) {
             if (productDto.getPrice() <= 0) {
                 return ResponseEntity.badRequest().body("Price must be a positive number.");
             }
-            existingProduct.setPrice(productDto.getPrice());
+            product.setPrice(productDto.getPrice());
         }
 
-        if (productDto.getCategory() != null) {
-            existingProduct.setCategory(productDto.getCategory());
+        if (productDto.getCategory() != null && !Objects.equals(product.getCategory(), productDto.getCategory())) {
+            product.setCategory(productDto.getCategory());
         }
 
-        if (productDto.getBrand() != null) {
-            existingProduct.setBrand(productDto.getBrand());
+        if (productDto.getBrand() != null && !Objects.equals(product.getBrand(), productDto.getBrand())) {
+            product.setBrand(productDto.getBrand());
         }
 
-        if (productDto.getStock() != null) {
+        if (productDto.getStock() != null && productDto.getStock() != product.getStock()) {
             if (productDto.getStock() <= 0) {
                 return ResponseEntity.badRequest().body("Stock must be a positive number.");
             }
-            existingProduct.setStock(productDto.getStock());
+            product.setStock(productDto.getStock());
         }
 
-        if (productDto.getImageUrl() != null) {
+        if (productDto.getImageUrl() != null && !Objects.equals(product.getImageUrl(), productDto.getImageUrl())) {
             String imageUrl = productDto.getImageUrl();
             if (imageUrl.isBlank() || !isValidImageUrl(imageUrl)) {
                 return ResponseEntity.badRequest().body("Invalid image URL.");
             }
-            existingProduct.setImageUrl(imageUrl);
+            product.setImageUrl(imageUrl);
         }
 
-        productRepository.save(existingProduct);
+        productRepository.save(product);
 
         return ResponseEntity.ok("Product updated successfully.");
     }
