@@ -13,9 +13,9 @@ public class OrderItemDTO {
     }
 
     public OrderItemDTO(OrderItem orderItem) {
-        this.id = orderItem.getProduct().getId();
+        this.id = orderItem.getId();
         this.productName = orderItem.getProduct().getName();
-        this.productDescription = orderItem.getProduct().getDescriptLong();
+        this.productDescription = orderItem.getProduct().getDescriptShort();
         this.productPrice = orderItem.getProduct().getPrice();
         this.quantity = orderItem.getQuantity();
     }
