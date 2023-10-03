@@ -1,11 +1,9 @@
 package com.purity.ecommerce.controllers;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Paragraph;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.purity.ecommerce.dtos.OrderItemDTO;
 import com.purity.ecommerce.dtos.PurchaseOrderDTO;
 import com.purity.ecommerce.models.*;
 import com.purity.ecommerce.repositories.*;
@@ -23,8 +21,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -104,14 +104,10 @@ public class OrderController {
 
     @GetMapping("/current/orders/generate-pdf")
     public void generatePdf(
-            @RequestParam("startDate")
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, // Adjust the pattern to match your date format
-            @RequestParam("endDate")
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            @RequestParam Long id,
             HttpServletResponse response, Authentication authentication) throws IOException, DocumentException {
 
         Customer customer = customerRepository.findByEmail(authentication.getName());
-
 
         // Set the response headers for PDF
         response.setContentType("application/pdf");
@@ -122,20 +118,33 @@ public class OrderController {
         PdfWriter.getInstance(document, response.getOutputStream());
 
         // Open the document for writing
-        document.open();
-
-        // Add content to the PDF
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        document.open();
+        PdfPTable logo = new PdfPTable(1);
+        logo.setWidthPercentage(100);
 
-        String formattedStartDate = startDate.format(dateFormatter);
-        String formattedEndDate = endDate.format(dateFormatter);
+        Image img = Image.getInstance("C:\\Users\\User\\Downloads\\e-commerce\\e-commerce\\src\\main\\resources\\static\\web\\assets\\logo.png");
+        img.scaleToFit(200, 56);
+        img.setAlignment(Image.ALIGN_BASELINE);
+        PdfPCell imageCell = new PdfPCell(img);
+        imageCell.setBorder(PdfPCell.NO_BORDER);
+        logo.addCell(imageCell);
 
+        document.add(logo);
 
-        // Fetch and add order history data from your database
-        Set<PurchaseOrders> orderHistoryList = customer.getPurchaseOrders();
+        PdfPTable tableTitle = new PdfPTable(1);
+        PdfPCell cell = new PdfPCell();
+        cell.setBorder(PdfPCell.NO_BORDER);
+        cell.setPaddingBottom(20);
+        cell.addElement(new Paragraph("Your requested order:", new Font(Font.HELVETICA, 16)));
+        tableTitle.addCell(cell);
+        document.add(tableTitle);
 
-        if (!orderHistoryList.isEmpty()) {
+        // Fetch and add order data from your database
+        PurchaseOrders order = orderRepository.findById(id).orElse(null);
+        Set<OrderItem> orderItems = orderItemRepository.findByPurchaseOrders(order);
+
+        if (order != null) {
             PdfPTable table = new PdfPTable(4); // 4 columns: Order ID, Order Date, Quantity, Total Amount
 
             // Table header
@@ -149,22 +158,39 @@ public class OrderController {
             table.addCell(cell3);
             table.addCell(cell4);
 
-            // Table data
-            for (PurchaseOrders orderHistory : orderHistoryList) {
-                PdfPCell orderIdCell = new PdfPCell(new Paragraph(String.valueOf(orderHistory.getId())));
-                PdfPCell orderDateCell = new PdfPCell(new Paragraph(orderHistory.getOrderDate().format(dateFormatter))); // Use DateTimeFormatter
-                PdfPCell statusCell = new PdfPCell(new Paragraph(String.valueOf(orderHistory.getStatus())));
-                PdfPCell totalAmountCell = new PdfPCell(new Paragraph(String.valueOf(orderHistory.getTotalAmount())));
+            PdfPCell orderIdCell = new PdfPCell(new Paragraph(String.valueOf(id)));
+            PdfPCell orderDateCell = new PdfPCell(new Paragraph(order.getOrderDate().format(dateFormatter))); // Use DateTimeFormatter
+            PdfPCell statusCell = new PdfPCell(new Paragraph(String.valueOf(order.getStatus())));
+            PdfPCell totalAmountCell = new PdfPCell(new Paragraph("$" + order.getTotalAmount()));
 
-                table.addCell(orderIdCell);
-                table.addCell(orderDateCell);
-                table.addCell(statusCell);
-                table.addCell(totalAmountCell);
-            }
+            table.addCell(orderIdCell);
+            table.addCell(orderDateCell);
+            table.addCell(statusCell);
+            table.addCell(totalAmountCell);
 
             document.add(table);
+
+            PdfPTable tableItems = new PdfPTable(4);
+
+            tableItems.setSpacingBefore(50f);
+
+            // Table header
+            tableItems.addCell("Name");
+            tableItems.addCell("Description");
+            tableItems.addCell("Price");
+            tableItems.addCell("Quantity");
+
+            for (OrderItem orderItem : orderItems) {
+                tableItems.addCell(orderItem.getProduct().getName());
+                tableItems.addCell(orderItem.getProduct().getDescriptShort());
+                tableItems.addCell("$" + orderItem.getProduct().getPrice() * orderItem.getQuantity());
+                tableItems.addCell(String.valueOf(orderItem.getQuantity()));
+            }
+
+            document.add(tableItems);
+
         } else {
-            document.add(new Paragraph("No orders found between the specified dates."));
+            document.add(new Paragraph("No orders found."));
         }
 
         // Close the document

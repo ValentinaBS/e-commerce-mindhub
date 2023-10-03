@@ -278,7 +278,7 @@
                             <p class="fw-bold mb-1">Total</p>
                             <span>{{ moneyFormatter.format(order.totalAmount) }}</span>
                         </div>
-                        <button class="btn primary-btn d-flex align-items-center justify-content-center column-gap-3">
+                        <button @click="downloadOrder(order.id)" class="btn primary-btn d-flex align-items-center justify-content-center column-gap-3">
                             <i class="bi bi-download fs-5"></i>
                             Download PDF
                         </button>

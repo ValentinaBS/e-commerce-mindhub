@@ -22,7 +22,7 @@ public class WebAuthorization {
                 .antMatchers("/api/products", "/api/login",
                         "/web/index.html", "/web/pages/products.html", "/web/pages/product.html", "/web/pages/product.html", "/web/pages/login-signup.html", "/web/pages/contact.html", "/web/pages/about-us.html",
                         "/web/styles/**", "/web/js/**", "/web/assets/**",
-                        "/api/products/{productId}", "/api/product/{id}").permitAll()
+                        "/api/products/{productId}", "/api/product/{id}", "/api/customer/current").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/cart/{productID}","/api/process-payment").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/customers", "/api/current/orders/generate-pdf").permitAll()
 
@@ -30,7 +30,7 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.PATCH, "/api/products/update/{productId}").hasAuthority("ADMIN")
                 .antMatchers("/web/pages/admin/**").hasAuthority("ADMIN")
 
-                .antMatchers("/web/pages/profile.html", "/web/pages/checkout.html", "/api/customer/current").hasAuthority("CLIENT")
+                .antMatchers("/web/pages/profile.html", "/web/pages/checkout.html").hasAuthority("CLIENT")
 
                 .antMatchers("/api/logout").authenticated()
 
