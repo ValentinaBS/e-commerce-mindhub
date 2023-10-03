@@ -16,6 +16,7 @@ public class PurchaseOrderDTO {
     private String customerName;
     private Set<OrderItemDTO> orderItems;
 
+    public PurchaseOrderDTO() {}
     public PurchaseOrderDTO(PurchaseOrders purchaseOrders) {
         this.id = purchaseOrders.getId();
         this.orderDate = purchaseOrders.getOrderDate();
