@@ -29,9 +29,16 @@
     }
     
 }
-@media screen and (max-width: 760px){
+@media screen and (max-width: 840px){
     
     .imgLogin{
+        display: none;
+    }
+    
+}
+@media screen and (max-width: 1110px){
+    
+    .imgSignUp{
         display: none;
     }
     
