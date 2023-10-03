@@ -12,7 +12,7 @@ public class CartDTO {
     private Set<CartItemDTO> cartItems;
 
     public CartDTO(Cart cart) {
-//        this.id = cart.getId();
+        this.id = cart.getId();
         this.cartItems = cart.getItems().stream().map(CartItemDTO::new).collect(Collectors.toSet());
     }
 

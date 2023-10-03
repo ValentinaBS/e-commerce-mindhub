@@ -1,4 +1,6 @@
-let { createApp } = Vue
+const { createApp } = Vue
+
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
 
 const options = {
   data() {
@@ -11,11 +13,19 @@ const options = {
 
       currentCustomer: [],
       checkUser: false,
-      errorMessage: ""
+      errorMessage: "",
+
+      cart: {
+          cartItems: [],
+      },
+
+      moneyFormatter: {},
     }
   },
 
   created() {
+    this.loadCart();
+
     axios.get('/api/customer/current')
       .then(res => {
           this.currentCustomer = res.data;
@@ -23,6 +33,11 @@ const options = {
       })
       .catch(err => {
           console.error(err);
+
+    this.moneyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    })
   });
 
   },
@@ -46,7 +61,7 @@ const options = {
                   console.log(error.response.headers);
                   this.errorMessage = "Incorrect email or password.";
           })
-  },
+    },
   submitSignUp() {
     axios.post("/api/register", {name: this.nameInput, email: this.emailInput, password: this.passwordInput, address: this.addressInput})
         .then(() => {
@@ -67,6 +82,12 @@ const options = {
             console.log(error.config);
         })
   },
+
+  loadCart,
+  addToCart,
+  updateCartItem,
+  removeCartItem,
+  emptyCart
   
 },
   computed: {

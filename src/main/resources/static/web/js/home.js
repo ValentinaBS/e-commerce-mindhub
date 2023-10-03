@@ -1,16 +1,24 @@
 const { createApp } = Vue;
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const options = {
     data() {
         return {
             currentCustomer: [],
             checkUser: false,
             allProducts: [],
-            cart: {},
+
+            cart: {
+                cartItems: [],
+            },
+
             moneyFormatter: {},
         }
     },
     created() {
+        this.loadCart();
+
         axios.get('/api/customer/current')
         .then(res => {
             this.currentCustomer = res.data;
@@ -30,75 +38,17 @@ const options = {
                 console.log(error.response.headers);
             })
 
-        axios.get('/api/cart/current')
-            .then(res => {
-                this.cart = res.data;
-            })
-            .catch(err => {
-                console.error(err);
-            });
-
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
         })
     },
     methods: {
-        addToCart(productId, count) {
-            axios.post('/api/cart', {
-                productID: productId,
-                count: count
-            }, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(res => {
-                    this.loadCart();
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },
-
-        updateCartItem(cartItemId, count) {
-            if (count <= 0) {
-                this.removeCartItem(cartItemId);
-                return;
-            }
-            axios.post('/api/cart/update', {
-                cartItemID: cartItemId,
-                count: count
-            }, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(res => {
-                    this.loadCart();
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },
-
-        removeCartItem(cartItemId) {
-            axios.delete('/api/cart/remove', {
-                params: {
-                    cartItemID: cartItemId
-                }
-            }, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(res => {
-                    this.loadCart();
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart
     },
     computed: {
         checkUserLogged() {
