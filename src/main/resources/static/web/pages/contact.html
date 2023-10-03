@@ -109,6 +109,11 @@
                     <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                         <i class="bi bi-bag-fill fs-4"></i>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header px-4">
@@ -239,21 +244,28 @@
             <section class="d-flex flex-column align-items-center  gap-4 animate__animated animate__zoomIn mt-5">
                     <h2><span class="underline-text">Contact Us</span></h2>
     
-                    <form class="formcontact d-flex flex-column gap-3">
-                        <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                        <input type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe">
-                        </div>
-                        <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Email</label>
-                        <input type="email" class="inputs form-control" id="exampleFormControlInput2" placeholder="email@gmail.com">
-                        </div>
-                        <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Your Message</label>
-                        <textarea class="textArea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I'd like to ask about..."></textarea>
-                        </div>
-                    <button type="submit" class="buttonSend btn btn-primary">Send</button>
-                    </form>
+                    <template v-if="responseMessage">
+                        <p class="text-center fs-5 my-5">
+                            {{ responseMessage }}
+                        </p>
+                    </template>
+                    <template v-else>
+                        <form ref="form" @submit.prevent="sendEmail" class="formcontact d-flex flex-column gap-3">
+                            <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+                            <input name="name" type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe" required>
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleFormControlInput2" class="form-label">Email</label>
+                            <input name="email" type="email" class="inputs form-control" id="exampleFormControlInput2" placeholder="email@gmail.com" required>
+                            </div>
+                            <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Your Message</label>
+                            <textarea name="message" class="textArea form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I'd like to ask about..." required></textarea>
+                            </div>
+                        <button type="submit" class="buttonSend btn primary-btn">Send</button>
+                        </form>
+                    </template>
     
                 </section>
 
@@ -391,7 +403,7 @@
                                 New York, NY 10012, US
                             </div>
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                     <i class="bi bi-envelope-fill"></i>
                                     puritymakeupcontact@gmail.com
                                 </div>
@@ -433,6 +445,14 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("8n-mlNrupz3rdpU0s");
+        })();
+    </script>
     <script src="../js/contact.js"></script>
 </body>
 </html>

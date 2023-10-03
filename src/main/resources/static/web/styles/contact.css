@@ -8,21 +8,10 @@
     width: 20rem;
 }
 
-.buttonSend{
-    width: 100%;
-    background-color: #A38F85;
-    border: #A38F85;
-}
-.buttonSend:hover{
-    background-color: #DB9A95;
-}
 .textArea{
     resize: none;
-    border: 0.5px solid #4D423A;
 }
-.inputs{
-    border: 0.5px solid #4D423A;
-}
+
 .anchorContact{
     text-decoration: none;
     color: #4D423A;
@@ -40,6 +29,7 @@ bi:hover{
     font-weight: 600;
     text-align: center;
 }
+
 
 @media screen and (max-width: 500px){
     .formcontact{

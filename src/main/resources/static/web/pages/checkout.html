@@ -42,7 +42,7 @@
                 </div>
                 <div class="offcanvas-body">
                     <h5>
-                        Product Categories
+                        Categories
                     </h5>
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 ms-3">
                         <li class="nav-item">
@@ -79,7 +79,7 @@
                     <div class="border-top border-secondary-subtle mt-4 pt-3">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link nav-icons fs-5" href="#">About Us</a>
+                                <a class="nav-link nav-icons fs-5" href="../pages/about-us.html">About Us</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-icons fs-5" href="../pages/contact.html">Contact Us</a>
@@ -109,12 +109,70 @@
                 <img class="nav-logo d-none d-md-block" src="../assets/logo.png" alt="Purity logo">
             </a>
             <div class="d-flex align-items-center">
-                <a class="btn nav-icons" href="../pages/profile.html">
+                <a class="btn nav-icons" :href="checkUserLogged">
                     <i class="bi bi-person-fill fs-2"></i>
                 </a>
-                <button class="btn nav-icons">
+                <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                     <i class="bi bi-bag-fill fs-4"></i>
                 </button>
+                <template v-if="checkUser">
+                    <button @click="logOut" class="btn nav-icons">
+                        <i class="bi bi-box-arrow-left fs-4"></i>
+                    </button>
+                </template>
+            </div>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header px-4">
+                    <h3 class="offcanvas-title fw-bold" id="offcanvasRightLabel">Cart</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body pt-0 pb-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item py-4 px-2">
+                            <div class="d-flex column-gap-3">
+                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
+                                <div class="d-flex flex-column">
+                                    <h3 class="fs-4">
+                                        Lipstick Red Rose
+                                    </h3>
+                                    <p class="mb-0 small-text">
+                                        Brand: MAC
+                                    </p>
+                                    <p class="mb-1 small-text">
+                                        Total Stock: 20
+                                    </p>
+                                    <span class="fs-5 fw-bold">
+                                        $145
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div class="input-group-custom d-flex">
+                                    <button @click="decrement" class="btn primary-btn">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    <input type="text" class="form-control input-number" v-model="count"
+                                        :min="1" :max="100" placeholder="1">
+                                    <button @click="increment" class="btn primary-btn">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                                <button class="btn secondary-btn">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="px-2">
+                        <a href="../pages/checkout.html" class="btn primary-btn w-100 my-3 py-2">
+                            Go to Checkout
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <button class="btn secondary-btn w-100">
+                            Clear Cart
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -403,7 +461,7 @@
                             New York, NY 10012, US
                         </div>
                         <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                            <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                            <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                 <i class="bi bi-envelope-fill"></i>
                                 puritymakeupcontact@gmail.com
                             </div>
