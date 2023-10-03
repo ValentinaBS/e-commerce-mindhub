@@ -1,31 +1,29 @@
 package com.purity.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
 @Entity
-public class CartItem {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    private int count;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @JoinColumn(name = "order_id")
+    private PurchaseOrders purchaseOrders;
 
-    public CartItem() {
+    public OrderItem() {
     }
 
-    public CartItem(int count, Product product) {
-        this.count = count;
+    public OrderItem(int quantity, Product product) {
+        this.quantity = quantity;
         this.product = product;
     }
 
@@ -37,15 +35,14 @@ public class CartItem {
         this.id = id;
     }
 
-    public int getCount() {
-        return count;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    @JsonIgnore
     public Product getProduct() {
         return product;
     }
@@ -54,12 +51,12 @@ public class CartItem {
         this.product = product;
     }
 
-    @JsonIgnore
-    public Cart getCart() {
-        return cart;
+    public void setPurchaseOrders(PurchaseOrders purchaseOrders) {
+
+        this.purchaseOrders = purchaseOrders;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public PurchaseOrders getPurchaseOrders() {
+        return purchaseOrders;
     }
 }

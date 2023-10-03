@@ -10,8 +10,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -26,7 +30,6 @@ public class ProductController {
                 .stream()
                 .map(ProductDTO::new)
                 .collect(toList());
-
     }
 
     @GetMapping("/product/{id}")
@@ -37,137 +40,116 @@ public class ProductController {
                 .orElse(null);
     }
 
+
     @PostMapping("/products/create")
-    public ResponseEntity<String> createProduct(
-            @ModelAttribute ProductDTO productDto,
-            @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-
-        // Validate product data
-        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank()) {
-            return ResponseEntity.badRequest().body("Product data is required.");
+    public ResponseEntity<String> createProduct(@RequestBody ProductDTO productDto) {
+        if (productDto.getName().isBlank() || productDto.getDescriptLong().isBlank() || productDto.getDescriptShort().isBlank() ||  productDto.getPrice() <= 0 || productDto.getBrand().isBlank() || productDto.getCategory().isBlank() || productDto.getStock() <= 0 || productDto.getImageUrl().isBlank()) {
+            return ResponseEntity.badRequest().body("Product data is invalid.");
         }
-
-        // Validate image file
-        if (imageFile == null || imageFile.isEmpty()) {
-            return ResponseEntity.badRequest().body("Image file is required.");
+        Product existingProduct = productRepository.findByName(productDto.getName());
+        if (existingProduct != null) {
+            return ResponseEntity.badRequest().body("A product with the same name already exists.");
         }
-
-        try {
-            // Convert the image to Base64
-            byte[] imageBytes = imageFile.getBytes();
-            String base64Image = Base64.encodeBase64String(imageBytes);
-            String uniqueFileName = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
-
-            // Construct the GitHub API URL for creating a new file
-            String githubApiUrl = "https://api.github.com/repos/nataliafuentesg/project-images/contents/" + uniqueFileName;
-
-            // Create a JSON request body with the Base64-encoded image
-            String requestBody = "{\"message\":\"Add image\",\"content\":\"" + base64Image + "\"}";
-
-            // Create an HTTP POST request to the GitHub API
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer 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"); // Replace with your GitHub token
-            headers.set("Content-Type", "application/json");
-            HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
-
-            // Send the request to create the image file
-            ResponseEntity<String> response = restTemplate.exchange(
-                    githubApiUrl,
-                    HttpMethod.PUT,
-                    entity,
-                    String.class
-            );
-
-            if (response.getStatusCode() == HttpStatus.CREATED) {
-                String githubRawImageUrl = "https://raw.githubusercontent.com/nataliafuentesg/project-images/main/" + uniqueFileName;
-
-
-                productDto.setImageUrl(githubRawImageUrl);
-
-                Product product = new Product(
-                        productDto.getName(),
-                        productDto.getDescriptLong(),
-                        productDto.getDescriptShort(),
-                        productDto.getPrice(),
-                        productDto.getCategory(),
-                        productDto.getBrand(),
-                        productDto.getStock(),
-                        productDto.getImageUrl()
-                );
-
-                productRepository.save(product);
-
-                return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully.");
-
-            } else {
-                // Handle any error responses from GitHub here
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image to GitHub.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image to GitHub.");
+        String imageUrl = productDto.getImageUrl();
+        if (!isValidImageUrl(imageUrl)) {
+            return ResponseEntity.badRequest().body("Invalid image URL format.");
         }
+      
+        Product product = new Product(
+                productDto.getName(),
+                productDto.getDescriptLong(),
+                productDto.getDescriptShort(),
+                productDto.getPrice(),
+                productDto.getCategory(),
+                productDto.getBrand(),
+                productDto.getStock(),
+                imageUrl,
+                true
+        );
+
+        productRepository.save(product);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully.");
     }
+
 
     @PatchMapping("/products/update/{productId}")
     public ResponseEntity<String> updateProduct(
             @PathVariable Long productId,
             @RequestBody ProductDTO productDto) {
 
+        Product product = productRepository.findById(productId).orElse(null);
+
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (productDto.getName() != null && !Objects.equals(product.getName(), productDto.getName())) {
+            product.setName(productDto.getName());
+        }
+
+        if (productDto.getDescriptLong() != null && !Objects.equals(product.getDescriptLong(), productDto.getDescriptLong())) {
+            product.setDescriptLong(productDto.getDescriptLong());
+        }
+
+        if (productDto.getDescriptShort() != null && !Objects.equals(product.getDescriptShort(), productDto.getDescriptShort())) {
+            product.setDescriptShort(productDto.getDescriptShort());
+        }
+
+        if (productDto.getPrice() != null && productDto.getPrice() != product.getPrice()) {
+            if (productDto.getPrice() <= 0) {
+                return ResponseEntity.badRequest().body("Price must be a positive number.");
+            }
+            product.setPrice(productDto.getPrice());
+        }
+
+        if (productDto.getCategory() != null && !Objects.equals(product.getCategory(), productDto.getCategory())) {
+            product.setCategory(productDto.getCategory());
+        }
+
+        if (productDto.getBrand() != null && !Objects.equals(product.getBrand(), productDto.getBrand())) {
+            product.setBrand(productDto.getBrand());
+        }
+
+        if (productDto.getStock() != null && productDto.getStock() != product.getStock()) {
+            if (productDto.getStock() <= 0) {
+                return ResponseEntity.badRequest().body("Stock must be a positive number.");
+            }
+            product.setStock(productDto.getStock());
+        }
+
+        if (productDto.getImageUrl() != null && !Objects.equals(product.getImageUrl(), productDto.getImageUrl())) {
+            String imageUrl = productDto.getImageUrl();
+            if (imageUrl.isBlank() || !isValidImageUrl(imageUrl)) {
+                return ResponseEntity.badRequest().body("Invalid image URL.");
+            }
+            product.setImageUrl(imageUrl);
+        }
+
+        productRepository.save(product);
+
+        return ResponseEntity.ok("Product updated successfully.");
+    }
+
+
+    @PatchMapping("/products/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
         Optional<Product> optionalProduct = productRepository.findById(productId);
 
         if (optionalProduct.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
-        Product existingProduct = optionalProduct.get();
-
-        if (productDto.getName() != null) {
-            existingProduct.setName(productDto.getName());
-        }
-
-        if (productDto.getDescriptLong() != null) {
-            existingProduct.setDescriptLong(productDto.getDescriptLong());
-        }
-
-        if (productDto.getDescriptShort() != null) {
-            existingProduct.setDescriptShort(productDto.getDescriptShort());
-        }
-
-        if (productDto.getPrice() != null) {
-            existingProduct.setPrice(productDto.getPrice());
-        }
-
-        if (productDto.getCategory() != null) {
-            existingProduct.setCategory(productDto.getCategory());
-        }
-
-        if (productDto.getBrand() != null) {
-            existingProduct.setBrand(productDto.getBrand());
-        }
-
-        if (productDto.getStock() != null) {
-            existingProduct.setStock(productDto.getStock());
-        }
-
-        productRepository.save(existingProduct);
-
-        return ResponseEntity.ok("Product updated successfully.");
+        Product product = optionalProduct.get();
+        product.setActive(false);
+        productRepository.save(product);
+        return ResponseEntity.ok("Product deactivated successfully.");
     }
 
-    @DeleteMapping("/products/delete/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
-        if (productRepository.existsById(productId)) {
-            productRepository.deleteById(productId);
-            return ResponseEntity.ok("Product deleted successfully.");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    private boolean isValidImageUrl(String imageUrl) {
+        String imageUrlPattern = "^(https?://)?(www\\.)?.+\\.(jpg|jpeg|png|gif)$";
+        Pattern pattern = Pattern.compile(imageUrlPattern);
+        Matcher matcher = pattern.matcher(imageUrl);
+        return matcher.matches();
     }
-<<<<<<< Updated upstream
 
-
-=======
->>>>>>> Stashed changes
 }

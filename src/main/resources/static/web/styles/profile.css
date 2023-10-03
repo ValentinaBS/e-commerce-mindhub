@@ -1,9 +1,13 @@
 .profile-list {
-    max-width: 300px;
+    max-width: 90%;
 }
 
 .list-group-item {
     border-color: rgba(77, 66, 58, 0.5);
+}
+
+.search-profile {
+    width: 300px;
 }
 
 .order {
@@ -21,6 +25,9 @@
 }
 
 @media screen and (min-width: 768px) {
+    .profile-list {
+        max-width: 320px;
+    }
     .order {
         width: 650px;
     }
