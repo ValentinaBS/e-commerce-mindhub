@@ -1,5 +1,7 @@
 const { createApp } = Vue
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const options = {
     data() {
         return {
@@ -8,16 +10,27 @@ const options = {
             selectedOrder: {},
             filteredOrders: [],
             searchInput: "",
-            moneyFormatter: {}
+
+            moneyFormatter: {},
+
+            cart: {
+                cartItems: [],
+            },
+              
+            checkUser: false
         }
     },
+
     created() {
+        this.loadCart();
+
         axios.get('/api/customer/current')
             .then(res => {
                 this.currentCustomer = res.data;
                 this.customerOrders = this.currentCustomer.purchasedOrders.sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
-                console.log(this.currentCustomer);
-                console.log(this.customerOrders);
+                if (this.currentCustomer) {
+                                 this.checkUser = true;
+                            }
             })
 
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
@@ -26,6 +39,12 @@ const options = {
         })
     },
     methods: {
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart,
+  
         downloadOrder(orderId) {
             this.selectedOrder = this.customerOrders.find(order => order.id == orderId)
             console.log(this.selectedOrder);
@@ -48,6 +67,29 @@ const options = {
                     // Cleans the URL object
                     window.URL.revokeObjectURL(url);
                 })
+        },
+        logOut() {
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                    cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Log out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/api/logout')
+                        .then(() => {
+                            window.location.href = '../index.html'
+                            this.checkUser = false;
+                        })
+                }
+            })
         }
     },
     computed: {
@@ -55,7 +97,13 @@ const options = {
             this.filteredOrders = this.customerOrders.filter(order => {
                 return order.id.toString() == this.searchInput || this.searchInput === "";
             }) 
-        }
+        },
+        checkUserLoggedCheckout() {
+            if(this.checkUser) {
+                return 'checkout.html'
+            }
+            return 'login-signup.html'
+        },
     }
 }
 

@@ -1,20 +1,30 @@
 const { createApp } = Vue;
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const options = {
     data() {
         return {
             currentCustomer: [],
             checkUser: false,
             allProducts: [],
-            cart: {},
+
+            cart: {
+                cartItems: [],
+            },
+
             moneyFormatter: {},
         }
     },
     created() {
+        this.loadCart();
+
         axios.get('/api/customer/current')
         .then(res => {
             this.currentCustomer = res.data;
-            this.checkUser = true;
+            if (this.currentCustomer) {
+                 this.checkUser = true;
+            }
         })
         .catch(err => {
             console.error(err);
@@ -30,75 +40,42 @@ const options = {
                 console.log(error.response.headers);
             })
 
-        axios.get('/api/cart/current')
-            .then(res => {
-                this.cart = res.data;
-            })
-            .catch(err => {
-                console.error(err);
-            });
-
         this.moneyFormatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
         })
     },
     methods: {
-        addToCart(productId, count) {
-            axios.post('/api/cart', {
-                productID: productId,
-                count: count
-            }, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(res => {
-                    this.loadCart();
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart,
 
-        updateCartItem(cartItemId, count) {
-            if (count <= 0) {
-                this.removeCartItem(cartItemId);
-                return;
-            }
-            axios.post('/api/cart/update', {
-                cartItemID: cartItemId,
-                count: count
-            }, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
+        logOut() {
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                    cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Log out',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/api/logout')
+                        .then(() => {
+                            window.location.href = '/web/index.html'
+                            this.checkUser = false;
+                        })
                 }
             })
-                .then(res => {
-                    this.loadCart();
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },
+        }
 
-        removeCartItem(cartItemId) {
-            axios.delete('/api/cart/remove', {
-                params: {
-                    cartItemID: cartItemId
-                }
-            }, {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-                .then(res => {
-                    this.loadCart();
-                })
-                .catch(err => {
-                    console.error(err);
-                });
-        },
     },
     computed: {
         checkUserLogged() {
@@ -106,7 +83,13 @@ const options = {
                 return 'pages/profile.html'
             }
             return 'pages/login-signup.html'
-        }
+        },
+        checkUserLoggedCheckout() {
+            if(this.checkUser) {
+                return 'pages/checkout.html'
+            }
+            return 'pages/login-signup.html'
+        },
     }
 }
 

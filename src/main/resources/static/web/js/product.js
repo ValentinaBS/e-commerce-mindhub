@@ -1,5 +1,7 @@
 const { createApp } = Vue;
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
+
 const app = createApp({
   data() {
     return {
@@ -16,9 +18,14 @@ const app = createApp({
 
       currentCustomer: [],
       checkUser: false,
+
+      cart: {
+          cartItems: [],
+      },
     };
   },
   created() {
+    this.loadCart();
     
     let urlParams = new URLSearchParams(location.search);
     this.productId = urlParams.get("id");
@@ -67,14 +74,20 @@ const app = createApp({
     axios.get('/api/customer/current')
       .then(res => {
           this.currentCustomer = res.data;
-          this.checkUser = true;
+          if (this.currentCustomer) {
+                           this.checkUser = true;
+                      }
       })
       .catch(err => {
           console.error(err);
   });
+
+  this.moneyFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+  })
   },
   methods: {
-    
     getHomeUrl() {
       // Lógica para construir la URL de la página de todos los productos
       return "/products.html"; // Ajusta la URL según la ubicación real de tu página principal
@@ -93,6 +106,36 @@ const app = createApp({
         // Lógica para construir la URL del producto
         return `/product.html?id=${productId}`;
       },
+
+    loadCart,
+    addToCart,
+    updateCartItem,
+    removeCartItem,
+    emptyCart,
+    
+    logOut() {
+        Swal.fire({
+            title: 'Are you sure you want to log out?',
+            icon: 'warning',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
+                cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Log out',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then(result => {
+            if (result.isConfirmed) {
+                axios.post('/api/logout')
+                    .then(() => {
+                        window.location.href = '../index.html'
+                        this.checkUser = false;
+                    })
+            }
+        })
+    }
   },
   computed: {
     checkUserLogged() {
@@ -100,7 +143,13 @@ const app = createApp({
             return '../pages/profile.html'
         }
         return '../pages/login-signup.html'
-    }
+    },
+    checkUserLoggedCheckout() {
+      if(this.checkUser) {
+          return 'checkout.html'
+      }
+      return 'login-signup.html'
+  },
 }
 });
 

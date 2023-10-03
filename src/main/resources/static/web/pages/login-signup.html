@@ -84,19 +84,19 @@
                     </div>
                 </div>
                 <div class="d-flex column-gap-4 justify-content-end me-2 mb-2">
-                    <a class="nav-link nav-icons" href="#">
+                    <a class="nav-link nav-icons" href="https://twitter.com/" target="_blank">
                         <i class="bi bi-twitter fs-2"></i>
                     </a>
-                    <a class="nav-link nav-icons" href="#">
+                    <a class="nav-link nav-icons" href="https://www.facebook.com/" target="_blank">
                         <i class="bi bi-facebook fs-2"></i>
                     </a>
-                    <a class="nav-link nav-icons" href="#">
+                    <a class="nav-link nav-icons" href="https://www.pinterest.co.uk/" target="_blank">
                         <i class="bi bi-pinterest fs-2"></i>
                     </a>
-                    <a class="nav-link nav-icons" href="#">
+                    <a class="nav-link nav-icons" href="https://www.instagram.com/" target="_blank">
                         <i class="bi bi-instagram fs-2"></i>
                     </a>
-                    <a class="nav-link nav-icons" href="#">
+                    <a class="nav-link nav-icons" href="https://www.tiktok.com/" target="_blank">
                         <i class="bi bi-tiktok fs-2"></i>
                     </a>
                 </div>
@@ -108,10 +108,19 @@
                 <a class="btn nav-icons" :href="checkUserLogged">
                     <i class="bi bi-person-fill fs-2"></i>
                 </a>
-                <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                <button class="btn nav-icons d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                     <i class="bi bi-bag-fill fs-4"></i>
+                    <span class="cart-number">
+                        {{ cart.cartCount }}
+                    </span>
                 </button>
+                <template v-if="checkUser">
+                    <button @click="logOut" class="btn nav-icons">
+                        <i class="bi bi-box-arrow-left fs-4"></i>
+                    </button>
+                </template>
             </div>
+
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header px-4">
                     <h3 class="offcanvas-title fw-bold" id="offcanvasRightLabel">Cart</h3>
@@ -119,120 +128,58 @@
                 </div>
                 <div class="offcanvas-body pt-0 pb-4">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item py-4 px-2">
-                            <div class="d-flex column-gap-3">
-                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
-                                <div class="d-flex flex-column">
-                                    <h3 class="fs-4">
-                                        Lipstick Red Rose
-                                    </h3>
-                                    <p class="mb-0 small-text">
-                                        Brand: MAC
-                                    </p>
-                                    <p class="mb-1 small-text">
-                                        Total Stock: 20
-                                    </p>
-                                    <span class="fs-5 fw-bold">
-                                        $145
-                                    </span>
+                        <template v-if="cart.cartItems.length > 0">
+                            <li class="list-group-item py-4 px-2" v-for="item in cart.cartItems" :key="item.id">
+                                <div class="d-flex column-gap-3">
+                                    <img class="cart-img rounded-2" :src="item.productDTO.imageUrl" :alt="item.productDTO.name">
+                                    <div class="d-flex flex-column">
+                                        <h3 class="fs-4">
+                                            {{ item.productDTO.name }}
+                                        </h3>
+                                        <p class="mb-0 small-text">
+                                            Brand: {{ item.productDTO.brand }}
+                                        </p>
+                                        <p class="mb-1 small-text">
+                                            Total Stock: {{ item.productDTO.stock }}
+                                        </p>
+                                        <span class="fs-5 fw-bold">
+                                                {{ moneyFormatter.format(item.productDTO.price) }}
+                                            </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <div class="input-group-custom d-flex">
-                                    <button @click="decrement" class="btn primary-btn">
-                                        <i class="bi bi-dash-lg"></i>
-                                    </button>
-                                    <input type="text" class="form-control input-number" v-model="count"
-                                        :min="1" :max="100" placeholder="1">
-                                    <button @click="increment" class="btn primary-btn">
-                                        <i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </div>
-                                <button class="btn secondary-btn">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="list-group-item py-4 px-2">
-                            <div class="d-flex column-gap-3">
-                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
-                                <div class="d-flex flex-column">
-                                    <h3 class="fs-4">
-                                        Lipstick Red Rose
-                                    </h3>
-                                    <p class="mb-0 small-text">
-                                        Brand: MAC
-                                    </p>
-                                    <p class="mb-1 small-text">
-                                        Total Stock: 20
-                                    </p>
-                                    <span class="fs-5 fw-bold">
-                                        $145
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <div class="input-group-custom d-flex">
-                                    <button @click="decrement" class="btn primary-btn">
-                                        <i class="bi bi-dash-lg"></i>
-                                    </button>
-                                    <input type="text" class="form-control input-number" v-model="count"
-                                        :min="1" :max="100" placeholder="1">
-                                    <button @click="increment" class="btn primary-btn">
-                                        <i class="bi bi-plus-lg"></i>
+                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                    <div class="input-group-custom d-flex">
+                                        <button @click="updateCartItem(item.id, item.count - 1)" class="btn primary-btn">
+                                            <i class="bi bi-dash-lg"></i>
+                                        </button>
+                                        <input type="text" class="form-control input-number" v-model="item.count"
+                                               min="1" :max="item.stock">
+                                        <button @click="updateCartItem(item.id, item.count + 1)" class="btn primary-btn">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </button>
+                                    </div>
+                                    <button @click="removeCartItem(item.id)" class="btn secondary-btn">
+                                        <i class="bi bi-trash-fill"></i>
                                     </button>
                                 </div>
-                                <button class="btn secondary-btn">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="list-group-item py-4 px-2">
-                            <div class="d-flex column-gap-3">
-                                <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
-                                <div class="d-flex flex-column">
-                                    <h3 class="fs-4">
-                                        Lipstick Red Rose
-                                    </h3>
-                                    <p class="mb-0 small-text">
-                                        Brand: MAC
-                                    </p>
-                                    <p class="mb-1 small-text">
-                                        Total Stock: 20
-                                    </p>
-                                    <span class="fs-5 fw-bold">
-                                        $145
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mt-3">
-                                <div class="input-group-custom d-flex">
-                                    <button @click="decrement" class="btn primary-btn">
-                                        <i class="bi bi-dash-lg"></i>
-                                    </button>
-                                    <input type="text" class="form-control input-number" v-model="count"
-                                        :min="1" :max="100" placeholder="1">
-                                    <button @click="increment" class="btn primary-btn">
-                                        <i class="bi bi-plus-lg"></i>
-                                    </button>
-                                </div>
-                                <button class="btn secondary-btn">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
-                        </li>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <p>You have no products in your bag...</p>
+                        </template>
                     </ul>
                     <div class="px-2">
-                        <a href="../pages/checkout.html" class="btn primary-btn w-100 my-3 py-2">
+                        <a :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
                             Go to Checkout
                             <i class="bi bi-arrow-right"></i>
                         </a>
-                        <button class="btn secondary-btn w-100">
+                        <button @click="emptyCart" class="btn secondary-btn w-100">
                             Clear Cart
                         </button>
                     </div>
                 </div>
             </div>
+
         </div>
     </nav>
 
@@ -299,151 +246,139 @@
                         <p>Already have an account?</p>
                         <button class="buttonFinal" type="button" @click="showForms">Log In</button>
                       </div>
-    
-                      
-                      
                   </form>
                   <img class="imgSignUp" src="../assets/login-images/signup2.jpeg" alt="">
               </section>
-              
-
-
-
         </section>
-
-        
     </main>
+
     <footer class="footer text-center text-lg-start">
-      <div
-          class="footer-newsletter text-white rounded-3 px-5 py-4 d-flex flex-wrap align-items-center justify-content-between column-gap-3 row-gap-3">
-          <h2 class="text-uppercase mx-auto mx-xxl-0">
-              Stay up to date about our latest offers
-          </h2>
-          <form class="footer-form mx-auto mx-xxl-0" action="#">
-              <div class="input-group flex-nowrap">
-                  <span class="footer-icon input-group-text" id="email-icon">
-                      <i class="bi bi-envelope-fill"></i>
-                  </span>
-                  <input type="email" class="form-control border-start-0 ps-1" id="email" aria-label="Email"
-                      aria-describedby="email-icon" placeholder="email@email.com">
-              </div>
-              <button class="btn primary-btn mt-3 w-100">
-                  Subscribe to our Newsletter
-              </button>
-          </form>
-      </div>
-      <div class="footer-down container px-4 pb-0">
-          <section>
-              <div class="row">
-                  <div class="col-lg-3 col-xl-3 mx-auto my-3 mb-4">
-                      <h3 class="mb-4 fw-bold">
-                          Purity
-                      </h3>
-                      <p>
-                          Our mission is to provide you with a curated selection of high-quality makeup products that
-                          enhance your natural radiance.
-                      </p>
-                      <div class="d-flex column-gap-4 mt-4 me-2 justify-content-center justify-content-lg-start">
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=all">
-                            <i class="bi bi-back"></i>
-                            All
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=lips">
-                            <i class="bi bi-emoji-kiss-fill"></i>
-                            Lips
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=eyes">
-                            <i class="bi bi-eye-fill"></i>
-                            Eyes
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=skincare">
-                            <i class="bi bi-bandaid-fill"></i>
-                            Skincare
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=brushes">
-                            <i class="bi bi-brush-fill"></i>
-                            Brushes
-                        </a>
-                      </div>
-                  </div>
-
-                  <div class="footer-divider py-4 py-lg-0 col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                      <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
-                      <div class="d-flex flex-column row-gap-2">
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=all">
-                            <i class="bi bi-back"></i>
-                            All
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=lips">
-                            <i class="bi bi-emoji-kiss-fill"></i>
-                            Lips
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=eyes">
-                            <i class="bi bi-eye-fill"></i>
-                            Eyes
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=skincare">
-                            <i class="bi bi-bandaid-fill"></i>
-                            Skincare
-                        </a>
-                        <a class="nav-link nav-footer" href="../pages/products.html?category=brushes">
-                            <i class="bi bi-brush-fill"></i>
-                            Brushes
-                        </a>
-                      </div>
-                  </div>
-
-                  <div class="footer-divider py-4 py-lg-0 col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                      <h6 class="text-uppercase mb-4 font-weight-bold">
-                          Useful links
-                      </h6>
-                      <div class="d-flex flex-column row-gap-3">
-                          <a href="#" class="nav-link nav-footer">Join Our Club</a>
-                          <a href="../pages/profile.html" class="nav-link nav-footer">Your Account</a>
-                          <a href="../pages/about-us.html" class="nav-link nav-footer">About Us</a>
-                          <a href="../pages/contact.html" class="nav-link nav-footer">Help</a>
-                      </div>
-                  </div>
-
-                  <div class="footer-divider py-4 py-lg-0 col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                      <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                      <div class="d-flex justify-content-center justify-content-md-start column-gap-2">
-                          <i class="bi bi-house-fill"></i>
-                          New York, NY 10012, US
-                      </div>
-                      <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                        <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
-                            <i class="bi bi-envelope-fill"></i>
-                            puritymakeupcontact@gmail.com
+        <div
+            class="footer-newsletter text-white rounded-3 px-5 py-4 d-flex flex-wrap align-items-center justify-content-between column-gap-3 row-gap-3">
+            <h2 class="text-uppercase mx-auto mx-xxl-0">
+                Stay up to date about our latest offers
+            </h2>
+            <form class="footer-form mx-auto mx-xxl-0" action="#">
+                <div class="input-group flex-nowrap">
+                    <span class="footer-icon input-group-text" id="email-icon">
+                        <i class="bi bi-envelope-fill"></i>
+                    </span>
+                    <input type="email" class="form-control border-start-0 ps-1" id="email" aria-label="Email"
+                        aria-describedby="email-icon" placeholder="email@email.com">
+                </div>
+                <button class="btn primary-btn mt-3 w-100">
+                    Subscribe to our Newsletter
+                </button>
+            </form>
+        </div>
+        <div class="footer-down container px-4 pb-0">
+            <section>
+                <div class="row">
+                    <div class="col-lg-3 col-xl-3 mx-auto my-3 mb-4">
+                        <h3 class="mb-4 fw-bold">
+                            Purity
+                        </h3>
+                        <p>
+                            Our mission is to provide you with a curated selection of high-quality makeup products
+                            that
+                            enhance your natural radiance.
+                        </p>
+                        <div class="d-flex column-gap-4 mt-4 me-2 justify-content-center justify-content-lg-start">
+                            <a class="nav-link nav-footer" href="https://twitter.com/" target="_blank">
+                                <i class="bi bi-twitter fs-5"></i>
+                            </a>
+                            <a class="nav-link nav-footer" href="https://www.facebook.com/" target="_blank">
+                                <i class="bi bi-facebook fs-5"></i>
+                            </a>
+                            <a class="nav-link nav-footer" href="https://www.pinterest.co.uk/" target="_blank">
+                                <i class="bi bi-pinterest fs-5"></i>
+                            </a>
+                            <a class="nav-link nav-footer" href="https://www.instagram.com/" target="_blank">
+                                <i class="bi bi-instagram fs-5"></i>
+                            </a>
+                            <a class="nav-link nav-footer" href="https://www.tiktok.com/" target="_blank">
+                                <i class="bi bi-tiktok fs-5"></i>
+                            </a>
                         </div>
-                    </a>
-                      <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
-                          <i class="bi bi-telephone-fill"></i>
-                          +01 234 567 88
-                      </div>
-                      <div class="d-flex justify-content-center justify-content-md-start column-gap-2">
-                          <i class="bi bi-telephone-fill"></i>
-                          +01 234 542 89
-                      </div>
-                  </div>
-              </div>
-          </section>
+                    </div>
 
-          <div class="footer-divider-bottom p-3">
-              <div class="row d-flex align-items-center p-3">
-                  <div class="col-md-6 col-lg-5 text-center text-md-start mb-3 mb-md-0">
-                      <p class="mb-0">
-                          Purity © 2000-2023, All Rights Reserved
-                      </p>
-                  </div>
-                  <div class="col-md-6 col-lg-7 ml-lg-0 text-center text-md-end">
-                      <img class="me-4 footer-img" src="../assets/1percent.svg" alt="One percent for the planet">
-                      <img src="../assets/leaping_bunny.svg" alt="One percent for the planet">
-                  </div>
-              </div>
-          </div>
-      </div>
-  </footer>
+                    <div class="footer-divider py-4 py-lg-0 col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+                        <div class="d-flex flex-column row-gap-2">
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=all">
+                                <i class="bi bi-back"></i>
+                                All
+                            </a>
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=lips">
+                                <i class="bi bi-emoji-kiss-fill"></i>
+                                Lips
+                            </a>
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=eyes">
+                                <i class="bi bi-eye-fill"></i>
+                                Eyes
+                            </a>
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=skincare">
+                                <i class="bi bi-bandaid-fill"></i>
+                                Skincare
+                            </a>
+                            <a class="nav-link nav-footer" href="../pages/products.html?category=brushes">
+                                <i class="bi bi-brush-fill"></i>
+                                Brushes
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="footer-divider py-4 py-lg-0 col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">
+                            Useful links
+                        </h6>
+                        <div class="d-flex flex-column row-gap-3">
+                            <a href="#" class="nav-link nav-footer">Join Our Club</a>
+                            <a href="../pages/profile.html" class="nav-link nav-footer">Your Account</a>
+                            <a href="../pages/about-us.html" class="nav-link nav-footer">About Us</a>
+                            <a href="../pages/contact.html" class="nav-link nav-footer">Help</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-divider py-4 py-lg-0 col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                        <div class="d-flex justify-content-center justify-content-md-start column-gap-2">
+                            <i class="bi bi-house-fill"></i>
+                            New York, NY 10012, US
+                        </div>
+                        <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
+                            <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
+                                <i class="bi bi-envelope-fill"></i>
+                                puritymakeupcontact@gmail.com
+                            </div>
+                        </a>
+                        <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                            <i class="bi bi-telephone-fill"></i>
+                            +01 234 567 88
+                        </div>
+                        <div class="d-flex justify-content-center justify-content-md-start column-gap-2">
+                            <i class="bi bi-telephone-fill"></i>
+                            +01 234 542 89
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="footer-divider-bottom p-3">
+                <div class="row d-flex align-items-center p-3">
+                    <div class="col-md-6 col-lg-5 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0">
+                            Purity © 2000-2023, All Rights Reserved
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-lg-7 ml-lg-0 text-center text-md-end">
+                        <img class="me-4 footer-img" src="../assets/1percent.svg" alt="One percent for the planet">
+                        <img src="../assets/leaping_bunny.svg" alt="One percent for the planet">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     
 
     </div>
@@ -453,6 +388,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/login-signup.js"></script>
+    <script type="module" src="../js/login-signup.js"></script>
 </body>
 </html>

@@ -85,19 +85,19 @@
                         </div>
                     </div>
                     <div class="d-flex column-gap-4 justify-content-end me-2 mb-2">
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://twitter.com/" target="_blank">
                             <i class="bi bi-twitter fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.facebook.com/" target="_blank">
                             <i class="bi bi-facebook fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.pinterest.co.uk/" target="_blank">
                             <i class="bi bi-pinterest fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.instagram.com/" target="_blank">
                             <i class="bi bi-instagram fs-2"></i>
                         </a>
-                        <a class="nav-link nav-icons" href="#">
+                        <a class="nav-link nav-icons" href="https://www.tiktok.com/" target="_blank">
                             <i class="bi bi-tiktok fs-2"></i>
                         </a>
                     </div>
@@ -109,127 +109,72 @@
                     <a class="btn nav-icons" :href="checkUserLogged">
                         <i class="bi bi-person-fill fs-2"></i>
                     </a>
-                    <button class="btn nav-icons" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                    <button class="btn nav-icons d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                         <i class="bi bi-bag-fill fs-4"></i>
+                        <span class="cart-number">
+                            {{ cart.cartCount }}
+                        </span>
                     </button>
+                    <template v-if="checkUser">
+                        <button @click="logOut" class="btn nav-icons">
+                            <i class="bi bi-box-arrow-left fs-4"></i>
+                        </button>
+                    </template>
                 </div>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                    aria-labelledby="offcanvasRightLabel">
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header px-4">
                         <h3 class="offcanvas-title fw-bold" id="offcanvasRightLabel">Cart</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body pt-0 pb-4">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item py-4 px-2">
-                                <div class="d-flex column-gap-3">
-                                    <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
-                                    <div class="d-flex flex-column">
-                                        <h3 class="fs-4">
-                                            Lipstick Red Rose
-                                        </h3>
-                                        <p class="mb-0 small-text">
-                                            Brand: MAC
-                                        </p>
-                                        <p class="mb-1 small-text">
-                                            Total Stock: 20
-                                        </p>
-                                        <span class="fs-5 fw-bold">
-                                            $145
-                                        </span>
+                            <template v-if="cart.cartItems.length > 0">
+                                <li class="list-group-item py-4 px-2" v-for="item in cart.cartItems" :key="item.id">
+                                    <div class="d-flex column-gap-3">
+                                        <img class="cart-img rounded-2" :src="item.productDTO.imageUrl" :alt="item.productDTO.name">
+                                        <div class="d-flex flex-column">
+                                            <h3 class="fs-4">
+                                                {{ item.productDTO.name }}
+                                            </h3>
+                                            <p class="mb-0 small-text">
+                                                Brand: {{ item.productDTO.brand }}
+                                            </p>
+                                            <p class="mb-1 small-text">
+                                                Total Stock: {{ item.productDTO.stock }}
+                                            </p>
+                                            <span class="fs-5 fw-bold">
+                                                {{ moneyFormatter.format(item.productDTO.price) }}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mt-3">
-                                    <div class="input-group-custom d-flex">
-                                        <button @click="decrement" class="btn primary-btn">
-                                            <i class="bi bi-dash-lg"></i>
-                                        </button>
-                                        <input type="text" class="form-control input-number" v-model="count" :min="1"
-                                            :max="100" placeholder="1">
-                                        <button @click="increment" class="btn primary-btn">
-                                            <i class="bi bi-plus-lg"></i>
-                                        </button>
-                                    </div>
-                                    <button class="btn secondary-btn">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list-group-item py-4 px-2">
-                                <div class="d-flex column-gap-3">
-                                    <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
-                                    <div class="d-flex flex-column">
-                                        <h3 class="fs-4">
-                                            Lipstick Red Rose
-                                        </h3>
-                                        <p class="mb-0 small-text">
-                                            Brand: MAC
-                                        </p>
-                                        <p class="mb-1 small-text">
-                                            Total Stock: 20
-                                        </p>
-                                        <span class="fs-5 fw-bold">
-                                            $145
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mt-3">
-                                    <div class="input-group-custom d-flex">
-                                        <button @click="decrement" class="btn primary-btn">
-                                            <i class="bi bi-dash-lg"></i>
-                                        </button>
-                                        <input type="text" class="form-control input-number" v-model="count" :min="1"
-                                            :max="100" placeholder="1">
-                                        <button @click="increment" class="btn primary-btn">
-                                            <i class="bi bi-plus-lg"></i>
+                                    <div class="d-flex align-items-center justify-content-between mt-3">
+                                        <div class="input-group-custom d-flex">
+                                            <button @click="updateCartItem(item.id, item.count - 1)" class="btn primary-btn">
+                                                <i class="bi bi-dash-lg"></i>
+                                            </button>
+                                            <input type="text" class="form-control input-number" v-model="item.count"
+                                                   min="1" :max="item.stock">
+                                            <button @click="updateCartItem(item.id, item.count + 1)" class="btn primary-btn">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                        </div>
+                                        <button @click="removeCartItem(item.id)" class="btn secondary-btn">
+                                            <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </div>
-                                    <button class="btn secondary-btn">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
-                                </div>
-                            </li>
-                            <li class="list-group-item py-4 px-2">
-                                <div class="d-flex column-gap-3">
-                                    <img class="cart-img rounded-2" src="../assets/image 1.jpg" alt="Test image">
-                                    <div class="d-flex flex-column">
-                                        <h3 class="fs-4">
-                                            Lipstick Red Rose
-                                        </h3>
-                                        <p class="mb-0 small-text">
-                                            Brand: MAC
-                                        </p>
-                                        <p class="mb-1 small-text">
-                                            Total Stock: 20
-                                        </p>
-                                        <span class="fs-5 fw-bold">
-                                            $145
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mt-3">
-                                    <div class="input-group-custom d-flex">
-                                        <button @click="decrement" class="btn primary-btn">
-                                            <i class="bi bi-dash-lg"></i>
-                                        </button>
-                                        <input type="text" class="form-control input-number" v-model="count" :min="1"
-                                            :max="100" placeholder="1">
-                                        <button @click="increment" class="btn primary-btn">
-                                            <i class="bi bi-plus-lg"></i>
-                                        </button>
-                                    </div>
-                                    <button class="btn secondary-btn">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
-                                </div>
-                            </li>
+                                </li>
+                            </template>
+                            <template v-else>
+                                <p>You have no products in your bag...</p>
+                            </template>
                         </ul>
                         <div class="px-2">
-                            <a href="../pages/checkout.html" class="btn primary-btn w-100 my-3 py-2">
+                            <a :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
                                 Go to Checkout
                                 <i class="bi bi-arrow-right"></i>
                             </a>
-                            <button class="btn secondary-btn w-100">
+                            <button @click="emptyCart" class="btn secondary-btn w-100">
                                 Clear Cart
                             </button>
                         </div>
@@ -364,19 +309,19 @@
                                 enhance your natural radiance.
                             </p>
                             <div class="d-flex column-gap-4 mt-4 me-2 justify-content-center justify-content-lg-start">
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://twitter.com/" target="_blank">
                                     <i class="bi bi-twitter fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.facebook.com/" target="_blank">
                                     <i class="bi bi-facebook fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.pinterest.co.uk/" target="_blank">
                                     <i class="bi bi-pinterest fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.instagram.com/" target="_blank">
                                     <i class="bi bi-instagram fs-5"></i>
                                 </a>
-                                <a class="nav-link nav-footer" href="#">
+                                <a class="nav-link nav-footer" href="https://www.tiktok.com/" target="_blank">
                                     <i class="bi bi-tiktok fs-5"></i>
                                 </a>
                             </div>
@@ -427,7 +372,7 @@
                                 New York, NY 10012, US
                             </div>
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3">
+                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                     <i class="bi bi-envelope-fill"></i>
                                     puritymakeupcontact@gmail.com
                                 </div>
@@ -467,7 +412,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/about-us.js"></script>
+    <script type="module" src="../js/about-us.js"></script>
 </body>
 
 </html>

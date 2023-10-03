@@ -12,6 +12,25 @@
     resize: none;
 }
 
+.anchorContact{
+    text-decoration: none;
+    color: #4D423A;
+    font-size: 1.5rem;
+
+}
+.anchorContact:hover{
+    color:#DB9A95 ;
+}
+bi:hover{
+    color:#DB9A95 ;
+}
+
+.name{
+    font-weight: 600;
+    text-align: center;
+}
+
+
 @media screen and (max-width: 500px){
     .formcontact{
         width: 15rem;
