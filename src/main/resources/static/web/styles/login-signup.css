@@ -16,10 +16,23 @@
     text-decoration: underline;
     color: #4D423A;
 }
+.imgLogin{
+    width: 30rem;
+}
+.imgSignUp{
+    width: 45rem;
+}
 @media screen and (min-width: 300px) and (max-width: 500px){
     
     .formLogin-Signup{
         width: 15rem;
+    }
+    
+}
+@media screen and (max-width: 760px){
+    
+    .imgLogin{
+        display: none;
     }
     
 }
