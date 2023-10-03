@@ -12,6 +12,7 @@ const app = Vue.createApp({
             try {
                 const response = await axios.post('http://localhost:8080/api/process-payment'); // Replace with your server endpoint
                 this.clientSecret = response.data;
+                console.log('Response:', response.data)
             } catch (error) {
                 console.error(error);
             }
