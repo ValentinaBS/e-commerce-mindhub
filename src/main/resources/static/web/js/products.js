@@ -23,6 +23,7 @@ const options = {
     created() {
         let urlParams = new URLSearchParams(location.search);
         this.productCategory = urlParams.get("category");
+        console.log(this.productCategory);
 
         axios.get('/api/products')
             .then(res => {
@@ -60,10 +61,6 @@ const options = {
     methods: {
         filter(){
             this.filteredProducts = this.productsByCategory.filter(prod => {
-                console.log(this.searchInput);
-                console.log(this.priceInput);
-                console.log(this.brandsChecked);
-                console.log(this.stockChecked);
 
                 const nameMatch = prod.name.toLowerCase().includes(this.searchInput.toLowerCase()) || this.searchInput === "";
                 const brandMatch = this.brandsChecked.includes(prod.brand) || this.brandsChecked.length === 0;
