@@ -20,6 +20,17 @@ export function addToCart(productId, count) {
     })
         .then(res => {
             this.loadCart();
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true
+            })
+            Toast.fire({
+                icon: 'success',
+                text: 'The item has been added to the bag!'
+            })
         })
         .catch(err => {
             console.error(err);

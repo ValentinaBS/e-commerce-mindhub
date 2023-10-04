@@ -38,10 +38,7 @@
     text-decoration: underline;
     font-weight: 600;
 }
-.description-p{
-    font-size: 0.8rem;
-    color: #4D423A;
-}
+
 .priceProduct{
     font-weight: 600;
     font-size: 1.8rem;
@@ -52,7 +49,6 @@
     align-items: center;
     justify-content: space-between; 
     border-radius: 0.5rem; 
-    padding: 0.5rem; 
     height: 3rem;
 }
 
@@ -139,7 +135,6 @@
 }
 .description-p{
     font-size: 0.8rem;
-    color: #4D423A;
 }
 .priceProduct{
     font-weight: 600;

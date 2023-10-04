@@ -106,7 +106,11 @@ const options = {
             }
         },
         clearFilters() {
-            this.filteredProducts = this.allProducts.filter(prod => prod.category == this.productCategory);
+            if(this.productCategory == "all") {
+                this.filteredProducts = this.allProducts;
+            } else {
+                this.filteredProducts = this.allProducts.filter(prod => prod.category == this.productCategory);
+            }
             this.searchInput = "";
             this.priceInput = "";
             this.brandsChecked = [];
@@ -125,8 +129,8 @@ const options = {
                 icon: 'warning',
                 buttonsStyling: false,
                 customClass: {
-                    confirmButton: 'btn primary-btn btn-lg mb-3 mb-md-0',
-                    cancelButton: 'btn secondary-btn btn-lg me-md-5 mb-3 mt-2 my-md-2'
+                    confirmButton: 'btn primary-btn btn-lg my-2',
+                    cancelButton: 'btn secondary-btn btn-lg me-5 my-2'
                 },
                 showCancelButton: true,
                 confirmButtonText: 'Log out',
