@@ -93,7 +93,7 @@ const app = createApp({
       return "/products.html"; // Ajusta la URL según la ubicación real de tu página principal
     },
     increment() {
-      if (this.count < 10) {
+      if (this.count < this.product.stock) {
         this.count++;
       }
     },

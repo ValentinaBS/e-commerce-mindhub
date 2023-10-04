@@ -1,19 +1,24 @@
 const { createApp } = Vue
 
+import { loadCart, addToCart, updateCartItem, removeCartItem, emptyCart } from './utils.js';
 
 const app = createApp({
     data() {
         return {
             paymentMethodId: 'pm_card_visa',
             processing: false,
+            processingMessage: "Place Order",
             clientSecret: 'pi_3NxDZUDxOCV4zZt42jEtY98j_secret_JuMhECF70tB8EejcI2Rruciq',
             amount : 0,
             cart: {
                 cartItems: [],
             },
+            moneyFormatter: {}
         };
     },
     created() {
+        this.loadCart();
+
         axios.get('/api/cart/current')
         .then(res => {
             this.cart = res.data;
@@ -23,12 +28,23 @@ const app = createApp({
         .catch(err => {
             console.error(err);
         });
+
+        this.moneyFormatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        })
     },
         
     methods: {
+        loadCart,
+        addToCart,
+        updateCartItem,
+        removeCartItem,
+        emptyCart,
         async submitPayment() {
 
-            this.processing = true;
+            this.processing = true
+            this.processingMessage = "Loading...";
 
             try {
                 const response = await axios.post('http://localhost:8080/api/process-payment', {
@@ -55,10 +71,10 @@ const app = createApp({
                 },
                     }).then((result) => {
                         if (result.isConfirmed) {
+                            emptyCart();
                             window.location.href = "http://localhost:8080/web/pages/profile.html";
                         }
                     });
-
                     
                 } else {
                     alert('Payment processing failed.');
@@ -69,6 +85,7 @@ const app = createApp({
                 console.error(error);
             } finally {
                 this.processing = false;
+                this.processingMessage = "Place Order";
             }
         },
         logOut() {

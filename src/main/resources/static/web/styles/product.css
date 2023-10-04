@@ -13,9 +13,7 @@
     text-decoration: none;
     color: #4D423A;
 }
-.breadcrumb-item{
-    color: #4D423A;
-}
+
 .card-body{
     width: 100%;
     min-height: 100%;
@@ -48,35 +46,21 @@
     font-weight: 600;
     font-size: 1.8rem;
 }
-.primary-btn {
-    width: 20rem;
-}
 
 .input-group-custom {
     display: flex;
     align-items: center;
     justify-content: space-between; 
     border-radius: 0.5rem; 
-    background-color: #CDC6C3;
     padding: 0.5rem; 
     height: 3rem;
-}
-
-.input-group-custom button {
-    border: none;
-    background-color: transparent; 
-    cursor: pointer; 
 }
 
 .input-group-custom input {
     border: none; 
     background-color: transparent;
     text-align: center;
-    width: 40px;
-}
-
-.input-group-custom button:hover {
-    background-color: #CDC6C3;
+    width: 70px;
 }
 
 
@@ -176,35 +160,6 @@
 .custom-button:hover {
     background-color: #CDC6C3;
 }
-
-.input-group-custom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-    border-radius: 0.5rem; 
-    background-color: #CDC6C3;
-    padding: 0.5rem; 
-    height: 3rem;
-}
-
-.input-group-custom button {
-    border: none;
-    background-color: transparent; 
-    cursor: pointer; 
-}
-
-.input-group-custom input {
-    border: none; 
-    background-color: transparent;
-    text-align: center;
-    width: 40px;
-}
-
-.input-group-custom button:hover {
-    background-color: #CDC6C3;
-}
-
-
 
 .h5article{
     font-size: 1rem;

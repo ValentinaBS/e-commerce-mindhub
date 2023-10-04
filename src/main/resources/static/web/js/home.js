@@ -23,7 +23,7 @@ const options = {
         .then(res => {
             this.currentCustomer = res.data;
             if (this.currentCustomer) {
-                 this.checkUser = true;
+                this.checkUser = true;
             }
         })
         .catch(err => {
