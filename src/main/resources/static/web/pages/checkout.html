@@ -159,7 +159,7 @@
                                                 <i class="bi bi-plus-lg"></i>
                                             </button>
                                         </div>
-                                        <button @click="removeCartItem(item.id)" class="btn secondary-btn">
+                                        <button disabled @click="removeCartItem(item.id)" class="btn secondary-btn">
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </div>
@@ -174,7 +174,7 @@
                                 Go to Checkout
                                 <i class="bi bi-arrow-right"></i>
                             </a>
-                            <button @click="emptyCart" class="btn secondary-btn w-100">
+                            <button disabled @click="emptyCart" class="btn secondary-btn w-100">
                                 Clear Cart
                             </button>
                         </div>
@@ -185,11 +185,11 @@
         </nav>
     
         <main class="">
-            <section class="sectionCheckout d-flex flex-column flex-xl-row align-items-center justify-content-around gap-sm-4 pt-4">
+            <section class="sectionCheckout d-flex flex-column flex-xl-row align-items-center justify-content-around mt-5 gap-sm-4 pt-4">
                 
                     <form class="formDelivery animateanimated animateslideInUp" >
     
-                        <section class="sectionPayment d-flex flex-column gap-5">
+                        <section class="sectionPayment d-flex flex-column gap-5 mt-5">
                             <h2 class="h2Delivery">Payment</h2>
     
                             <div class="col-12 d-flex flex-column">
@@ -210,15 +210,52 @@
                                         required><br>
                                 </div>
                             </div>
-
-                            <p class="text-center fw-bold">
-                                Total amount to pay: {{ moneyFormatter.format(cartTotal) }}
-                            </p>
                         </section>
     
                         <button type="button" class="buttonOrder primary-btn custom-button" @click="submitPayment"
                             :disabled="processing"> {{ processingMessage }} </button>
                     </form>
+
+                    <ul class="ulCheckout mt-5 mt-md-0 list-group list-group-flush px-4 animate__animated animate__slideInRight">
+                        <li class="list-group-item py-4 px-2">
+                            <h3>Order Summary</h3>
+                        </li>
+                        <li v-for="item in cart.cartItems" :key="item.id" class="list-group-item py-4 px-2">
+                            <div class="d-flex column-gap-3">
+                                <img class="cart-img rounded-2" :src="item.productDTO.imageUrl" :alt="item.productDTO.name">
+                                <div class="d-flex flex-column">
+                                    <h3 class="fs-4">
+                                        {{ item.productDTO.name }}
+                                    </h3>
+                                    <p class="mb-0 small-text">
+                                        Brand: {{ item.productDTO.brand }}
+                                    </p>
+                                    <p class="mb-1 small-text">
+                                        Quantity: {{ item.count }}
+                                    </p>
+                                    <span class="fs-5 fw-bold price">
+                                        {{ moneyFormatter.format(item.productDTO.price * item.count) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <div class=" d-flex flex-column mt-4">
+                            <div class="d-flex justify-content-between">
+                                <p>Subtotal</p>
+                                <p>{{ moneyFormatter.format(cartTotal) }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p>Delivery Fee</p>
+                                <p>$8.00</p>
+                            </div>
+                            <hr>
+                        </div>
+                        
+                        <div class="divTotal d-flex justify-content-between w-100">
+                            <p class="fw-bold">Total</p>
+                            <p class="fw-bold">{{ moneyFormatter.format(cartTotal + 8) }}</p>
+                        </div>
+                    </ul>
             </section>
             
         </main>

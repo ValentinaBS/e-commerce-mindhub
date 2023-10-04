@@ -169,7 +169,7 @@
                         </template>
                     </ul>
                     <div class="px-2">
-                        <a :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
+                        <a :style="cart.cartItems.length <= 0 ? 'pointer-events: none; background-color: gray' : ''" :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
                             Go to Checkout
                             <i class="bi bi-arrow-right"></i>
                         </a>
