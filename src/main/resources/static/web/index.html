@@ -27,8 +27,9 @@
         </div>
         <nav class="navbar bg-white border border-black border-end-0 border-start-0 sticky-top">
             <div class="container-fluid">
-                <button class="navbar-toggler nav-icons border-0 hamburger-menu d-flex justify-content-start" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <button class="navbar-toggler nav-icons border-0 hamburger-menu d-flex justify-content-start"
+                    type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <i class="bi-list fs-2"></i>
                 </button>
                 <div class="offcanvas offcanvas-start border-start border-black px-2" tabindex="-1" id="offcanvasNavbar"
@@ -106,7 +107,7 @@
                     <img class="nav-logo d-none d-md-block" src="assets/logo.png" alt="Purity logo">
                 </a>
                 <div class="d-flex align-items-center">
-                    <a class="btn nav-icons" :href="checkUserLogged">
+                    <a class="btn nav-icons py-0" :href="checkUserLogged">
                         <i class="bi bi-person-fill fs-2"></i>
                     </a>
                     <button class="btn nav-icons d-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
@@ -122,7 +123,8 @@
                     </template>
                 </div>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header px-4">
                         <h3 class="offcanvas-title fw-bold" id="offcanvasRightLabel">Cart</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -132,7 +134,8 @@
                             <template v-if="cart.cartItems.length > 0">
                                 <li class="list-group-item py-4 px-2" v-for="item in cart.cartItems" :key="item.id">
                                     <div class="d-flex column-gap-3">
-                                        <img class="cart-img rounded-2" :src="item.productDTO.imageUrl" :alt="item.productDTO.name">
+                                        <img class="cart-img rounded-2" :src="item.productDTO.imageUrl"
+                                            :alt="item.productDTO.name">
                                         <div class="d-flex flex-column">
                                             <h3 class="fs-4">
                                                 {{ item.productDTO.name }}
@@ -150,12 +153,14 @@
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-3">
                                         <div class="input-group-custom d-flex">
-                                            <button @click="updateCartItem(item.id, item.count - 1)" class="btn primary-btn">
+                                            <button @click="updateCartItem(item.id, item.count - 1)"
+                                                class="btn primary-btn">
                                                 <i class="bi bi-dash-lg"></i>
                                             </button>
                                             <input type="text" class="form-control input-number" v-model="item.count"
                                                 min="1" :max="item.stock">
-                                            <button @click="updateCartItem(item.id, item.count + 1)" class="btn primary-btn">
+                                            <button @click="updateCartItem(item.id, item.count + 1)"
+                                                class="btn primary-btn">
                                                 <i class="bi bi-plus-lg"></i>
                                             </button>
                                         </div>
@@ -170,7 +175,8 @@
                             </template>
                         </ul>
                         <div class="px-2">
-                            <a :style="cart.cartItems.length <= 0 ? 'pointer-events: none; background-color: gray' : ''" :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
+                            <a :style="cart.cartItems.length <= 0 ? 'pointer-events: none; background-color: gray' : ''"
+                                :href="checkUserLoggedCheckout" class="btn primary-btn w-100 my-3 py-2">
                                 Go to Checkout
                                 <i class="bi bi-arrow-right"></i>
                             </a>
@@ -182,32 +188,37 @@
                 </div>
             </div>
         </nav>
-    
+
         <header class="my-5 d-flex flex-column flex-md-row justify-content-center align-items-center px-4 py-5 gap-5">
-            <img class="header-img col-md-9 animate__animated animate__bounceInLeft" src="assets/home/home-header.png" alt="">
+            <img class="header-img col-md-9 animate__animated animate__bounceInLeft" src="assets/home/home-header.png"
+                alt="">
             <div class="col-md-3 d-flex flex-column row-gap-4 animate__animated animate__fadeIn">
                 <h1>
                     Discover Your True Beauty
                 </h1>
                 <p>
-                    We believe that makeup should enhance your natural radiance, not conceal it. Our curated selection of
-                    makeup products is designed to empower you to express your unique style and embrace your inner beauty.
+                    We believe that makeup should enhance your natural radiance, not conceal it. Our curated selection
+                    of
+                    makeup products is designed to empower you to express your unique style and embrace your inner
+                    beauty.
                 </p>
                 <a class="btn primary-btn py-2" href="pages/products.html?category=all">
                     Browse Our Products!
                 </a>
             </div>
         </header>
-    
+
         <section>
             <h2 class="underline-text text-center">
                 Our Favorites
             </h2>
-            <div class="d-flex justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5 mt-5 mx-3 mx-md-5">
+            <div
+                class="d-flex justify-content-center justify-content-md-between flex-wrap column-gap-3 row-gap-5 mt-5 mx-3 mx-md-5">
                 <template v-if="allProducts.length > 0" v-for="product in allProducts" :key="product.id">
                     <article class="product-card">
                         <a :href="'pages/product.html?id=' + product.id">
-                            <img class="product-img img-fluid object-fit-cover w-100 h-lg-100" :src="product.imageUrl" :alt="product.name">
+                            <img class="product-img img-fluid object-fit-cover w-100 h-lg-100" :src="product.imageUrl"
+                                :alt="product.name">
                         </a>
                         <div class="mt-4">
                             <h5 class="fw-bold">
@@ -225,7 +236,7 @@
                             </p>
                             <div class="d-flex column-gap-4">
                                 <a :href="'pages/product.html?id=' + product.id"
-                                class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
+                                    class="w-25 btn primary-btn d-flex align-items-center justify-content-center column-gap-2 py-2">
                                     Details
                                 </a>
                                 <button @click="addToCart(product.id, 1)"
@@ -239,29 +250,33 @@
                 </template>
             </div>
         </section>
-    
+
         <section class="home-categories mx-auto p-5 rounded-3">
             <h2 class="text-center fw-bold fs-1">
                 Browse by Category
             </h2>
             <div class="d-flex flex-column flex-md-row column-gap-3 row-gap-5 mt-5 mb-3">
-                <a class="nav-link home-category-lips text-white fw-bold col-md-4 rounded-4" href="pages/products.html?category=lips">
+                <a class="nav-link home-category-lips text-white fw-bold col-md-4 rounded-4"
+                    href="pages/products.html?category=lips">
                     <h3 class="fs-2">Lips</h3>
                 </a>
-                <a class="nav-link home-category-skincare col-md-8 rounded-4 text-white" href="pages/products.html?category=skincare">
+                <a class="nav-link home-category-skincare col-md-8 rounded-4 text-white"
+                    href="pages/products.html?category=skincare">
                     <h3 class="fs-2">Skincare</h3>
                 </a>
             </div>
             <div class="d-flex flex-column flex-md-row column-gap-3 row-gap-5 mt-5 mt-md-3 mb-3">
-                <a class="nav-link home-category-eyes col-md-8 rounded-4 text-white" href="pages/products.html?category=eyes">
+                <a class="nav-link home-category-eyes col-md-8 rounded-4 text-white"
+                    href="pages/products.html?category=eyes">
                     <h3 class="fs-2">Eyes</h3>
                 </a>
-                <a class="nav-link home-category-brushes text-white fs-3 fw-bold col-md-4 rounded-4" href="pages/products.html?category=brushes">
+                <a class="nav-link home-category-brushes text-white fs-3 fw-bold col-md-4 rounded-4"
+                    href="pages/products.html?category=brushes">
                     <h3 class="fs-2">Brushes</h3>
                 </a>
             </div>
         </section>
-    
+
         <section
             class="home-banner d-flex flex-column flex-md-row justify-content-center align-items-center px-4 py-5 gap-4">
             <img class="col-md-8 home-banner-img" src="assets/home/home-banner.png" alt="Make up palette drawing">
@@ -275,7 +290,7 @@
                 </p>
             </div>
         </section>
-    
+
         <footer class="footer text-center text-lg-start">
             <div
                 class="footer-newsletter text-white rounded-3 px-5 py-4 d-flex flex-wrap align-items-center justify-content-between column-gap-3 row-gap-3">
@@ -303,7 +318,8 @@
                                 Purity
                             </h3>
                             <p>
-                                Our mission is to provide you with a curated selection of high-quality makeup products that
+                                Our mission is to provide you with a curated selection of high-quality makeup products
+                                that
                                 enhance your natural radiance.
                             </p>
                             <div class="d-flex column-gap-4 mt-4 me-2 justify-content-center justify-content-lg-start">
@@ -324,7 +340,7 @@
                                 </a>
                             </div>
                         </div>
-    
+
                         <div class="footer-divider py-4 py-lg-0 col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                             <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
                             <div class="d-flex flex-column row-gap-2">
@@ -350,7 +366,7 @@
                                 </a>
                             </div>
                         </div>
-    
+
                         <div class="footer-divider py-4 py-lg-0 col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
                             <h6 class="text-uppercase mb-4 font-weight-bold">
                                 Useful links
@@ -362,7 +378,7 @@
                                 <a href="pages/contact.html" class="nav-link nav-footer">Help</a>
                             </div>
                         </div>
-    
+
                         <div class="footer-divider py-4 py-lg-0 col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                             <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
                             <div class="d-flex justify-content-center justify-content-md-start column-gap-2">
@@ -370,7 +386,8 @@
                                 New York, NY 10012, US
                             </div>
                             <a class="nav-link nav-footer" href="mailto:puritymakeupcontact@gmail.com">
-                                <div class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
+                                <div
+                                    class="d-flex justify-content-center justify-content-md-start column-gap-2 my-3 text-break">
                                     <i class="bi bi-envelope-fill"></i>
                                     puritymakeupcontact@gmail.com
                                 </div>
@@ -386,7 +403,7 @@
                         </div>
                     </div>
                 </section>
-    
+
                 <div class="footer-divider-bottom p-3">
                     <div class="row d-flex align-items-center p-3">
                         <div class="col-md-6 col-lg-5 text-center text-md-start mb-3 mb-md-0">

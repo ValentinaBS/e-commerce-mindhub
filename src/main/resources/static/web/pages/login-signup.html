@@ -190,9 +190,9 @@
             <!-- <section class=" d-flex  align-items-center gap-4 "> -->
 
             <!-- FORM LOGIN -->
-            <section v-if="showForm == false" class="d-flex gap-5">
+            <section v-if="showForm == false" class="d-flex gap-5 animate__animated animate__zoomIn">
 
-                <form @submit.prevent class="formLogin-Signup animate__animated animate__zoomIn" v-if="showForm == false">
+                <form @submit.prevent class="formLogin-Signup" v-if="showForm == false">
                     <h2><span class="underline-text">Log In</span></h2>
                     <div class="mb-3 w-100">
                       <label for="exampleInputEmail3" class="form-label">Email</label>
@@ -221,25 +221,25 @@
 
               <!-- FORM SIGN UP -->
              
-              <section v-if="showForm == true" class="d-flex flex-row-reverse gap-5">
-                <form @submit.prevent class="formLogin-Signup" >
-                    <h2><span class="underline-text">Sign Up</span></h2>
-                    <div class="mb-3 w-100">
-                        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                        <input v-model="nameInput" type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe">
-                    </div>
-                    <div class="mb-3 w-100">
-                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                        <input v-model="emailInput" type="email" class="inputs  form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@gmail.com">
-                    </div>
-                    <div class="mb-3 w-100">
-                        <label for="exampleInputPassword2" class="form-label">Password</label>
-                        <input v-model="passwordInput" type="password" class="inputs form-control" id="exampleInputPassword2">
-                    </div>
-                    <div class="mb-3 w-100">
-                        <label for="inputAddress" class="form-label">Address</label>
-                        <input v-model="addressInput" type="text" class="inputs form-control" id="inputAddress" placeholder="Street 123">
-                    </div>
+              <section v-if="showForm == true" class="d-flex flex-row-reverse gap-5 animate__animated animate__zoomIn">
+                    <form @submit.prevent class="formLogin-Signup" >
+                        <h2><span class="underline-text">Sign Up</span></h2>
+                        <div class="mb-3 w-100">
+                            <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+                            <input v-model="nameInput" type="text" class="inputs form-control" id="exampleFormControlInput1" placeholder="Jane Doe">
+                        </div>
+                        <div class="mb-3 w-100">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input v-model="emailInput" type="email" class="inputs  form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@gmail.com">
+                        </div>
+                        <div class="mb-3 w-100">
+                            <label for="exampleInputPassword2" class="form-label">Password</label>
+                            <input v-model="passwordInput" type="password" class="inputs form-control" id="exampleInputPassword2">
+                        </div>
+                        <div class="mb-3 w-100">
+                            <label for="inputAddress" class="form-label">Address</label>
+                            <input v-model="addressInput" type="text" class="inputs form-control" id="inputAddress" placeholder="Street 123">
+                        </div>
                     
                       <button @click="submitSignUp" type="submit" class="btn primary-btn">Sign Up</button>
                       <div class="divAccount d-flex flex-column align-items-center">
