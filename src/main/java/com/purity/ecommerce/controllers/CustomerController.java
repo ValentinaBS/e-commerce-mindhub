@@ -26,10 +26,6 @@ public class CustomerController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     @GetMapping("/customers")
     public List<CustomerDTO> getCustomers() {
         return customerRepository.findAll()
