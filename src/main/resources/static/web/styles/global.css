@@ -80,6 +80,10 @@ textarea {
     object-fit: cover;
 }
 
+.hamburger-menu {
+    width: 120px !important;
+}
+
 .input-group-custom input {
     border: none; 
     background-color: transparent;
