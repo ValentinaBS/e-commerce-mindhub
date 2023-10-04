@@ -48,7 +48,7 @@ public class PaymentController {
             if ("requires_action".equals(paymentIntent.getStatus())) {
                 return ResponseEntity.badRequest().body("Payment processing failed.");
             }
-            emailService.sendOrderConfirmationEmail(authentication.getName());
+
             return ResponseEntity.ok("Payment processed successfully.");
         } catch (StripeException e) {
             e.printStackTrace();
