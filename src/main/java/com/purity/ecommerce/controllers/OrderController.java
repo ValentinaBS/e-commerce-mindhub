@@ -126,7 +126,7 @@ public class OrderController {
         PdfPTable logo = new PdfPTable(1);
         logo.setWidthPercentage(100);
 
-        Image img = Image.getInstance("C:\\Users\\User\\Downloads\\e-commerce\\e-commerce\\src\\main\\resources\\static\\web\\assets\\logo.png");
+        Image img = Image.getInstance("https://i.imgur.com/IQq68cP.png");
         img.scaleToFit(200, 56);
         img.setAlignment(Image.ALIGN_BASELINE);
         PdfPCell imageCell = new PdfPCell(img);

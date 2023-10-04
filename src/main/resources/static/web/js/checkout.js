@@ -49,7 +49,7 @@ const app = createApp({
             try {
                 const response = await axios.post('http://localhost:8080/api/process-payment', {
                     paymentMethodId: this.paymentMethodId,
-                    amount : this.cartTotal + 8,
+                    amount : this.cartTotal * 1000 + 8,
                 });
 
                 if (response.status === 200) {
