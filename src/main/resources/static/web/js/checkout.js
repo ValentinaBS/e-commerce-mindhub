@@ -1,14 +1,30 @@
 const { createApp } = Vue
 
+
 const app = createApp({
     data() {
         return {
             paymentMethodId: 'pm_card_visa',
             processing: false,
             clientSecret: 'pi_3NxDZUDxOCV4zZt42jEtY98j_secret_JuMhECF70tB8EejcI2Rruciq',
-            amount : 50,
+            amount : 0,
+            cart: {
+                cartItems: [],
+            },
         };
     },
+    created() {
+        axios.get('/api/cart/current')
+        .then(res => {
+            this.cart = res.data;
+            this.cart.cartItems.sort((a, b) => a.id - b.id);
+            console.log(this.cart.cartItems)
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    },
+        
     methods: {
         async submitPayment() {
 
@@ -17,10 +33,16 @@ const app = createApp({
             try {
                 const response = await axios.post('http://localhost:8080/api/process-payment', {
                     paymentMethodId: this.paymentMethodId,
-                    amount : this.amount
+                    amount : this.cartTotal,
                 });
 
                 if (response.status === 200) {
+                    axios.post('/api/order/create')
+                        .then(response => {              
+                
+                        })
+                        .catch((error) => console.log(error));
+                 
 
                     Swal.fire({
                         icon: 'success',
@@ -37,16 +59,7 @@ const app = createApp({
                         }
                     });
 
-                    axios.post('/api/order/create')
-                        .then(response => {
-                            
-                
-                
-                
-                        })
-                        .catch((error) => console.log(error));
                     
-                    // Redirect to a success page or perform other actions as needed.
                 } else {
                     alert('Payment processing failed.');
                     console.error(response.data);
@@ -82,6 +95,14 @@ const app = createApp({
             })
         }
     },
+    computed:{
+        cartTotal() {
+            
+            return this.cart.cartItems.reduce((total, item) => {
+              return total + (item.productDTO.price * item.count);
+            }, 0);
+    }
+},
     
 });
 

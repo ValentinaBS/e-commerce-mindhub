@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -60,6 +61,7 @@ public class OrderController {
     }
 
     @PostMapping("/order/create")
+    @Transactional
     public ResponseEntity<String> createOrder(Authentication authentication) {
         Customer customer = customerRepository.findByEmail(authentication.getName());
 
@@ -87,6 +89,7 @@ public class OrderController {
             orderItem.setQuantity(cartItem.getCount());
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setPurchaseOrders(order);
+            orderItemRepository.save(orderItem);
             order.getOrderItems().add(orderItem);
         }
 
