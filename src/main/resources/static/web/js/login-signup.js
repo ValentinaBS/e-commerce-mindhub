@@ -47,9 +47,9 @@ const options = {
             axios.post("/api/login", `email=${this.emailInput}&password=${this.passwordInput}`)
                 .then(res => {
                     if (this.emailInput.startsWith("admin")) {
-                        window.location.href = "/web/pages/admin/product-manager.html?category=lips"
+                        window.location.href = "../pages/admin/product-manager.html?category=lips"
                     } else {
-                        window.location.href = "/web/pages/profile.html"
+                        window.location.href = "../pages/profile.html"
                     }
                 })
                 .catch(error => {
