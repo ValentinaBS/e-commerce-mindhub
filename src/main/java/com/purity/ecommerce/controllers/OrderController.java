@@ -100,7 +100,7 @@ public class OrderController {
 
         orderRepository.save(order);
         cart.getItems().clear();
-        emailService.sendOrderConfirmationEmail(authentication.getName());
+        emailService.sendOrderConfirmationEmail(authentication.getName(), order);
         return ResponseEntity.ok("Order created successfully.");
     }
 
