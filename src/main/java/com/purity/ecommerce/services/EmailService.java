@@ -31,7 +31,7 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendOrderConfirmationEmail(String recipientEmail) {
+    public void sendOrderConfirmationEmail(String recipientEmail, PurchaseOrders order) {
         MimeMessage message = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -39,27 +39,17 @@ public class EmailService {
             helper.setTo(recipientEmail);
             helper.setSubject("Order Confirmation | Purity Makeup ");
 
-            Customer customer = customerRepository.findByEmail(recipientEmail);
-            if (customer == null) {
-                return;
-            }
-
-            PurchaseOrders latestOrder = orderRepository.getLatestOrderForCustomer(customer);
-
-            if (latestOrder == null) {
-                return;
-            }
 
             String htmlContent = "<html><body>";
             htmlContent += "<img src='https://i.imgur.com/IQq68cP.png%7D' style='width: 200px; height: auto;' alt='Brand Logo' />";
             htmlContent += "<p style='font-size: 16px;'>Thank you for your order. Your order has been confirmed.</p>";
-            htmlContent += "<p>Order ID: " + latestOrder.getId() + "</p>";
-            String formattedTotalAmount = String.format("%.2f", latestOrder.getTotalAmount());
+            htmlContent += "<p>Order ID: " + order.getId() + "</p>";
+            String formattedTotalAmount = String.format("%.2f", order.getTotalAmount());
             htmlContent += "<p>Total Amount: $" + formattedTotalAmount + "</p>";
             htmlContent += "<p>Order Items:</p>";
 
             htmlContent += "<div style='display: flex;'>";
-            for (OrderItem orderItem : latestOrder.getOrderItems()) {
+            for (OrderItem orderItem : order.getOrderItems()) {
                 htmlContent += "<div style='border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;'>";
                 htmlContent += "<img src='" + orderItem.getProduct().getImageUrl() + "' style='width: 100px; height: auto;' alt='Item Image' />";
                 htmlContent += "<p><strong>" + orderItem.getProduct().getName() + "</strong></p>";
